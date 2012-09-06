@@ -1,0 +1,19 @@
+{
+    "name": "dkplus/base",
+    "description": "Utility for other zf2-modules",
+    "type": "library",
+    "keywords": [
+        "zf2"
+    ],
+    "homepage": "https://github.com/UFOMelkor/DkplusBase",
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "dev-master",
+        "dkplus/unit-test": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "DkplusBase": "src/"
+        }
+    }
+}
