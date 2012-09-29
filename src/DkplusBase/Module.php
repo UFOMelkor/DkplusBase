@@ -59,4 +59,3 @@ class Module implements
         return include __DIR__ . '/../../config/view_helper.config.php';
     }
 }
-

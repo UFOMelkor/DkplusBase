@@ -44,4 +44,3 @@ class FlashMessenger extends AbstractHelper
         return $this->plugin->getMessages();
     }
 }
-

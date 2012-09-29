@@ -10,4 +10,3 @@ return function ($class) {
     }
     return include $map[$class];
 };
-
