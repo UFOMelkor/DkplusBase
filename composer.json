@@ -9,7 +9,8 @@
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "dev-master",
-        "dkplus/unit-test": "dev-master"
+        "dkplus/unit-test": "dev-master",
+        "dkplus/controller-dsl": "dev-master"
     },
     "autoload": {
         "psr-0": {

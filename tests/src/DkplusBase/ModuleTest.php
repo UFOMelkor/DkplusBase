@@ -29,7 +29,7 @@ class ModuleTest extends TestCase
 
     /**
      * @test
-     * @group Module/Application
+     * @group Module/DkplusBase
      * @group Component/Module
      */
     public function implementsConfigProviderInterface()
@@ -39,7 +39,7 @@ class ModuleTest extends TestCase
 
     /**
      * @test
-     * @group Module/Application
+     * @group Module/DkplusBase
      * @group Component/Module
      * @depends implementsConfigProviderInterface
      */
