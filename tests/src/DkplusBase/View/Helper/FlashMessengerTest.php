@@ -92,4 +92,3 @@ class FlashMessengerTest extends TestCase
         $this->assertEquals($messages, $this->viewHelper->getMessages());
     }
 }
-
