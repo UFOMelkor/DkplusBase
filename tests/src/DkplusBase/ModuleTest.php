@@ -132,4 +132,3 @@ class ModuleTest extends TestCase
         $this->assertInternalType('array', $this->module->getAutoloaderConfig());
     }
 }
-
