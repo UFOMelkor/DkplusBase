@@ -180,4 +180,214 @@ class CrudControllerTest extends TestCase
 
         $this->controller->readAction();
     }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function returnsDslWhileCreating()
+    {
+        $this->assertDsl($this->controller->createAction());
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function usesFormGivenByConstructorWhileCreating()
+    {
+        $dsl = $this->getDslMockBuilder()
+                    ->withMockedPhrases(array('assign'))
+                    ->getMock();
+        $dsl->expects($this->at(0))
+            ->method('__call')
+            ->with('use', array($this->form))
+            ->will($this->returnSelf());
+        $dsl->expects($this->at(2))
+            ->method('assign')
+            ->will($this->returnSelf());
+
+        $this->controller->createAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function validesFormAgainstPostRedirectGetWhileCreating()
+    {
+        $dsl = $this->getDslMockBuilder()
+                    ->withMockedPhrases(array('validate', 'against'))
+                    ->getMock();
+        $dsl->expects($this->once())
+            ->method('validate')
+            ->will($this->returnSelf());
+        $dsl->expects($this->once())
+            ->method('against')
+            ->with('postredirectget')
+            ->will($this->returnSelf());
+
+        $this->controller->createAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function storesDataOnSuccessIntoServiceWhileCreating()
+    {
+        $dsl = $this->getDslMockBuilder()
+                    ->withMockedPhrases(array('onSuccess'))
+                    ->getMock();
+
+        $successDsl = $this->getDslMockBuilder()
+                           ->withMockedPhrases(array('store', 'formData', 'into'))
+                           ->getMock();
+        $successDsl->expects($this->once())
+                   ->method('store')
+                   ->will($this->returnSelf());
+        $successDsl->expects($this->once())
+                   ->method('formData')
+                   ->will($this->returnSelf());
+        $successDsl->expects($this->once())
+                   ->method('into')
+                   ->with(array($this->service, 'create'))
+                   ->will($this->returnSelf());
+
+        $dsl->expects($this->once())
+            ->method('onSuccess')
+            ->with($successDsl)
+            ->will($this->returnSelf());
+
+        $this->controller->createAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function redirectsAfterCreating()
+    {
+        $dsl = $this->getDslMockBuilder()
+                    ->withMockedPhrases(array('onSuccess'))
+                    ->getMock();
+
+        $successDsl = $this->expectsDsl()
+                           ->toRedirectToRoute('home', array($this->controller, 'getCreationRedirectData'));
+
+        $dsl->expects($this->once())
+            ->method('onSuccess')
+            ->with($successDsl)
+            ->will($this->returnSelf());
+
+        $this->controller->createAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function canConfigureTheRedirectTargetAfterCreating()
+    {
+        $dsl = $this->getDslMockBuilder()
+                    ->withMockedPhrases(array('onSuccess'))
+                    ->getMock();
+
+        $successDsl = $this->expectsDsl()
+                           ->toRedirectToRoute('crud/read', array($this->controller, 'getCreationRedirectData'));
+
+        $dsl->expects($this->once())
+            ->method('onSuccess')
+            ->with($successDsl)
+            ->will($this->returnSelf());
+
+        $this->controller->setRedirectRouteForSuccessfulCreating('crud/read');
+        $this->controller->createAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     * @testdox adds a callback as success message after creating
+     */
+    public function addsCallbackAsSuccessMessageAfterCreating()
+    {
+        $dsl = $this->getDslMockBuilder()
+                    ->withMockedPhrases(array('onSuccess'))
+                    ->getMock();
+
+        $successDsl = $this->expectsDsl()
+                           ->toAddFlashMessage(array($this->controller, 'getCreationMessage'), 'success');
+
+        $dsl->expects($this->once())
+            ->method('onSuccess')
+            ->with($successDsl)
+            ->will($this->returnSelf());
+
+        $this->controller->createAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function assignsTheFormMessagesWhenAnAjaxRequestIsDetectedWhileCreating()
+    {
+        $dsl = $this->getDslMockBuilder()
+                    ->withMockedPhrases(array('onAjaxRequest'))
+                    ->getMock();
+
+        $ajaxDsl = $this->getDslMockBuilder()
+                        ->usedAt(2)
+                        ->withMockedPhrases(array('assign', 'formMessages'))
+                        ->getMock();
+        $ajaxDsl->expects($this->once())
+                ->method('assign')
+                ->will($this->returnSelf());
+        $ajaxDsl->expects($this->once())
+                ->method('formMessages')
+                ->will($this->returnSelf());
+
+        $dsl->expects($this->once())
+            ->method('onAjaxRequest')
+            ->with($ajaxDsl)
+            ->will($this->returnSelf());
+
+        $this->controller->createAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function returnsJesonWhenCreating()
+    {
+        $dsl = $this->getDslMockBuilder()
+                    ->withMockedPhrases(array('onAjaxRequest'))
+                    ->getMock();
+
+        $ajaxDsl = $this->getDslMockBuilder()
+                        ->usedAt(2)
+                        ->withMockedPhrases(array('asJson'))
+                        ->getMock();
+        $ajaxDsl->expects($this->once())
+                ->method('asJson')
+                ->will($this->returnSelf());
+
+        $dsl->expects($this->once())
+            ->method('onAjaxRequest')
+            ->with($ajaxDsl)
+            ->will($this->returnSelf());
+
+        $this->controller->createAction();
+    }
 }

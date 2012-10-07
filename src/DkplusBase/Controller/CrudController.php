@@ -11,6 +11,7 @@ namespace DkplusBase\Controller;
 use DkplusBase\Service\CrudServiceInterface as Service;
 use DkplusBase\Service\Exception\EntityNotFound as EntityNotFoundException;
 use DkplusControllerDsl\Controller\AbstractActionController;
+use DkplusControllerDsl\Dsl\ContainerInterface as Container;
 use Zend\Form\FormInterface as Form;
 
 /**
@@ -28,10 +29,13 @@ class CrudController extends AbstractActionController
     protected $form;
 
     /** @var string */
-    protected $errorMessageForNotFoundDataOnReading;
+    protected $errorMessageForNotFoundDataWhileReading;
 
     /** @var string */
-    protected $redirectRouteForNotFoundDataOnReading = 'home';
+    protected $redirectRouteForNotFoundDataWhileReading = 'home';
+
+    /** @var string */
+    protected $redirectRouteForSuccesfulCreating = 'home';
 
     public function __construct(Service $service, Form $form)
     {
@@ -41,6 +45,33 @@ class CrudController extends AbstractActionController
 
     public function createAction()
     {
+        return $this->dsl()->use($this->form)->and()->assign()
+                    ->and()->validate()->against('postredirectget')
+                    ->and()->onSuccess(
+                        $this->dsl()->store()->formData()->into(array($this->service, 'create'))
+                                    ->and()->redirect()
+                                           ->to()->route(
+                                               $this->redirectRouteForSuccesfulCreating,
+                                               array($this, 'getCreationRedirectData')
+                                           )
+                                           ->with()->success()->message(array($this, 'getCreationMessage'))
+                    )->and()->onAjaxRequest(
+                        $this->dsl()->assign()->formMessages()->asJson()
+                    );
+    }
+
+    public function setRedirectRouteForSuccessfulCreating($route)
+    {
+        $this->redirectRouteForSuccesfulCreating = $route;
+    }
+
+    public function getCreationRedirectData(Container $container)
+    {
+
+    }
+
+    public function getCreationMessage(Container $container)
+    {
 
     }
 
@@ -48,13 +79,13 @@ class CrudController extends AbstractActionController
     {
         try {
             $data = $this->service->get($this->getEvent()->getRouteMatch()->getParam('id'));
+
         } catch (EntityNotFoundException $e) {
-            $dsl = $this->dsl()->redirect()->to()->route($this->redirectRouteForNotFoundDataOnReading);
+            $dsl = $this->dsl()->redirect()->to()->route($this->redirectRouteForNotFoundDataWhileReading);
 
-            if ($this->errorMessageForNotFoundDataOnReading) {
-                $dsl->with()->error()->message($this->errorMessageForNotFoundDataOnReading);
+            if ($this->errorMessageForNotFoundDataWhileReading) {
+                $dsl->with()->error()->message($this->errorMessageForNotFoundDataWhileReading);
             }
-
             return $dsl;
         }
 
@@ -63,12 +94,12 @@ class CrudController extends AbstractActionController
 
     public function setRedirectRouteForNotFoundDataOnReading($route)
     {
-        $this->redirectRouteForNotFoundDataOnReading = $route;
+        $this->redirectRouteForNotFoundDataWhileReading = $route;
     }
 
     public function setErrorMessageForNotFoundDataOnReading($message)
     {
-        $this->errorMessageForNotFoundDataOnReading = $message;
+        $this->errorMessageForNotFoundDataWhileReading = $message;
     }
 
     public function updateAction()
