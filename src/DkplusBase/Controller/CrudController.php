@@ -12,7 +12,6 @@ use DkplusBase\Service\CrudServiceInterface as Service;
 use DkplusBase\Service\Exception\EntityNotFound as EntityNotFoundException;
 use DkplusControllerDsl\Controller\AbstractActionController;
 use DkplusControllerDsl\Dsl\ContainerInterface as Container;
-use Zend\Form\FormInterface as Form;
 
 /**
  * @category   Dkplus
@@ -25,9 +24,6 @@ class CrudController extends AbstractActionController
     /** @var Service */
     protected $service;
 
-    /** @var Form */
-    protected $form;
-
     /** @var string */
     protected $errorMessageForNotFoundDataWhileReading;
 
@@ -35,17 +31,45 @@ class CrudController extends AbstractActionController
     protected $redirectRouteForNotFoundDataWhileReading = 'home';
 
     /** @var string */
+    protected $errorMessageForNotFoundDataWhileUpdating;
+
+    /** @var string */
+    protected $redirectRouteForNotFoundDataWhileUpdating = 'home';
+
+    /** @var string */
+    protected $redirectRouteForSuccesfulUpdating = 'home';
+
+    /** @var string */
     protected $redirectRouteForSuccesfulCreating = 'home';
 
-    public function __construct(Service $service, Form $form)
+    /** @var string */
+    protected $errorMessageForNotFoundDataWhileDeleting;
+
+    /** @var string */
+    protected $redirectRouteForNotFoundDataWhileDeleting = 'home';
+
+    /** @var string */
+    protected $successMessageForSuccessfulDeletion;
+
+    /** @var string */
+    protected $redirectRouteForSuccessfulDeletion = 'home';
+
+    /** @var string */
+    protected $routeMatchIdentifier = 'id';
+
+    public function __construct(Service $service)
     {
         $this->service = $service;
-        $this->form    = $form;
+    }
+
+    public function setRouteMatchIdentifier($identifierParameter)
+    {
+        $this->routeMatchIdentifier = $identifierParameter;
     }
 
     public function createAction()
     {
-        return $this->dsl()->use($this->form)->and()->assign()
+        return $this->dsl()->use($this->service->getCreationForm())->and()->assign()
                     ->and()->validate()->against('postredirectget')
                     ->and()->onSuccess(
                         $this->dsl()->store()->formData()->into(array($this->service, 'create'))
@@ -77,8 +101,10 @@ class CrudController extends AbstractActionController
 
     public function readAction()
     {
+        $identifier = $this->getEvent()->getRouteMatch()->getParam($this->routeMatchIdentifier);
+
         try {
-            $data = $this->service->get($this->getEvent()->getRouteMatch()->getParam('id'));
+            $data = $this->service->get($identifier);
 
         } catch (EntityNotFoundException $e) {
             $dsl = $this->dsl()->redirect()->to()->route($this->redirectRouteForNotFoundDataWhileReading);
@@ -104,12 +130,101 @@ class CrudController extends AbstractActionController
 
     public function updateAction()
     {
+        $identifier = $this->getEvent()->getRouteMatch()->getParam($this->routeMatchIdentifier);
 
+        try {
+            $form = $this->service->getUpdateForm($identifier);
+
+        } catch (EntityNotFoundException $e) {
+            $dsl = $this->dsl()->redirect()->to()->route($this->redirectRouteForNotFoundDataWhileUpdating);
+
+            if ($this->errorMessageForNotFoundDataWhileUpdating) {
+                $dsl->with()->error()->message($this->errorMessageForNotFoundDataWhileUpdating);
+            }
+            return $dsl;
+        }
+
+        return $this->dsl()->use($form)->and()->assign()
+                    ->and()->validate()->against('postredirectget')
+                    ->and()->onSuccess(
+                        $this->dsl()->store()->formData()->into(array($this->service, 'update'))->with($identifier)
+                                    ->and()->redirect()
+                                           ->to()->route(
+                                               $this->redirectRouteForSuccesfulUpdating,
+                                               array($this, 'getUpdatingRedirectData')
+                                           )
+                                           ->with()->success()->message(array($this, 'getUpdatingMessage'))
+                    )->and()->onAjaxRequest(
+                        $this->dsl()->assign()->formMessages()->asJson()
+                    );
+    }
+
+    public function setRedirectRouteForSuccessfulUpdating($route)
+    {
+        $this->redirectRouteForSuccesfulUpdating = $route;
+    }
+
+    public function getUpdatingRedirectData(Container $container)
+    {
+
+    }
+
+    public function getUpdatingMessage(Container $container)
+    {
+
+    }
+
+    public function setRedirectRouteForNotFoundDataOnUpdating($route)
+    {
+        $this->redirectRouteForNotFoundDataWhileUpdating = $route;
+    }
+
+    public function setErrorMessageForNotFoundDataOnUpdating($message)
+    {
+        $this->errorMessageForNotFoundDataWhileUpdating = $message;
     }
 
     public function deleteAction()
     {
+        $identifier = $this->getEvent()->getRouteMatch()->getParam($this->routeMatchIdentifier);
 
+        try {
+            $this->service->delete($identifier);
+
+        } catch (EntityNotFoundException $e) {
+            $dsl = $this->dsl()->redirect()->to()->route($this->redirectRouteForNotFoundDataWhileDeleting);
+
+            if ($this->errorMessageForNotFoundDataWhileDeleting) {
+                $dsl->with()->error()->message($this->errorMessageForNotFoundDataWhileDeleting);
+            }
+            return $dsl;
+        }
+
+        $dsl = $this->dsl()->redirect()->to()->route($this->redirectRouteForSuccessfulDeletion);
+        if ($this->successMessageForSuccessfulDeletion) {
+            $dsl->with()->success()->message($this->successMessageForSuccessfulDeletion);
+        }
+        return $dsl;
+    }
+
+    public function setRedirectRouteForNotFoundDataOnDeletion($route)
+    {
+        $this->redirectRouteForNotFoundDataWhileDeleting = $route;
+    }
+
+    public function setErrorMessageForNotFoundDataOnDeletion($message)
+    {
+        $this->errorMessageForNotFoundDataWhileDeleting = $message;
+    }
+
+    public function setRedirectRouteForSuccessfulDeletion($route)
+    {
+        $this->redirectRouteForSuccessfulDeletion = $route;
+    }
+
+    public function setSuccessMessageForDeletion($message)
+    {
+        $this->successMessageForSuccessfulDeletion = $message;
     }
 
     public function paginateAction()
@@ -117,7 +232,7 @@ class CrudController extends AbstractActionController
 
     }
 
-    public function listAllAction()
+    public function listAction()
     {
 
     }

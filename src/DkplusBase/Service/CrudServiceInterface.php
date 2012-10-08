@@ -20,9 +20,13 @@ interface CrudServiceInterface
 
     public function get($identifier);
 
+    public function getCreationForm();
+
     public function getAll();
 
     public function update($data, $identifier);
+
+    public function getUpdateForm($identifier);
 
     public function delete($identifier);
 

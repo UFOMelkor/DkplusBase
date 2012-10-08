@@ -21,19 +21,15 @@ class CrudControllerTest extends TestCase
     /** @var CrudController */
     protected $controller;
 
-    /** @var \Zend\Form\FormInterface|\PHPUnit_Framework_MockObject_MockObject */
-    protected $form;
-
-    /** @var \Zend\Form\FormInterface|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \DkplusBase\Service\CrudServiceInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $service;
 
     protected function setUp()
     {
         parent::setUp();
 
-        $this->form       = $this->getMockForAbstractClass('Zend\Form\FormInterface');
         $this->service    = $this->getMockForAbstractClass('DkplusBase\Service\CrudServiceInterface');
-        $this->controller = new CrudController($this->service, $this->form);
+        $this->controller = new CrudController($this->service);
         $this->setUpController($this->controller);
     }
 
@@ -93,7 +89,24 @@ class CrudControllerTest extends TestCase
      * @test
      * @group Component/Controller
      * @group Module/DkplusBase
-     * @testdox uses the id from the router to get data from service when reading
+     */
+    public function canConfigureTheRouteMatchParameterForReading()
+    {
+        $this->setRouteMatchParams(array('id' => 42, 'foo' => 58));
+
+        $this->service->expects($this->once())
+                      ->method('get')
+                      ->with(58);
+
+        $this->controller->setRouteMatchIdentifier('foo');
+        $this->controller->readAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     * @testdox assigns the data from the service if the data are found while reading
      */
     public function assignsDataFromServiceIfDataAreFoundWhileReading()
     {
@@ -113,7 +126,7 @@ class CrudControllerTest extends TestCase
      * @group Component/Controller
      * @group Module/DkplusBase
      */
-    public function redirectsWhenNoDataHasBeenFoundFoundWhileReading()
+    public function redirectsWhenNoDataHasBeenFoundWhileReading()
     {
         $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
         $this->service->expects($this->any())
@@ -130,7 +143,7 @@ class CrudControllerTest extends TestCase
      * @group Component/Controller
      * @group Module/DkplusBase
      */
-    public function canConfigurateRouteForRedirectionWhenNoDataHasBeenFoundFoundWhileReading()
+    public function canConfigurateRouteForRedirectionWhenNoDataHasBeenFoundWhileReading()
     {
         $route     = 'foo/bar';
         $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
@@ -149,7 +162,7 @@ class CrudControllerTest extends TestCase
      * @group Component/Controller
      * @group Module/DkplusBase
      */
-    public function addsNoErrorMessageUntilItIsConfiguratedWhenNoDataHasBeenFoundFoundWhileReading()
+    public function addsNoErrorMessageUntilItIsConfiguratedWhenNoDataHasBeenFoundWhileReading()
     {
         $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
         $this->service->expects($this->any())
@@ -165,9 +178,8 @@ class CrudControllerTest extends TestCase
      * @test
      * @group Component/Controller
      * @group Module/DkplusBase
-     * @testdox can configurate a error message when no data has been found while reading
      */
-    public function canConfigurateErrorMessageWhenNoDataHasBeenFoundFoundWhileReading()
+    public function canConfigurateAnErrorMessageWhenNoDataHasBeenFoundWhileReading()
     {
         $message   = 'could not found any data';
         $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
@@ -196,20 +208,30 @@ class CrudControllerTest extends TestCase
      * @group Component/Controller
      * @group Module/DkplusBase
      */
-    public function usesFormGivenByConstructorWhileCreating()
+    public function usesCreationFormFromServiceWhileCreating()
+    {
+        $form = $this->getMockForAbstractClass('Zend\Form\FormInterface');
+
+        $this->service->expects($this->any())
+                      ->method('getCreationForm')
+                      ->will($this->returnValue($form));
+
+        $this->expectsDslToUseForm($form);
+        $this->controller->createAction();
+    }
+
+    protected function expectsDslToUseForm($form)
     {
         $dsl = $this->getDslMockBuilder()
                     ->withMockedPhrases(array('assign'))
                     ->getMock();
         $dsl->expects($this->at(0))
             ->method('__call')
-            ->with('use', array($this->form))
+            ->with('use', array($form))
             ->will($this->returnSelf());
         $dsl->expects($this->at(2))
             ->method('assign')
             ->will($this->returnSelf());
-
-        $this->controller->createAction();
     }
 
     /**
@@ -218,6 +240,12 @@ class CrudControllerTest extends TestCase
      * @group Module/DkplusBase
      */
     public function validesFormAgainstPostRedirectGetWhileCreating()
+    {
+        $this->expectsDslToValidateFormAgainstPostRedirectGet();
+        $this->controller->createAction();
+    }
+
+    protected function expectsDslToValidateFormAgainstPostRedirectGet()
     {
         $dsl = $this->getDslMockBuilder()
                     ->withMockedPhrases(array('validate', 'against'))
@@ -229,8 +257,6 @@ class CrudControllerTest extends TestCase
             ->method('against')
             ->with('postredirectget')
             ->will($this->returnSelf());
-
-        $this->controller->createAction();
     }
 
     /**
@@ -244,19 +270,7 @@ class CrudControllerTest extends TestCase
                     ->withMockedPhrases(array('onSuccess'))
                     ->getMock();
 
-        $successDsl = $this->getDslMockBuilder()
-                           ->withMockedPhrases(array('store', 'formData', 'into'))
-                           ->getMock();
-        $successDsl->expects($this->once())
-                   ->method('store')
-                   ->will($this->returnSelf());
-        $successDsl->expects($this->once())
-                   ->method('formData')
-                   ->will($this->returnSelf());
-        $successDsl->expects($this->once())
-                   ->method('into')
-                   ->with(array($this->service, 'create'))
-                   ->will($this->returnSelf());
+        $successDsl = $this->expectsDslToStoreDataIntoMethod('create');
 
         $dsl->expects($this->once())
             ->method('onSuccess')
@@ -264,6 +278,46 @@ class CrudControllerTest extends TestCase
             ->will($this->returnSelf());
 
         $this->controller->createAction();
+    }
+
+    /**
+     * @param string $serviceMethod
+     * @param int|null $additionalArgument
+     * @return \DkplusControllerDsl\Dsl\DslInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function expectsDslToStoreDataIntoMethod($serviceMethod, $additionalArgument = null)
+    {
+        $phrases = array('store', 'formData', 'into');
+
+        if ($additionalArgument !== null) {
+            $phrases[] = 'with';
+        }
+
+        $dsl = $this->getDslMockBuilder()
+                    ->withMockedPhrases($phrases)
+                    ->getMock();
+        $dsl->expects($this->once())
+            ->method('store')
+            ->will($this->returnSelf());
+        $dsl->expects($this->once())
+            ->method('formData')
+            ->will($this->returnSelf());
+        $dsl->expects($this->once())
+            ->method('into')
+            ->with(array($this->service, $serviceMethod))
+            ->will($this->returnSelf());
+
+        if ($additionalArgument !== null) {
+            $dsl->expects($this->at(3)) //atLeastOnce() does not work here
+                ->method('with')
+                ->with($additionalArgument)
+                ->will($this->returnSelf());
+            $dsl->expects($this->any())
+                ->method('with')
+                ->will($this->returnSelf());
+
+        }
+        return $dsl;
     }
 
     /**
@@ -300,7 +354,7 @@ class CrudControllerTest extends TestCase
                     ->getMock();
 
         $successDsl = $this->expectsDsl()
-                           ->toRedirectToRoute('crud/read', array($this->controller, 'getCreationRedirectData'));
+                           ->toRedirectToRoute('crud/read');
 
         $dsl->expects($this->once())
             ->method('onSuccess')
@@ -315,9 +369,9 @@ class CrudControllerTest extends TestCase
      * @test
      * @group Component/Controller
      * @group Module/DkplusBase
-     * @testdox adds a callback as success message after creating
+     * @testdox adds a callback as success message after creation
      */
-    public function addsCallbackAsSuccessMessageAfterCreating()
+    public function addsCallbackAsSuccessMessageAfterCreation()
     {
         $dsl = $this->getDslMockBuilder()
                     ->withMockedPhrases(array('onSuccess'))
@@ -369,7 +423,7 @@ class CrudControllerTest extends TestCase
      * @group Component/Controller
      * @group Module/DkplusBase
      */
-    public function returnsJesonWhenCreating()
+    public function returnsJsonWhenAnAjaxRequestIsDetectedWhileCreating()
     {
         $dsl = $this->getDslMockBuilder()
                     ->withMockedPhrases(array('onAjaxRequest'))
@@ -389,5 +443,483 @@ class CrudControllerTest extends TestCase
             ->will($this->returnSelf());
 
         $this->controller->createAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function returnsDslWhileUpdating()
+    {
+        $this->assertDsl($this->controller->updateAction());
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function usesUpdateFormFromServiceWhileUpdating()
+    {
+        $this->setRouteMatchParams(array('id' => 64));
+
+        $form = $this->getMockForAbstractClass('Zend\Form\FormInterface');
+
+        $this->service->expects($this->once())
+                      ->method('getUpdateForm')
+                      ->with(64)
+                      ->will($this->returnValue($form));
+
+        $this->expectsDslToUseForm($form);
+        $this->controller->updateAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function canConfigureTheRouteMatchParameterForUpdating()
+    {
+        $this->setRouteMatchParams(array('id' => 64, 'foo' => 13));
+
+        $this->service->expects($this->once())
+                      ->method('getUpdateForm')
+                      ->with(13);
+
+        $this->controller->setRouteMatchIdentifier('foo');
+        $this->controller->updateAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function validesFormAgainstPostRedirectGetWhileUpdating()
+    {
+        $this->expectsDslToValidateFormAgainstPostRedirectGet();
+        $this->controller->updateAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function storesDataOnSuccessIntoServiceWithIdWhileUpdating()
+    {
+        $this->setRouteMatchParams(array('id' => 87));
+
+        $dsl = $this->getDslMockBuilder()
+                    ->withMockedPhrases(array('onSuccess'))
+                    ->getMock();
+
+        $successDsl = $this->expectsDslToStoreDataIntoMethod('update', 87);
+
+        $dsl->expects($this->once())
+            ->method('onSuccess')
+            ->with($successDsl)
+            ->will($this->returnSelf());
+
+        $this->controller->updateAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function redirectsAfterUpdating()
+    {
+        $dsl = $this->getDslMockBuilder()
+                    ->withMockedPhrases(array('onSuccess'))
+                    ->getMock();
+
+        $successDsl = $this->expectsDsl()
+                           ->toRedirectToRoute('home', array($this->controller, 'getUpdatingRedirectData'));
+
+        $dsl->expects($this->once())
+            ->method('onSuccess')
+            ->with($successDsl)
+            ->will($this->returnSelf());
+
+        $this->controller->updateAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function canConfigureTheRedirectTargetAfterUpdating()
+    {
+        $dsl = $this->getDslMockBuilder()
+                    ->withMockedPhrases(array('onSuccess'))
+                    ->getMock();
+
+        $successDsl = $this->expectsDsl()
+                           ->toRedirectToRoute('crud/read');
+
+        $dsl->expects($this->once())
+            ->method('onSuccess')
+            ->with($successDsl)
+            ->will($this->returnSelf());
+
+        $this->controller->setRedirectRouteForSuccessfulUpdating('crud/read');
+        $this->controller->updateAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     * @testdox adds a callback as success message after updating
+     */
+    public function addsCallbackAsSuccessMessageAfterUpdating()
+    {
+        $dsl = $this->getDslMockBuilder()
+                    ->withMockedPhrases(array('onSuccess'))
+                    ->getMock();
+
+        $successDsl = $this->expectsDsl()
+                           ->toAddFlashMessage(array($this->controller, 'getUpdatingMessage'), 'success');
+
+        $dsl->expects($this->once())
+            ->method('onSuccess')
+            ->with($successDsl)
+            ->will($this->returnSelf());
+
+        $this->controller->updateAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function assignsTheFormMessagesWhenAnAjaxRequestIsDetectedWhileUpdating()
+    {
+        $dsl = $this->getDslMockBuilder()
+                    ->withMockedPhrases(array('onAjaxRequest'))
+                    ->getMock();
+
+        $ajaxDsl = $this->getDslMockBuilder()
+                        ->usedAt(2)
+                        ->withMockedPhrases(array('assign', 'formMessages'))
+                        ->getMock();
+        $ajaxDsl->expects($this->once())
+                ->method('assign')
+                ->will($this->returnSelf());
+        $ajaxDsl->expects($this->once())
+                ->method('formMessages')
+                ->will($this->returnSelf());
+
+        $dsl->expects($this->once())
+            ->method('onAjaxRequest')
+            ->with($ajaxDsl)
+            ->will($this->returnSelf());
+
+        $this->controller->updateAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function returnsJsonWhenAnAjaxRequestIsDetectedWhileUpdating()
+    {
+        $dsl = $this->getDslMockBuilder()
+                    ->withMockedPhrases(array('onAjaxRequest'))
+                    ->getMock();
+
+        $ajaxDsl = $this->getDslMockBuilder()
+                        ->usedAt(2)
+                        ->withMockedPhrases(array('asJson'))
+                        ->getMock();
+        $ajaxDsl->expects($this->once())
+                ->method('asJson')
+                ->will($this->returnSelf());
+
+        $dsl->expects($this->once())
+            ->method('onAjaxRequest')
+            ->with($ajaxDsl)
+            ->will($this->returnSelf());
+
+        $this->controller->updateAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function returnsDslWhenNoDataHasBeenFoundWhileUpdating()
+    {
+        $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
+        $this->service->expects($this->any())
+                      ->method('getUpdateForm')
+                      ->will($this->throwException($exception));
+        $this->assertDsl($this->controller->updateAction());
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function redirectsWhenNoDataHasBeenFoundWhileUpdating()
+    {
+        $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
+        $this->service->expects($this->any())
+                      ->method('getUpdateForm')
+                      ->will($this->throwException($exception));
+
+        $this->expectsDsl()->toRedirectToRoute();
+
+        $this->controller->updateAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function canConfigurateRouteForRedirectionWhenNoDataHasBeenFoundWhileUpdating()
+    {
+        $route     = 'foo/bar';
+        $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
+        $this->controller->setRedirectRouteForNotFoundDataOnUpdating($route);
+        $this->service->expects($this->any())
+                      ->method('getUpdateForm')
+                      ->will($this->throwException($exception));
+
+        $this->expectsDsl()->toRedirectToRoute($route);
+
+        $this->controller->updateAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function addsNoErrorMessageUntilItIsConfiguratedWhenNoDataHasBeenFoundWhileUpdating()
+    {
+        $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
+        $this->service->expects($this->any())
+                      ->method('getUpdateForm')
+                      ->will($this->throwException($exception));
+
+        $this->expectsDsl()->toDoNotAddFlashMessages();
+
+        $this->controller->updateAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     * @testdox can configurate a error message when no data has been found while updating
+     */
+    public function canConfigurateErrorMessageWhenNoDataHasBeenFoundWhileUpdating()
+    {
+        $message   = 'could not found any data';
+        $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
+        $this->controller->setErrorMessageForNotFoundDataOnUpdating($message);
+        $this->service->expects($this->any())
+                      ->method('getUpdateForm')
+                      ->will($this->throwException($exception));
+
+        $this->expectsDsl()->toAddFlashMessage($message, 'error');
+
+        $this->controller->updateAction();
+    }
+
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function returnsDslWhileDeleting()
+    {
+        $this->assertDsl($this->controller->deleteAction());
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function returnsDslWhenNoDataHasBeenFoundWhileDeleting()
+    {
+        $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
+        $this->service->expects($this->any())
+                      ->method('delete')
+                      ->will($this->throwException($exception));
+        $this->assertDsl($this->controller->deleteAction());
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     * @testdox uses the id from the router to delete when deleting
+     */
+    public function usesIdFromRouteToDelete()
+    {
+        $this->setRouteMatchParams(array('id' => 42));
+
+        $this->service->expects($this->once())
+                      ->method('delete')
+                      ->with(42);
+
+        $this->controller->deleteAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function canConfigureTheRouteMatchParameterForDeleting()
+    {
+        $this->setRouteMatchParams(array('id' => 42, 'foo' => 58));
+
+        $this->service->expects($this->once())
+                      ->method('delete')
+                      ->with(58);
+
+        $this->controller->setRouteMatchIdentifier('foo');
+        $this->controller->deleteAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function redirectsWhenNoDataHasBeenFoundWhileDeleting()
+    {
+        $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
+        $this->service->expects($this->any())
+                      ->method('delete')
+                      ->will($this->throwException($exception));
+
+        $this->expectsDsl()->toRedirectToRoute();
+
+        $this->controller->deleteAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function canConfigurateRouteForRedirectionWhenNoDataHasBeenFoundWhileDeleting()
+    {
+        $route     = 'foo/bar';
+        $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
+        $this->controller->setRedirectRouteForNotFoundDataOnDeletion($route);
+        $this->service->expects($this->any())
+                      ->method('delete')
+                      ->will($this->throwException($exception));
+
+        $this->expectsDsl()->toRedirectToRoute($route);
+
+        $this->controller->deleteAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function addsNoErrorMessageUntilItIsConfiguratedWhenNoDataHasBeenFoundWhileDeleting()
+    {
+        $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
+        $this->service->expects($this->any())
+                      ->method('delete')
+                      ->will($this->throwException($exception));
+
+        $this->expectsDsl()->toDoNotAddFlashMessages();
+
+        $this->controller->deleteAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function canConfigurateAnErrorMessageWhenNoDataHasBeenFoundWhileDeleting()
+    {
+        $message   = 'could not found any data';
+        $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
+        $this->controller->setErrorMessageForNotFoundDataOnDeletion($message);
+        $this->service->expects($this->any())
+                      ->method('delete')
+                      ->will($this->throwException($exception));
+
+        $this->expectsDsl()->toAddFlashMessage($message, 'error');
+
+        $this->controller->deleteAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function redirectsWhenDeletionHasBeenSuccessful()
+    {
+        $this->expectsDsl()->toRedirectToRoute();
+
+        $this->controller->deleteAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function canConfigurateRouteForRedirectionWhenDeletionHasBeenSuccessful()
+    {
+        $route = 'foo/bar';
+
+        $this->expectsDsl()->toRedirectToRoute($route);
+
+        $this->controller->setRedirectRouteForSuccessfulDeletion($route);
+        $this->controller->deleteAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function addsNoSuccessMessageUntilItIsConfiguratedWhenDeletionHasBeenSuccessful()
+    {
+        $this->expectsDsl()->toDoNotAddFlashMessages();
+
+        $this->controller->deleteAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function canConfigurateAnSuccessMessageWhenDeletionHasBeenSuccessful()
+    {
+        $message = 'could not found any data';
+
+        $this->expectsDsl()->toAddFlashMessage($message, 'success');
+
+        $this->controller->setSuccessMessageForDeletion($message);
+        $this->controller->deleteAction();
     }
 }
