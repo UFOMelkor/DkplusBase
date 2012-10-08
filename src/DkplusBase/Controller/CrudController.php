@@ -24,35 +24,53 @@ class CrudController extends AbstractActionController
     /** @var Service */
     protected $service;
 
-    /** @var string */
-    protected $errorMessageForNotFoundDataWhileReading;
+    /**
+     * Message that is shown when no item has been found.
+     * @var string
+     */
+    protected $read404Message;
+
+    /**
+     * Redirect to this route when no item has been found.
+     * @var string
+     */
+    protected $read404Route = 'home';
+
+    /**
+     * Message that is shown when no item has been found.
+     * @var string
+     */
+    protected $update404Message;
+
+    /**
+     * Redirect to this route when no item has been found.
+     * @var string
+     */
+    protected $update404Route = 'home';
 
     /** @var string */
-    protected $redirectRouteForNotFoundDataWhileReading = 'home';
+    protected $updateSuccessRoute;
 
     /** @var string */
-    protected $errorMessageForNotFoundDataWhileUpdating;
+    protected $createSuccessRoute = 'home';
+
+    /**
+     * Message that is shown when no item has been found.
+     * @var string
+     */
+    protected $delete404Message;
+
+    /**
+     * Redirect to this route when no item has been found.
+     * @var string
+     */
+    protected $delete404Route = 'home';
 
     /** @var string */
-    protected $redirectRouteForNotFoundDataWhileUpdating = 'home';
+    protected $deleteSuccessMessage;
 
     /** @var string */
-    protected $redirectRouteForSuccesfulUpdating;
-
-    /** @var string */
-    protected $redirectRouteForSuccesfulCreating = 'home';
-
-    /** @var string */
-    protected $errorMessageForNotFoundDataWhileDeleting;
-
-    /** @var string */
-    protected $redirectRouteForNotFoundDataWhileDeleting = 'home';
-
-    /** @var string */
-    protected $successMessageForSuccessfulDeletion;
-
-    /** @var string */
-    protected $redirectRouteForSuccessfulDeletion = 'home';
+    protected $deleteSuccessRoute = 'home';
 
     /** @var string */
     protected $routeMatchIdentifier = 'id';
@@ -81,7 +99,7 @@ class CrudController extends AbstractActionController
                         $this->dsl()->store()->formData()->into(array($this->service, 'create'))
                                     ->and()->redirect()
                                            ->to()->route(
-                                               $this->redirectRouteForSuccesfulCreating,
+                                               $this->createSuccessRoute,
                                                array($this, 'getCreationRedirectData')
                                            )
                                            ->with()->success()->message(array($this, 'getCreationMessage'))
@@ -92,7 +110,7 @@ class CrudController extends AbstractActionController
 
     public function setRedirectRouteForSuccessfulCreating($route)
     {
-        $this->redirectRouteForSuccesfulCreating = $route;
+        $this->createSuccessRoute = $route;
     }
 
     public function getCreationRedirectData(Container $container)
@@ -113,10 +131,10 @@ class CrudController extends AbstractActionController
             $data = $this->service->get($identifier);
 
         } catch (EntityNotFoundException $e) {
-            $dsl = $this->dsl()->redirect()->to()->route($this->redirectRouteForNotFoundDataWhileReading);
+            $dsl = $this->dsl()->redirect()->to()->route($this->read404Route);
 
-            if ($this->errorMessageForNotFoundDataWhileReading) {
-                $dsl->with()->error()->message($this->errorMessageForNotFoundDataWhileReading);
+            if ($this->read404Message) {
+                $dsl->with()->error()->message($this->read404Message);
             }
             return $dsl;
         }
@@ -126,29 +144,29 @@ class CrudController extends AbstractActionController
 
     public function setRedirectRouteForNotFoundDataOnReading($route)
     {
-        $this->redirectRouteForNotFoundDataWhileReading = $route;
+        $this->read404Route = $route;
     }
 
     public function setErrorMessageForNotFoundDataOnReading($message)
     {
-        $this->errorMessageForNotFoundDataWhileReading = $message;
+        $this->read404Message = $message;
     }
 
     public function updateAction()
     {
         $identifier = $this->getEvent()->getRouteMatch()->getParam($this->routeMatchIdentifier);
-        $route      = $this->redirectRouteForSuccesfulUpdating === null
+        $route      = $this->updateSuccessRoute === null
                     ? $this->getEvent()->getRouteMatch()->getMatchedRouteName()
-                    : $this->redirectRouteForSuccesfulUpdating;
+                    : $this->updateSuccessRoute;
 
         try {
             $form = $this->service->getUpdateForm($identifier);
 
         } catch (EntityNotFoundException $e) {
-            $dsl = $this->dsl()->redirect()->to()->route($this->redirectRouteForNotFoundDataWhileUpdating);
+            $dsl = $this->dsl()->redirect()->to()->route($this->update404Route);
 
-            if ($this->errorMessageForNotFoundDataWhileUpdating) {
-                $dsl->with()->error()->message($this->errorMessageForNotFoundDataWhileUpdating);
+            if ($this->update404Message) {
+                $dsl->with()->error()->message($this->update404Message);
             }
             return $dsl;
         }
@@ -170,7 +188,7 @@ class CrudController extends AbstractActionController
 
     public function setRedirectRouteForSuccessfulUpdating($route)
     {
-        $this->redirectRouteForSuccesfulUpdating = $route;
+        $this->updateSuccessRoute = $route;
     }
 
     public function getUpdatingRedirectData(Container $container)
@@ -185,12 +203,12 @@ class CrudController extends AbstractActionController
 
     public function setRedirectRouteForNotFoundDataOnUpdating($route)
     {
-        $this->redirectRouteForNotFoundDataWhileUpdating = $route;
+        $this->update404Route = $route;
     }
 
     public function setErrorMessageForNotFoundDataOnUpdating($message)
     {
-        $this->errorMessageForNotFoundDataWhileUpdating = $message;
+        $this->update404Message = $message;
     }
 
     public function deleteAction()
@@ -201,39 +219,39 @@ class CrudController extends AbstractActionController
             $this->service->delete($identifier);
 
         } catch (EntityNotFoundException $e) {
-            $dsl = $this->dsl()->redirect()->to()->route($this->redirectRouteForNotFoundDataWhileDeleting);
+            $dsl = $this->dsl()->redirect()->to()->route($this->delete404Route);
 
-            if ($this->errorMessageForNotFoundDataWhileDeleting) {
-                $dsl->with()->error()->message($this->errorMessageForNotFoundDataWhileDeleting);
+            if ($this->delete404Message) {
+                $dsl->with()->error()->message($this->delete404Message);
             }
             return $dsl;
         }
 
-        $dsl = $this->dsl()->redirect()->to()->route($this->redirectRouteForSuccessfulDeletion);
-        if ($this->successMessageForSuccessfulDeletion) {
-            $dsl->with()->success()->message($this->successMessageForSuccessfulDeletion);
+        $dsl = $this->dsl()->redirect()->to()->route($this->deleteSuccessRoute);
+        if ($this->deleteSuccessMessage) {
+            $dsl->with()->success()->message($this->deleteSuccessMessage);
         }
         return $dsl;
     }
 
     public function setRedirectRouteForNotFoundDataOnDeletion($route)
     {
-        $this->redirectRouteForNotFoundDataWhileDeleting = $route;
+        $this->delete404Route = $route;
     }
 
     public function setErrorMessageForNotFoundDataOnDeletion($message)
     {
-        $this->errorMessageForNotFoundDataWhileDeleting = $message;
+        $this->delete404Message = $message;
     }
 
     public function setRedirectRouteForSuccessfulDeletion($route)
     {
-        $this->redirectRouteForSuccessfulDeletion = $route;
+        $this->deleteSuccessRoute = $route;
     }
 
     public function setSuccessMessageForDeletion($message)
     {
-        $this->successMessageForSuccessfulDeletion = $message;
+        $this->deleteSuccessMessage = $message;
     }
 
     public function paginateAction()
