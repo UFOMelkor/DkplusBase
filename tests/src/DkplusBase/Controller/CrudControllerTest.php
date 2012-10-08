@@ -116,7 +116,7 @@ class CrudControllerTest extends TestCase
                       ->method('get')
                       ->will($this->returnValue($data));
 
-        $this->expectsDsl()->toAssign($data, 'data');
+        $this->expectsDsl()->toAssign($data, 'item');
 
         $this->controller->readAction();
     }
@@ -921,5 +921,141 @@ class CrudControllerTest extends TestCase
 
         $this->controller->setSuccessMessageForDeletion($message);
         $this->controller->deleteAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function assignsDataFromServiceWhilePaginating()
+    {
+        $this->setPostData(array());
+        $paginator = $this->getMockIgnoringConstructor('Zend\Paginator\Paginator');
+
+        $this->service->expects($this->once())
+                      ->method('getPaginator')
+                      ->will($this->returnValue($paginator));
+        $this->expectsDsl()->toAssign($paginator, 'paginator');
+
+        $this->controller->paginateAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function getsPageNumberFromRouteMatchWhilePaginating()
+    {
+        $this->setPostData(array());
+        $this->setRouteMatchParams(array('page' => 5));
+
+        $this->service->expects($this->once())
+                      ->method('getPaginator')
+                      ->with(5);
+
+        $this->controller->paginateAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function canConfigurateTheRouteMatchParameterWhilePaginating()
+    {
+        $this->setPostData(array());
+        $this->setRouteMatchParams(array('page' => 5, 'p' => 10));
+
+        $this->service->expects($this->once())
+                      ->method('getPaginator')
+                      ->with(10);
+
+        $this->controller->setPageParameter('p');
+        $this->controller->paginateAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function hasAnDefaultNumberOfEntriesPerPageOf10()
+    {
+        $this->setPostData(array());
+        $this->service->expects($this->once())
+                      ->method('getPaginator')
+                      ->with($this->anything(), 10);
+
+        $this->controller->paginateAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function canConfigurateTheNumberOfEntriesPerPageWhilePaginating()
+    {
+        $this->setPostData(array());
+        $this->service->expects($this->once())
+                      ->method('getPaginator')
+                      ->with($this->anything(), 20);
+
+        $this->controller->setItemCountPerPage(20);
+        $this->controller->paginateAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function usesPostAsDefaultSearchDataForPaginating()
+    {
+        $post = array('foo' => 'bar', 'baz' => 'foo');
+        $this->setPostData($post);
+
+        $this->service->expects($this->once())
+                      ->method('getPaginator')
+                      ->with($this->anything(), $this->anything(), $post);
+
+        $this->controller->paginateAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function assignsDataFromServiceWhileListing()
+    {
+        $this->setPostData(array());
+        $data = array(array('id' => 4, 'name' => 'foo'), array('id' => 5, 'name' => 'bar'));
+
+        $this->service->expects($this->once())
+                      ->method('getAll')
+                      ->will($this->returnValue($data));
+        $this->expectsDsl()->toAssign($data, 'items');
+
+        $this->controller->listAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function usesPostAsDefaultSearchDataForListing()
+    {
+        $post = array('foo' => 'bar', 'baz' => 'foo');
+        $this->setPostData($post);
+
+        $this->service->expects($this->once())
+                      ->method('getAll')
+                      ->with($post);
+
+        $this->controller->listAction();
     }
 }

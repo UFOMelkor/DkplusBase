@@ -57,6 +57,12 @@ class CrudController extends AbstractActionController
     /** @var string */
     protected $routeMatchIdentifier = 'id';
 
+    /** @var string */
+    protected $routeMatchPage = 'page';
+
+    /** @var int */
+    protected $itemCountPerPage = 10;
+
     public function __construct(Service $service)
     {
         $this->service = $service;
@@ -115,7 +121,7 @@ class CrudController extends AbstractActionController
             return $dsl;
         }
 
-        return $this->dsl()->assign($data)->as('data');
+        return $this->dsl()->assign($data)->as('item');
     }
 
     public function setRedirectRouteForNotFoundDataOnReading($route)
@@ -229,11 +235,39 @@ class CrudController extends AbstractActionController
 
     public function paginateAction()
     {
+        $pageNumber       = $this->getEvent()->getRouteMatch()->getParam($this->routeMatchPage, 1);
+        $itemCountPerPage = $this->itemCountPerPage;
+        $searchData       = $this->getPaginationSearchData();
+        return $this->dsl()->assign($this->service->getPaginator($pageNumber, $itemCountPerPage, $searchData))
+                           ->as('paginator');
+    }
 
+    /** @return array */
+    protected function getPaginationSearchData()
+    {
+        return $this->getRequest()->getPost();
+    }
+
+    public function setPageParameter($page)
+    {
+        $this->routeMatchPage = $page;
+    }
+
+    public function setItemCountPerPage($itemCount)
+    {
+        $this->itemCountPerPage = $itemCount;
     }
 
     public function listAction()
     {
+        return $this->dsl()->assign($this->service->getAll($this->getListingSearchData()))
+                           ->as('items');
+    }
 
+
+    /** @return array */
+    protected function getListingSearchData()
+    {
+        return $this->getRequest()->getPost();
     }
 }

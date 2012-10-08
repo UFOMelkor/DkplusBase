@@ -22,7 +22,7 @@ interface CrudServiceInterface
 
     public function getCreationForm();
 
-    public function getAll();
+    public function getAll(array $searchData = array());
 
     public function update($data, $identifier);
 
