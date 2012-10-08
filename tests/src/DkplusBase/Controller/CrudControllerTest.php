@@ -533,12 +533,14 @@ class CrudControllerTest extends TestCase
      */
     public function redirectsAfterUpdating()
     {
+        $this->setMatchedRouteName('foo/bar/baz');
+
         $dsl = $this->getDslMockBuilder()
                     ->withMockedPhrases(array('onSuccess'))
                     ->getMock();
 
         $successDsl = $this->expectsDsl()
-                           ->toRedirectToRoute('home', array($this->controller, 'getUpdatingRedirectData'));
+                           ->toRedirectToRoute('foo/bar/baz', array($this->controller, 'getUpdatingRedirectData'));
 
         $dsl->expects($this->once())
             ->method('onSuccess')
@@ -1057,5 +1059,54 @@ class CrudControllerTest extends TestCase
                       ->with($post);
 
         $this->controller->listAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function hasNoCreationRedirectData()
+    {
+        $container = $this->getMockForAbstractClass('DkplusControllerDsl\Dsl\ContainerInterface');
+        $this->assertSame(array(), $this->controller->getCreationRedirectData($container));
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     * @testdox has a simple creation message
+     */
+    public function hasSimpleCreationMessage()
+    {
+        $container = $this->getMockForAbstractClass('DkplusControllerDsl\Dsl\ContainerInterface');
+        $this->assertSame('Item has been created.', $this->controller->getCreationMessage($container));
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     */
+    public function hasRouteMatchParamsAsUpdateRedirectData()
+    {
+        $container        = $this->getMockForAbstractClass('DkplusControllerDsl\Dsl\ContainerInterface');
+        $routeMatchParams = array('foo' => 'bar', 'bar' => 'baz');
+
+        $this->setRouteMatchParams($routeMatchParams);
+        $this->assertSame($routeMatchParams, $this->controller->getUpdatingRedirectData($container));
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group Module/DkplusBase
+     * @testdox has a simple update message
+     */
+    public function hasSimpleUpdateMessage()
+    {
+        $container = $this->getMockForAbstractClass('DkplusControllerDsl\Dsl\ContainerInterface');
+        $this->assertSame('Item has been updated.', $this->controller->getUpdatingMessage($container));
     }
 }

@@ -37,7 +37,7 @@ class CrudController extends AbstractActionController
     protected $redirectRouteForNotFoundDataWhileUpdating = 'home';
 
     /** @var string */
-    protected $redirectRouteForSuccesfulUpdating = 'home';
+    protected $redirectRouteForSuccesfulUpdating;
 
     /** @var string */
     protected $redirectRouteForSuccesfulCreating = 'home';
@@ -97,12 +97,12 @@ class CrudController extends AbstractActionController
 
     public function getCreationRedirectData(Container $container)
     {
-
+        return array();
     }
 
     public function getCreationMessage(Container $container)
     {
-
+        return 'Item has been created.';
     }
 
     public function readAction()
@@ -137,6 +137,9 @@ class CrudController extends AbstractActionController
     public function updateAction()
     {
         $identifier = $this->getEvent()->getRouteMatch()->getParam($this->routeMatchIdentifier);
+        $route      = $this->redirectRouteForSuccesfulUpdating === null
+                    ? $this->getEvent()->getRouteMatch()->getMatchedRouteName()
+                    : $this->redirectRouteForSuccesfulUpdating;
 
         try {
             $form = $this->service->getUpdateForm($identifier);
@@ -156,7 +159,7 @@ class CrudController extends AbstractActionController
                         $this->dsl()->store()->formData()->into(array($this->service, 'update'))->with($identifier)
                                     ->and()->redirect()
                                            ->to()->route(
-                                               $this->redirectRouteForSuccesfulUpdating,
+                                               $route,
                                                array($this, 'getUpdatingRedirectData')
                                            )
                                            ->with()->success()->message(array($this, 'getUpdatingMessage'))
@@ -172,12 +175,12 @@ class CrudController extends AbstractActionController
 
     public function getUpdatingRedirectData(Container $container)
     {
-
+        return $this->getEvent()->getRouteMatch()->getParams();
     }
 
     public function getUpdatingMessage(Container $container)
     {
-
+        return 'Item has been updated.';
     }
 
     public function setRedirectRouteForNotFoundDataOnUpdating($route)
