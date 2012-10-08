@@ -8,7 +8,7 @@
 
 namespace DkplusBase\Controller;
 
-use DkplusBase\Service\CrudServiceInterface as Service;
+use DkplusBase\Service\Crud\ServiceInterface as Service;
 use DkplusBase\Service\Exception\EntityNotFound as EntityNotFoundException;
 use DkplusControllerDsl\Controller\AbstractActionController;
 use DkplusControllerDsl\Dsl\ContainerInterface as Container;
@@ -284,7 +284,6 @@ class CrudController extends AbstractActionController
         return $this->dsl()->assign($this->service->getAll($this->getListingSearchData()))
                            ->as('items');
     }
-
 
     /** @return array */
     protected function getListingSearchData()

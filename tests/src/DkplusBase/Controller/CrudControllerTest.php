@@ -21,14 +21,14 @@ class CrudControllerTest extends TestCase
     /** @var CrudController */
     protected $controller;
 
-    /** @var \DkplusBase\Service\CrudServiceInterface|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \DkplusBase\Service\Crud\ServiceInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $service;
 
     protected function setUp()
     {
         parent::setUp();
 
-        $this->service    = $this->getMockForAbstractClass('DkplusBase\Service\CrudServiceInterface');
+        $this->service    = $this->getMockForAbstractClass('DkplusBase\Service\Crud\ServiceInterface');
         $this->controller = new CrudController($this->service);
         $this->setUpController($this->controller);
     }
