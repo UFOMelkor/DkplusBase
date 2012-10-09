@@ -8,9 +8,14 @@
     "homepage": "https://github.com/UFOMelkor/DkplusBase",
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zendframework": "dev-master",
+        "zendframework/zendframework": "2.*@stable",
         "dkplus/unit-test": "dev-master",
-        "dkplus/controller-dsl": "dev-master"
+        "dkplus/controller-dsl": "dev-master",
+        "doctrine/orm": "2.*@stable",
+        "doctrine/migrations": "dev-master",
+        "doctrine/data-fixtures": "dev-master",
+        "doctrine/doctrine-module": "dev-master",
+        "doctrine/doctrine-orm-module": "dev-master"
     },
     "autoload": {
         "psr-0": {
