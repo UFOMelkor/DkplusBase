@@ -15,7 +15,7 @@ use DkplusUnitTest\TestCase;
  * @package    Base
  * @subpackage Service\Crud
  * @author     Oskar Bley <oskar@programming-php.net>
- * @covers     DkplusBase\Service\Crud\BindFormStrategy
+ * @covers     DkplusBase\Service\Crud\FactoryFormStrategy
  */
 class FactoryFormStrategyTest extends TestCase
 {
