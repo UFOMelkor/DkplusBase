@@ -3,6 +3,7 @@
 return array(
     'DkplusBase\Controller\CrudController'          => __DIR__ . '/src/DkplusBase/Controller/CrudController.php',
     'DkplusBase\Module'                             => __DIR__ . '/src/DkplusBase/Module.php',
+    'DkplusBase\Service\Crud\BindFormStrategy'      => __DIR__ . '/src/DkplusBase/Service/Crud/BindFormStrategy.php',
     'DkplusBase\Service\Crud\FormStrategyInterface' => __DIR__ . '/src/DkplusBase/Service/Crud/FormStrategyInterface.php',
     'DkplusBase\Service\Crud\MapperInterface'       => __DIR__ . '/src/DkplusBase/Service/Crud/MapperInterface.php',
     'DkplusBase\Service\Crud\Service'               => __DIR__ . '/src/DkplusBase/Service/Crud/Service.php',
