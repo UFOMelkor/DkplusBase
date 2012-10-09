@@ -224,6 +224,47 @@ class DoctrineMapperTest extends TestCase
      * @group Module/DkplusBase
      * @group Component/Service/Crud
      */
+    public function searchesForEntitiesThatHaveIntValuesThatAreEqualToTheTheSearchParamsWhenFinding()
+    {
+        $query = $this->getMock('stdClass', array('execute'));
+
+        $yearExpression = $this->getMockIgnoringConstructor('Doctrine\ORM\Query\Expr\Comparison');
+        $andExpression  = $this->getMockIgnoringConstructor('Doctrine\ORM\Query\Expr\Andx');
+
+        $expressionBuilder = $this->getMockIgnoringConstructor('Doctrine\ORM\Query\Expr');
+        $expressionBuilder->expects($this->at(0))
+                          ->method('eq')
+                          ->with('e.year', '1925')
+                          ->will($this->returnValue($yearExpression));
+        $expressionBuilder->expects($this->at(1))
+                          ->method('andX')
+                          ->with(array($yearExpression))
+                          ->will($this->returnValue($andExpression));
+
+        $queryBuilder = $this->getMockIgnoringConstructor('Doctrine\ORM\QueryBuilder');
+
+        $queryBuilder->expects($this->any())
+                     ->method('expr')
+                     ->will($this->returnValue($expressionBuilder));
+        $queryBuilder->expects($this->once())
+                     ->method('where')
+                     ->with($andExpression);
+        $queryBuilder->expects($this->any())
+                     ->method('getQuery')
+                     ->will($this->returnValue($query));
+
+        $this->entityManager->expects($this->any())
+                            ->method('createQueryBuilder')
+                            ->will($this->returnValue($queryBuilder));
+
+        $this->mapper->findAll(array('year' => '1925'));
+    }
+
+    /**
+     * @test
+     * @group Module/DkplusBase
+     * @group Component/Service/Crud
+     */
     public function returnsTheExecutedQueryAsFoundResult()
     {
         $executionResult = array('firstEntity', 'secondEntity');

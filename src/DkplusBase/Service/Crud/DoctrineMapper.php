@@ -72,7 +72,9 @@ class DoctrineMapper implements MapperInterface
         $whereExpressions = array();
 
         foreach ($searchData as $property => $value) {
-            $whereExpressions[] = $queryBuilder->expr()->like('e.' . $property, "%$value%");
+            $whereExpressions[] = is_numeric($value)
+                                ? $queryBuilder->expr()->eq('e.' . $property, $value)
+                                : $queryBuilder->expr()->like('e.' . $property, "%$value%");
         }
 
         if (count($whereExpressions) > 0) {
