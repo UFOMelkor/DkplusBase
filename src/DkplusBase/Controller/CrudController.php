@@ -266,7 +266,7 @@ class CrudController extends AbstractActionController
     /** @return array */
     protected function getPaginationSearchData()
     {
-        return $this->getRequest()->getPost();
+        return $this->getRequest()->getPost()->toArray();
     }
 
     public function setPageParameter($page)
@@ -288,6 +288,6 @@ class CrudController extends AbstractActionController
     /** @return array */
     protected function getListingSearchData()
     {
-        return $this->getRequest()->getPost();
+        return $this->getRequest()->getPost()->toArray();
     }
 }
