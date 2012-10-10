@@ -903,9 +903,9 @@ class CrudControllerTest extends TestCase
      * @group Component/Controller
      * @group unit
      */
-    public function addsCallbackAsSuccessMessageWhenDeletionHasBeenSuccessful()
+    public function addsSuccessMessageWhenDeletionHasBeenSuccessful()
     {
-        $this->expectsDsl()->toAddFlashMessage(array($this->controller, 'getDeletionSuccessMessage'));
+        $this->expectsDsl()->toAddFlashMessage();
 
         $this->controller->deleteAction();
     }

@@ -213,6 +213,7 @@ class CrudController extends AbstractActionController
         $identifier = $this->getEvent()->getRouteMatch()->getParam($this->routeMatchIdentifier);
 
         try {
+            $item = $this->service->get($identifier);
             $this->service->delete($identifier);
 
         } catch (EntityNotFoundException $e) {
@@ -225,7 +226,7 @@ class CrudController extends AbstractActionController
         }
 
         return $this->dsl()->redirect()->to()->route($this->deleteSuccessRoute)
-                           ->with()->success()->message(array($this, 'getDeletionSuccessMessage'));
+                           ->with()->success()->message($this->getDeletionSuccessMessage($item));
     }
 
     public function setRedirectRouteForNotFoundDataOnDeletion($route)
@@ -238,7 +239,7 @@ class CrudController extends AbstractActionController
         $this->delete404Message = $message;
     }
 
-    public function getDeletionSuccessMessage(Container $container)
+    public function getDeletionSuccessMessage($item)
     {
         return 'An Item has been deleted.';
     }
