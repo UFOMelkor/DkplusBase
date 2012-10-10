@@ -20,7 +20,7 @@ class EntityNotFoundTest extends TestCase
 {
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Exception
      * @testdox is a runtime exception
      */
@@ -31,7 +31,7 @@ class EntityNotFoundTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Exception
      */
     public function providesAnMessageIncludingTheGivenIdentifier()

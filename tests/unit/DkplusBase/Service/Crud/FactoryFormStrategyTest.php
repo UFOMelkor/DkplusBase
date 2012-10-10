@@ -41,7 +41,7 @@ class FactoryFormStrategyTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      * @testdox is a form strategy
      */
@@ -52,7 +52,7 @@ class FactoryFormStrategyTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function returnsTheOvergivenFormAsCreationForm()
@@ -62,7 +62,7 @@ class FactoryFormStrategyTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function returnsTheOvergivenFormAsUpdateForm()
@@ -73,7 +73,7 @@ class FactoryFormStrategyTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function putsTheDataOfTheModelIntoTheUpdateForm()
@@ -95,7 +95,7 @@ class FactoryFormStrategyTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function createsNewItemsUsingTheHydrationFactory()
@@ -113,7 +113,7 @@ class FactoryFormStrategyTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function updatesItemsUsingTheHydrationFactory()
@@ -130,7 +130,7 @@ class FactoryFormStrategyTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function returnsTheUpdatedItem()

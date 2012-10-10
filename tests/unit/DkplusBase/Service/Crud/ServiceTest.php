@@ -38,7 +38,7 @@ class ServiceTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      * @testdox is a crud service
      */
@@ -49,7 +49,7 @@ class ServiceTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function letTheFormStrategyCreateTheItem()
@@ -65,7 +65,7 @@ class ServiceTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function storesTheCreatedItemIntoTheMapper()
@@ -85,7 +85,7 @@ class ServiceTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function returnsTheCreatedItem()
@@ -101,7 +101,7 @@ class ServiceTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function getsTheItemToUpdateFromTheMapper()
@@ -115,7 +115,7 @@ class ServiceTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function letTheFormStrategyUpdateTheItem()
@@ -136,7 +136,7 @@ class ServiceTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function storesTheUpdatedItemIntoTheMapper()
@@ -156,7 +156,7 @@ class ServiceTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function returnsTheUpdatedItem()
@@ -172,7 +172,7 @@ class ServiceTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function getsTheCreationFormFromFormStrategy()
@@ -188,7 +188,7 @@ class ServiceTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function findsItemsViaMapper()
@@ -205,7 +205,7 @@ class ServiceTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      * @expectedException DkplusBase\Service\Exception\EntityNotFound
      */
@@ -222,7 +222,7 @@ class ServiceTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function deletesItemsViaMapper()
@@ -236,7 +236,7 @@ class ServiceTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      * @expectedException DkplusBase\Service\Exception\EntityNotFound
      */
@@ -253,7 +253,7 @@ class ServiceTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function getsAllItemsViaMapper()
@@ -269,7 +269,7 @@ class ServiceTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function canUseSearchDataToGetAllItems()
@@ -285,7 +285,7 @@ class ServiceTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function getsTheItemForTheUpdateFormFromTheMapper()
@@ -299,7 +299,7 @@ class ServiceTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function getsTheUpdateFormFromTheFormStrategy()
@@ -320,7 +320,7 @@ class ServiceTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      * @expectedException DkplusBase\Service\Exception\EntityNotFound
      */
@@ -337,7 +337,7 @@ class ServiceTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      * @testdox gets a paginator with an adapter from the mapper
      */
@@ -355,7 +355,7 @@ class ServiceTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function canUseSearchDataToGetTheAdapterFromTheMapper()
@@ -373,7 +373,7 @@ class ServiceTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function assignsCurrentPageNumberToThePaginator()
@@ -390,7 +390,7 @@ class ServiceTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function assignsItemCountPerPageToThePaginator()

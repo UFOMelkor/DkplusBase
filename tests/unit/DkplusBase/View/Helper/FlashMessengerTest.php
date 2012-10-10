@@ -34,7 +34,7 @@ class FlashMessengerTest extends TestCase
     /**
      * @test
      * @group Component/ViewHelper
-     * @group Module/DkplusBase
+     * @group unit
      * @dataProvider hasMessagesProvider
      */
     public function canDetectWhetherMessagesDoesExistOrDoesNot($hasMessages)
@@ -53,7 +53,7 @@ class FlashMessengerTest extends TestCase
     /**
      * @test
      * @group Component/ViewHelper
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function usesDefaultAsNamespaceWhenNoOtherNamespaceIsGiven()
     {
@@ -66,7 +66,7 @@ class FlashMessengerTest extends TestCase
     /**
      * @test
      * @group Component/ViewHelper
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function canUseCustomNamespaces()
     {
@@ -79,7 +79,7 @@ class FlashMessengerTest extends TestCase
     /**
      * @test
      * @group Component/ViewHelper
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function canRetrieveMessages()
     {

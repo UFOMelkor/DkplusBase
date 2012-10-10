@@ -42,7 +42,7 @@ class ChainTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Authentication
      */
     public function isAnAuthenticationStorage()
@@ -52,7 +52,7 @@ class ChainTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Authentication
      */
     public function isNotEmptyIfAtLeastOneStorageIsNotEmpty()
@@ -70,7 +70,7 @@ class ChainTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Authentication
      */
     public function isEmptyIfAllStoragesAreEmpty()
@@ -88,7 +88,7 @@ class ChainTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Authentication
      */
     public function readsDataFromTheFirstNotEmptyStorage()
@@ -111,7 +111,7 @@ class ChainTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Authentication
      */
     public function readsNullWhenAllStoragesAreEmpty()
@@ -129,7 +129,7 @@ class ChainTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Authentication
      */
     public function writesDataToAllStorages()
@@ -149,7 +149,7 @@ class ChainTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Authentication
      */
     public function clearsAllStorages()

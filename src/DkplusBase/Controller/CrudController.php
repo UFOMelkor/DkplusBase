@@ -67,9 +67,6 @@ class CrudController extends AbstractActionController
     protected $delete404Route = 'home';
 
     /** @var string */
-    protected $deleteSuccessMessage;
-
-    /** @var string */
     protected $deleteSuccessRoute = 'home';
 
     /** @var string */
@@ -227,11 +224,8 @@ class CrudController extends AbstractActionController
             return $dsl;
         }
 
-        $dsl = $this->dsl()->redirect()->to()->route($this->deleteSuccessRoute);
-        if ($this->deleteSuccessMessage) {
-            $dsl->with()->success()->message($this->deleteSuccessMessage);
-        }
-        return $dsl;
+        return $this->dsl()->redirect()->to()->route($this->deleteSuccessRoute)
+                           ->with()->success()->message(array($this, 'getDeletionSuccessMessage'));
     }
 
     public function setRedirectRouteForNotFoundDataOnDeletion($route)
@@ -244,14 +238,14 @@ class CrudController extends AbstractActionController
         $this->delete404Message = $message;
     }
 
+    public function getDeletionSuccessMessage(Container $container)
+    {
+        return 'An Item has been deleted.';
+    }
+
     public function setRedirectRouteForSuccessfulDeletion($route)
     {
         $this->deleteSuccessRoute = $route;
-    }
-
-    public function setSuccessMessageForDeletion($message)
-    {
-        $this->deleteSuccessMessage = $message;
     }
 
     public function paginateAction()

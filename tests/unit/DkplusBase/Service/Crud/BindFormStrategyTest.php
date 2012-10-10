@@ -35,7 +35,7 @@ class BindFormStrategyTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      * @testdox is a form strategy
      */
@@ -46,7 +46,7 @@ class BindFormStrategyTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function returnsTheOvergivenFormAsCreationForm()
@@ -56,7 +56,7 @@ class BindFormStrategyTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function bindsAnInstanceOfTheModelToTheCreationForm()
@@ -69,7 +69,7 @@ class BindFormStrategyTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function returnsTheOvergivenFormAsUpdateForm()
@@ -80,7 +80,7 @@ class BindFormStrategyTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function bindsTheGivenInstanceOfTheModelToTheUpdateForm()
@@ -95,7 +95,7 @@ class BindFormStrategyTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function doesNotNeedToCreateNewItemsBecauseTheyAreAlreadyCreated()
@@ -106,7 +106,7 @@ class BindFormStrategyTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function doesNotNeedToUpdateNewItemsBecauseTheyAreAlreadyUpdated()

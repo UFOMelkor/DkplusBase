@@ -29,7 +29,7 @@ class ModuleTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Module
      */
     public function implementsConfigProviderInterface()
@@ -39,7 +39,7 @@ class ModuleTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Module
      * @depends implementsConfigProviderInterface
      */
@@ -50,7 +50,7 @@ class ModuleTest extends TestCase
 
     /**
      * @test
-     * @group Module/Application
+     * @group unit
      * @group Component/Module
      */
     public function implementsServiceProviderInterface()
@@ -60,7 +60,7 @@ class ModuleTest extends TestCase
 
     /**
      * @test
-     * @group Module/Application
+     * @group unit
      * @group Component/Module
      * @depends implementsServiceProviderInterface
      */
@@ -71,7 +71,7 @@ class ModuleTest extends TestCase
 
     /**
      * @test
-     * @group Module/Application
+     * @group unit
      * @group Component/Module
      */
     public function implementsControllerPluginProviderInterface()
@@ -81,7 +81,7 @@ class ModuleTest extends TestCase
 
     /**
      * @test
-     * @group Module/Application
+     * @group unit
      * @group Component/Module
      * @depends implementsControllerPluginProviderInterface
      */
@@ -92,7 +92,7 @@ class ModuleTest extends TestCase
 
     /**
      * @test
-     * @group Module/Application
+     * @group unit
      * @group Component/Module
      */
     public function implementsViewHelperProviderInterface()
@@ -102,7 +102,7 @@ class ModuleTest extends TestCase
 
     /**
      * @test
-     * @group Module/Application
+     * @group unit
      * @group Component/Module
      * @depends implementsViewHelperProviderInterface
      */
@@ -113,7 +113,7 @@ class ModuleTest extends TestCase
 
     /**
      * @test
-     * @group Module/Application
+     * @group unit
      * @group Component/Module
      */
     public function implementsAutoloaderProviderInterface()
@@ -123,7 +123,7 @@ class ModuleTest extends TestCase
 
     /**
      * @test
-     * @group Module/Application
+     * @group unit
      * @group Component/Module
      * @depends implementsAutoloaderProviderInterface
      */

@@ -34,7 +34,7 @@ class DoctrineMapperTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      * @testdox is a crud mapper
      */
@@ -45,7 +45,7 @@ class DoctrineMapperTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function savesItemsByPuttingThemIntoTheEntityManager()
@@ -63,7 +63,7 @@ class DoctrineMapperTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function returnsTheSavedItem()
@@ -75,7 +75,7 @@ class DoctrineMapperTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function findsAnEntityUsingTheEntityManager()
@@ -92,7 +92,7 @@ class DoctrineMapperTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      * @expectedException DkplusBase\Service\Exception\EntityNotFound
      */
@@ -108,7 +108,7 @@ class DoctrineMapperTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function canDeleteEntities()
@@ -131,7 +131,7 @@ class DoctrineMapperTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      * @expectedException DkplusBase\Service\Exception\EntityNotFound
      */
@@ -147,7 +147,7 @@ class DoctrineMapperTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      * @testdox creates a query builder to find entities
      */
@@ -175,7 +175,7 @@ class DoctrineMapperTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function searchesForEntitiesThatHaveValuesLikeTheSearchParamsWhenFinding()
@@ -221,7 +221,7 @@ class DoctrineMapperTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function searchesForEntitiesThatHaveIntValuesThatAreEqualToTheTheSearchParamsWhenFinding()
@@ -262,7 +262,7 @@ class DoctrineMapperTest extends TestCase
 
     /**
      * @test
-     * @group Module/DkplusBase
+     * @group unit
      * @group Component/Service/Crud
      */
     public function returnsTheExecutedQueryAsFoundResult()

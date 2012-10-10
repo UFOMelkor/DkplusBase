@@ -36,7 +36,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      * @testdox is a dsl controller
      */
     public function isDslController()
@@ -47,7 +47,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function returnsDslWhileReading()
     {
@@ -57,7 +57,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function returnsDslWhenNoDataHasBeenFoundWhileReading()
     {
@@ -71,7 +71,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      * @testdox uses the id from the router to get data from service when reading
      */
     public function usesIdFromRouteToGetDataFromServiceWhileReading()
@@ -88,7 +88,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function canConfigureTheRouteMatchParameterForReading()
     {
@@ -105,7 +105,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      * @testdox assigns the data from the service if the data are found while reading
      */
     public function assignsDataFromServiceIfDataAreFoundWhileReading()
@@ -124,7 +124,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function redirectsWhenNoDataHasBeenFoundWhileReading()
     {
@@ -141,7 +141,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function canConfigurateRouteForRedirectionWhenNoDataHasBeenFoundWhileReading()
     {
@@ -160,7 +160,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function addsNoErrorMessageUntilItIsConfiguratedWhenNoDataHasBeenFoundWhileReading()
     {
@@ -177,7 +177,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function canConfigurateAnErrorMessageWhenNoDataHasBeenFoundWhileReading()
     {
@@ -196,7 +196,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function returnsDslWhileCreating()
     {
@@ -206,7 +206,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function usesCreationFormFromServiceWhileCreating()
     {
@@ -237,7 +237,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function validesFormAgainstPostRedirectGetWhileCreating()
     {
@@ -262,7 +262,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function storesDataOnSuccessIntoServiceWhileCreating()
     {
@@ -323,7 +323,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function redirectsAfterCreating()
     {
@@ -345,7 +345,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function canConfigureTheRedirectTargetAfterCreating()
     {
@@ -368,7 +368,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      * @testdox adds a callback as success message after creation
      */
     public function addsCallbackAsSuccessMessageAfterCreation()
@@ -391,7 +391,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function assignsTheFormMessagesWhenAnAjaxRequestIsDetectedWhileCreating()
     {
@@ -421,7 +421,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function returnsJsonWhenAnAjaxRequestIsDetectedWhileCreating()
     {
@@ -448,7 +448,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function returnsDslWhileUpdating()
     {
@@ -458,7 +458,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function usesUpdateFormFromServiceWhileUpdating()
     {
@@ -478,7 +478,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function canConfigureTheRouteMatchParameterForUpdating()
     {
@@ -495,7 +495,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function validesFormAgainstPostRedirectGetWhileUpdating()
     {
@@ -506,7 +506,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function storesDataOnSuccessIntoServiceWithIdWhileUpdating()
     {
@@ -529,7 +529,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function redirectsAfterUpdating()
     {
@@ -553,7 +553,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function canConfigureTheRedirectTargetAfterUpdating()
     {
@@ -576,7 +576,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      * @testdox adds a callback as success message after updating
      */
     public function addsCallbackAsSuccessMessageAfterUpdating()
@@ -599,7 +599,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function assignsTheFormMessagesWhenAnAjaxRequestIsDetectedWhileUpdating()
     {
@@ -629,7 +629,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function returnsJsonWhenAnAjaxRequestIsDetectedWhileUpdating()
     {
@@ -656,7 +656,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function returnsDslWhenNoDataHasBeenFoundWhileUpdating()
     {
@@ -670,7 +670,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function redirectsWhenNoDataHasBeenFoundWhileUpdating()
     {
@@ -687,7 +687,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function canConfigurateRouteForRedirectionWhenNoDataHasBeenFoundWhileUpdating()
     {
@@ -706,7 +706,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function addsNoErrorMessageUntilItIsConfiguratedWhenNoDataHasBeenFoundWhileUpdating()
     {
@@ -723,7 +723,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      * @testdox can configurate a error message when no data has been found while updating
      */
     public function canConfigurateErrorMessageWhenNoDataHasBeenFoundWhileUpdating()
@@ -744,7 +744,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function returnsDslWhileDeleting()
     {
@@ -754,7 +754,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function returnsDslWhenNoDataHasBeenFoundWhileDeleting()
     {
@@ -768,7 +768,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      * @testdox uses the id from the router to delete when deleting
      */
     public function usesIdFromRouteToDelete()
@@ -785,7 +785,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function canConfigureTheRouteMatchParameterForDeleting()
     {
@@ -802,7 +802,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function redirectsWhenNoDataHasBeenFoundWhileDeleting()
     {
@@ -819,7 +819,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function canConfigurateRouteForRedirectionWhenNoDataHasBeenFoundWhileDeleting()
     {
@@ -838,7 +838,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function addsNoErrorMessageUntilItIsConfiguratedWhenNoDataHasBeenFoundWhileDeleting()
     {
@@ -855,7 +855,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function canConfigurateAnErrorMessageWhenNoDataHasBeenFoundWhileDeleting()
     {
@@ -874,7 +874,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function redirectsWhenDeletionHasBeenSuccessful()
     {
@@ -886,7 +886,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function canConfigurateRouteForRedirectionWhenDeletionHasBeenSuccessful()
     {
@@ -899,13 +899,13 @@ class CrudControllerTest extends TestCase
     }
 
     /**
-     * @test
+     * @ test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
-    public function addsNoSuccessMessageUntilItIsConfiguratedWhenDeletionHasBeenSuccessful()
+    public function addsCallbackAsSuccessMessageWhenDeletionHasBeenSuccessful()
     {
-        $this->expectsDsl()->toDoNotAddFlashMessages();
+        $this->expectsDsl()->toAddFlashMessage(array($this->controller, 'getDeletionSuccessMessage'));
 
         $this->controller->deleteAction();
     }
@@ -913,22 +913,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
-     */
-    public function canConfigurateAnSuccessMessageWhenDeletionHasBeenSuccessful()
-    {
-        $message = 'could not found any data';
-
-        $this->expectsDsl()->toAddFlashMessage($message, 'success');
-
-        $this->controller->setSuccessMessageForDeletion($message);
-        $this->controller->deleteAction();
-    }
-
-    /**
-     * @test
-     * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function assignsDataFromServiceWhilePaginating()
     {
@@ -946,7 +931,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function getsPageNumberFromRouteMatchWhilePaginating()
     {
@@ -963,7 +948,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function canConfigurateTheRouteMatchParameterWhilePaginating()
     {
@@ -981,7 +966,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function hasAnDefaultNumberOfEntriesPerPageOf10()
     {
@@ -996,7 +981,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function canConfigurateTheNumberOfEntriesPerPageWhilePaginating()
     {
@@ -1012,7 +997,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function usesPostAsDefaultSearchDataForPaginating()
     {
@@ -1029,7 +1014,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function assignsDataFromServiceWhileListing()
     {
@@ -1047,7 +1032,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function usesPostAsDefaultSearchDataForListing()
     {
@@ -1064,7 +1049,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function hasNoCreationRedirectData()
     {
@@ -1075,7 +1060,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      * @testdox has a simple creation message
      */
     public function hasSimpleCreationMessage()
@@ -1087,7 +1072,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      */
     public function hasRouteMatchParamsAsUpdateRedirectData()
     {
@@ -1101,7 +1086,7 @@ class CrudControllerTest extends TestCase
     /**
      * @test
      * @group Component/Controller
-     * @group Module/DkplusBase
+     * @group unit
      * @testdox has a simple update message
      */
     public function hasSimpleUpdateMessage()
