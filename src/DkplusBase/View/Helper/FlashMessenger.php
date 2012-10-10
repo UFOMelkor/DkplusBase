@@ -30,6 +30,7 @@ class FlashMessenger extends AbstractHelper
     public function __invoke($namespace = 'default')
     {
         $this->plugin->setNamespace($namespace);
+        return $this;
     }
 
     /** @return boolean */
