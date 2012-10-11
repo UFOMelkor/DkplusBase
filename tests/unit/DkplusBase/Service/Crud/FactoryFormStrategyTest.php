@@ -87,7 +87,7 @@ class FactoryFormStrategyTest extends TestCase
                                ->will($this->returnValue($data));
 
         $this->form->expects($this->once())
-                   ->method('setData')
+                   ->method('populateValues')
                    ->with($data);
 
         $this->formStrategy->getUpdateForm($item);

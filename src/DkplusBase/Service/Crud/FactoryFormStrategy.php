@@ -64,7 +64,7 @@ class FactoryFormStrategy implements FormStrategyInterface
     public function getUpdateForm($item)
     {
         $data = $this->factory->extract($item);
-        $this->form->setData($data);
+        $this->form->populateValues($data);
         return $this->form;
     }
 }
