@@ -179,7 +179,7 @@ class CrudControllerTest extends TestCase
      * @group Component/Controller
      * @group unit
      */
-    public function canConfigurateAnErrorMessageWhenNoDataHasBeenFoundWhileReading()
+    public function canConfigurateAn404NotFoundMessageWhenNoDataHasBeenFoundWhileReading()
     {
         $message   = 'could not found any data';
         $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
@@ -188,7 +188,7 @@ class CrudControllerTest extends TestCase
                       ->method('get')
                       ->will($this->throwException($exception));
 
-        $this->expectsDsl()->toAddFlashMessage($message, 'error');
+        $this->expectsDsl()->toAddFlashMessage($message, 'notFound');
 
         $this->controller->readAction();
     }
@@ -724,9 +724,9 @@ class CrudControllerTest extends TestCase
      * @test
      * @group Component/Controller
      * @group unit
-     * @testdox can configurate a error message when no data has been found while updating
+     * @testdox can configurate a 404 not found message when no data has been found while updating
      */
-    public function canConfigurateErrorMessageWhenNoDataHasBeenFoundWhileUpdating()
+    public function canConfigurateNotFoundMessageWhenNoDataHasBeenFoundWhileUpdating()
     {
         $message   = 'could not found any data';
         $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
@@ -735,7 +735,7 @@ class CrudControllerTest extends TestCase
                       ->method('getUpdateForm')
                       ->will($this->throwException($exception));
 
-        $this->expectsDsl()->toAddFlashMessage($message, 'error');
+        $this->expectsDsl()->toAddFlashMessage($message, 'notFound');
 
         $this->controller->updateAction();
     }
@@ -857,7 +857,7 @@ class CrudControllerTest extends TestCase
      * @group Component/Controller
      * @group unit
      */
-    public function canConfigurateAnErrorMessageWhenNoDataHasBeenFoundWhileDeleting()
+    public function canConfigurateA404NotFoundMessageWhenNoDataHasBeenFoundWhileDeleting()
     {
         $message   = 'could not found any data';
         $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
@@ -866,7 +866,7 @@ class CrudControllerTest extends TestCase
                       ->method('delete')
                       ->will($this->throwException($exception));
 
-        $this->expectsDsl()->toAddFlashMessage($message, 'error');
+        $this->expectsDsl()->toAddFlashMessage($message, 'notFound');
 
         $this->controller->deleteAction();
     }

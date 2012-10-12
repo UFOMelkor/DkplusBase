@@ -131,7 +131,7 @@ class CrudController extends AbstractActionController
             $dsl = $this->dsl()->redirect()->to()->route($this->read404Route);
 
             if ($this->read404Message) {
-                $dsl->with()->error()->message($this->read404Message);
+                $dsl->with()->notFound()->message($this->read404Message);
             }
             return $dsl;
         }
@@ -163,7 +163,7 @@ class CrudController extends AbstractActionController
             $dsl = $this->dsl()->redirect()->to()->route($this->update404Route);
 
             if ($this->update404Message) {
-                $dsl->with()->error()->message($this->update404Message);
+                $dsl->with()->notFound()->message($this->update404Message);
             }
             return $dsl;
         }
@@ -220,7 +220,7 @@ class CrudController extends AbstractActionController
             $dsl = $this->dsl()->redirect()->to()->route($this->delete404Route);
 
             if ($this->delete404Message) {
-                $dsl->with()->error()->message($this->delete404Message);
+                $dsl->with()->notFound()->message($this->delete404Message);
             }
             return $dsl;
         }
