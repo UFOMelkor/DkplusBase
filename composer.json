@@ -6,13 +6,16 @@
         "zf2"
     ],
     "homepage": "https://github.com/UFOMelkor/DkplusBase",
+    "minimum-stability": "alpha",
     "require": {
         "php": ">=5.3.3",
+
         "zendframework/zendframework": "2.*@stable",
+
         "dkplus/unit-test": "dev-master",
         "dkplus/controller-dsl": "dev-master",
-        "doctrine/orm": "2.*@stable",
-        "doctrine/doctrine-orm-module": "dev-master"
+
+        "doctrine/doctrine-orm-module": "0.*"
     },
     "autoload": {
         "psr-0": {
