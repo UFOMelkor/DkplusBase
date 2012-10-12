@@ -15,7 +15,7 @@
         "dkplus/unit-test": "dev-master",
         "dkplus/controller-dsl": "dev-master",
 
-        "doctrine/doctrine-orm-module": "0.*"
+        "doctrine/doctrine-orm-module": "dev-master"
     },
     "autoload": {
         "psr-0": {
