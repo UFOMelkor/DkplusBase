@@ -91,4 +91,35 @@ class FlashMessengerTest extends TestCase
 
         $this->assertEquals($messages, $this->viewHelper->getMessages());
     }
+
+    /**
+     * @test
+     * @group Component/ViewHelper
+     * @group unit
+     */
+    public function canRetrieveCurrentMessages()
+    {
+        $messages = array('foo', 'bar', 'baz');
+
+        $this->controllerPlugin->expects($this->any())
+                               ->method('getCurrentMessages')
+                               ->will($this->returnValue($messages));
+
+        $this->assertEquals($messages, $this->viewHelper->getCurrentMessages());
+    }
+
+    /**
+     * @test
+     * @group Component/ViewHelper
+     * @group unit
+     */
+    public function cleansCurrentMessagesAfterRetrieving()
+    {
+        $this->controllerPlugin->expects($this->at(0))
+                               ->method('getCurrentMessages');
+        $this->controllerPlugin->expects($this->at(1))
+                               ->method('clearCurrentMessages');
+
+        $this->viewHelper->getCurrentMessages();
+    }
 }

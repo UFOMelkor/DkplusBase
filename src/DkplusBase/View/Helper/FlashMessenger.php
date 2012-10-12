@@ -39,9 +39,17 @@ class FlashMessenger extends AbstractHelper
         return $this->plugin->hasMessages();
     }
 
-    /** @return string */
+    /** @return string[] */
     public function getMessages()
     {
         return $this->plugin->getMessages();
+    }
+
+    /** @return string[] */
+    public function getCurrentMessages()
+    {
+        $result = $this->plugin->getCurrentMessages();
+        $this->plugin->clearCurrentMessages();
+        return $result;
     }
 }
