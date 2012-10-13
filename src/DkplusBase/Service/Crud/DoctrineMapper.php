@@ -113,7 +113,7 @@ class DoctrineMapper implements MapperInterface
             foreach ($searchData as $property => $value) {
                 $expression = is_numeric($value)
                             ? $queryBuilder->expr()->eq('e.' . $property, $value)
-                            : $queryBuilder->expr()->like('e.' . $property, '"%$value%"');
+                            : $queryBuilder->expr()->like('e.' . $property, "'%$value%'");
                 $conjunction->add($expression);
             }
             $queryBuilder->where($conjunction);
