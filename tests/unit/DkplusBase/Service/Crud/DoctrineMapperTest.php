@@ -250,11 +250,11 @@ class DoctrineMapperTest extends TestCase
                           ->will($this->returnValue($orExpression));
         $expressionBuilder->expects($this->at(1))
                           ->method('like')
-                          ->with('e.name', '%foo%')
+                          ->with('e.name', "'%foo%'")
                           ->will($this->returnValue($nameExpression));
         $expressionBuilder->expects($this->at(2))
                           ->method('like')
-                          ->with('e.email', '%bar%')
+                          ->with('e.email', "'%bar%'")
                           ->will($this->returnValue($emailExpression));
 
         $queryBuilder = $this->getMockIgnoringConstructor('Doctrine\ORM\QueryBuilder');
