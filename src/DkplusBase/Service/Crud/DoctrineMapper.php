@@ -143,7 +143,7 @@ class DoctrineMapper implements MapperInterface
      */
     public function getPaginationAdapter(array $searchData, $orderCrit = null, $orderDirection = null)
     {
-        $query = $this->getQuery($searchData);
+        $query = $this->getQuery($searchData, $orderCrit, $orderDirection);
         return new PaginationAdapter(new DoctrinePaginator($query));
     }
 }
