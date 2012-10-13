@@ -128,10 +128,14 @@ class CrudController extends AbstractActionController
             $data = $this->service->get($identifier);
 
         } catch (EntityNotFoundException $e) {
-            $dsl = $this->dsl()->redirect()->to()->route($this->read404Controller);
+            $dsl = $this->dsl()->replaceContent()->with()->controllerAction(
+                $this->read404Controller[0],
+                $this->read404Controller[1],
+                $this->read404Controller[2]
+            );
 
             if ($this->read404Message) {
-                $dsl->with()->notFound()->message($this->read404Message);
+                $dsl->and()->add()->notFound()->message($this->read404Message);
             }
             return $dsl;
         }
@@ -163,10 +167,14 @@ class CrudController extends AbstractActionController
             $form = $this->service->getUpdateForm($identifier);
 
         } catch (EntityNotFoundException $e) {
-            $dsl = $this->dsl()->redirect()->to()->route($this->update404Controller);
+            $dsl = $this->dsl()->replaceContent()->with()->controllerAction(
+                $this->update404Controller[0],
+                $this->update404Controller[1],
+                $this->update404Controller[2]
+            );
 
             if ($this->update404Message) {
-                $dsl->with()->notFound()->message($this->update404Message);
+                $dsl->and()->add()->notFound()->message($this->update404Message);
             }
             return $dsl;
         }
@@ -223,10 +231,14 @@ class CrudController extends AbstractActionController
             $this->service->delete($identifier);
 
         } catch (EntityNotFoundException $e) {
-            $dsl = $this->dsl()->redirect()->to()->route($this->delete404Controller);
+            $dsl = $this->dsl()->replaceContent()->with()->controllerAction(
+                $this->delete404Controller[0],
+                $this->delete404Controller[1],
+                $this->delete404Controller[2]
+            );
 
             if ($this->delete404Message) {
-                $dsl->with()->notFound()->message($this->delete404Message);
+                $dsl->and()->add()->notFound()->message($this->delete404Message);
             }
             return $dsl;
         }

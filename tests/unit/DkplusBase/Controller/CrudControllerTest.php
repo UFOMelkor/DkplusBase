@@ -150,7 +150,11 @@ class CrudControllerTest extends TestCase
         $routeParams = array('my-route' => 'params');
 
         $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
-        $this->controller->setControllerActionForContentReplacingOnReading($controller, $action, $routeParams);
+        $this->controller->setControllerActionForContentReplacingForNotFoundDataOnReading(
+            $controller,
+            $action,
+            $routeParams
+        );
         $this->service->expects($this->any())
                       ->method('get')
                       ->will($this->throwException($exception));
@@ -699,7 +703,11 @@ class CrudControllerTest extends TestCase
         $routeParams = array('my-route' => 'params');
 
         $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
-        $this->controller->setControllerActionForContentReplacingOnUpdating($controller, $action, $routeParams);
+        $this->controller->setControllerActionForContentReplacingForNotFoundDataOnUpdating(
+            $controller,
+            $action,
+            $routeParams
+        );
         $this->service->expects($this->any())
                       ->method('getUpdateForm')
                       ->will($this->throwException($exception));
@@ -834,7 +842,11 @@ class CrudControllerTest extends TestCase
         $routeParams = array('my-route' => 'params');
 
         $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
-        $this->controller->setControllerActionForContentReplacingOnDeletion($controller, $action, $routeParams);
+        $this->controller->setControllerActionForContentReplacingForNotFoundDataOnDeletion(
+            $controller,
+            $action,
+            $routeParams
+        );
         $this->service->expects($this->any())
                       ->method('delete')
                       ->will($this->throwException($exception));
