@@ -186,20 +186,25 @@ class DoctrineMapperTest extends TestCase
         $nameExpression  = $this->getMockIgnoringConstructor('Doctrine\ORM\Query\Expr\Comparison');
         $emailExpression = $this->getMockIgnoringConstructor('Doctrine\ORM\Query\Expr\Comparison');
         $andExpression   = $this->getMockIgnoringConstructor('Doctrine\ORM\Query\Expr\Andx');
+        $andExpression->expects($this->at(0))
+                      ->method('add')
+                      ->with($nameExpression);
+        $andExpression->expects($this->at(1))
+                      ->method('add')
+                      ->with($emailExpression);
 
         $expressionBuilder = $this->getMockIgnoringConstructor('Doctrine\ORM\Query\Expr');
         $expressionBuilder->expects($this->at(0))
+                          ->method('andX')
+                          ->will($this->returnValue($andExpression));
+        $expressionBuilder->expects($this->at(1))
                           ->method('like')
                           ->with('e.name', '%foo%')
                           ->will($this->returnValue($nameExpression));
-        $expressionBuilder->expects($this->at(1))
+        $expressionBuilder->expects($this->at(2))
                           ->method('like')
                           ->with('e.email', '%bar%')
                           ->will($this->returnValue($emailExpression));
-        $expressionBuilder->expects($this->at(2))
-                          ->method('andX')
-                          ->with(array($nameExpression, $emailExpression))
-                          ->will($this->returnValue($andExpression));
 
         $queryBuilder = $this->getMockIgnoringConstructor('Doctrine\ORM\QueryBuilder');
 
@@ -231,33 +236,38 @@ class DoctrineMapperTest extends TestCase
 
         $nameExpression  = $this->getMockIgnoringConstructor('Doctrine\ORM\Query\Expr\Comparison');
         $emailExpression = $this->getMockIgnoringConstructor('Doctrine\ORM\Query\Expr\Comparison');
-        $orExpression   = $this->getMockIgnoringConstructor('Doctrine\ORM\Query\Expr\Orx');
+        $orExpression    = $this->getMockIgnoringConstructor('Doctrine\ORM\Query\Expr\Orx');
+        $orExpression->expects($this->at(0))
+                     ->method('add')
+                     ->with($nameExpression);
+        $orExpression->expects($this->at(1))
+                     ->method('add')
+                     ->with($emailExpression);
 
         $expressionBuilder = $this->getMockIgnoringConstructor('Doctrine\ORM\Query\Expr');
         $expressionBuilder->expects($this->at(0))
+                          ->method('orX')
+                          ->will($this->returnValue($orExpression));
+        $expressionBuilder->expects($this->at(1))
                           ->method('like')
                           ->with('e.name', '%foo%')
                           ->will($this->returnValue($nameExpression));
-        $expressionBuilder->expects($this->at(1))
+        $expressionBuilder->expects($this->at(2))
                           ->method('like')
                           ->with('e.email', '%bar%')
                           ->will($this->returnValue($emailExpression));
-        $expressionBuilder->expects($this->at(2))
-                          ->method('orX')
-                          ->with(array($nameExpression, $emailExpression))
-                          ->will($this->returnValue($orExpression));
 
         $queryBuilder = $this->getMockIgnoringConstructor('Doctrine\ORM\QueryBuilder');
-
         $queryBuilder->expects($this->any())
                      ->method('expr')
                      ->will($this->returnValue($expressionBuilder));
         $queryBuilder->expects($this->once())
                      ->method('where')
-                     ->with($andExpression);
+                     ->with($orExpression);
         $queryBuilder->expects($this->any())
                      ->method('getQuery')
                      ->will($this->returnValue($query));
+
 
         $this->entityManager->expects($this->any())
                             ->method('createQueryBuilder')
@@ -329,20 +339,21 @@ class DoctrineMapperTest extends TestCase
         $query = $this->getMock('stdClass', array('execute'));
 
         $yearExpression = $this->getMockIgnoringConstructor('Doctrine\ORM\Query\Expr\Comparison');
-        $andExpression  = $this->getMockIgnoringConstructor('Doctrine\ORM\Query\Expr\Andx');
+        $andExpression   = $this->getMockIgnoringConstructor('Doctrine\ORM\Query\Expr\Andx');
+        $andExpression->expects($this->at(0))
+                      ->method('add')
+                      ->with($yearExpression);
 
         $expressionBuilder = $this->getMockIgnoringConstructor('Doctrine\ORM\Query\Expr');
         $expressionBuilder->expects($this->at(0))
+                          ->method('andX')
+                          ->will($this->returnValue($andExpression));
+        $expressionBuilder->expects($this->at(1))
                           ->method('eq')
                           ->with('e.year', '1925')
                           ->will($this->returnValue($yearExpression));
-        $expressionBuilder->expects($this->at(1))
-                          ->method('andX')
-                          ->with(array($yearExpression))
-                          ->will($this->returnValue($andExpression));
 
         $queryBuilder = $this->getMockIgnoringConstructor('Doctrine\ORM\QueryBuilder');
-
         $queryBuilder->expects($this->any())
                      ->method('expr')
                      ->will($this->returnValue($expressionBuilder));

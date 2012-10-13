@@ -34,7 +34,7 @@ class DoctrineMapper implements MapperInterface
     protected $orderDirection = 'ASC';
 
     /** @var boolean */
-    protected $allSearchCriteriasMustMatch = true;
+    protected $allCritsMustMatch = true;
 
     public function __construct(EntityManager $entityManager, $modelClass)
     {
@@ -44,7 +44,7 @@ class DoctrineMapper implements MapperInterface
 
     public function setOnlyOneSearchCriteriumMustMatch($flag)
     {
-        $this->allSearchCriteriasMustMatch = !$flag;
+        $this->allCritsMustMatch = !$flag;
     }
 
     /**
@@ -106,20 +106,17 @@ class DoctrineMapper implements MapperInterface
             $queryBuilder->orderBy('e.' . $orderCrit, $orderDirection);
         }
 
-        $whereExpressions = array();
-
-        foreach ($searchData as $property => $value) {
-            $whereExpressions[] = is_numeric($value)
-                                ? $queryBuilder->expr()->eq('e.' . $property, $value)
-                                : $queryBuilder->expr()->like('e.' . $property, "%$value%");
-        }
-
-        if (count($whereExpressions) > 0) {
-            $queryBuilder->where(
-                $this->allSearchCriteriasMustMatch
-                ? $queryBuilder->expr()->andX($whereExpressions)
-                : $queryBuilder->expr()->orX($whereExpressions)
-            );
+        if (count($searchData) > 0) {
+            $conjunction = $this->allCritsMustMatch
+                         ? $queryBuilder->expr()->andX()
+                         : $queryBuilder->expr()->orX();
+            foreach ($searchData as $property => $value) {
+                $expression = is_numeric($value)
+                            ? $queryBuilder->expr()->eq('e.' . $property, $value)
+                            : $queryBuilder->expr()->like('e.' . $property, "%$value%");
+                $conjunction->add($expression);
+            }
+            $queryBuilder->where($conjunction);
         }
 
         return $queryBuilder->getQuery();
