@@ -33,10 +33,18 @@ class DoctrineMapper implements MapperInterface
     /** @var string */
     protected $orderDirection = 'ASC';
 
+    /** @var boolean */
+    protected $allSearchCriteriasMustMatch = true;
+
     public function __construct(EntityManager $entityManager, $modelClass)
     {
         $this->entityManager  = $entityManager;
         $this->modelClass     = $modelClass;
+    }
+
+    public function setOnlyOneSearchCriteriumMustMatch($flag)
+    {
+        $this->allSearchCriteriasMustMatch = !$flag;
     }
 
     /**
@@ -107,7 +115,11 @@ class DoctrineMapper implements MapperInterface
         }
 
         if (count($whereExpressions) > 0) {
-            $queryBuilder->where($queryBuilder->expr()->andX($whereExpressions));
+            $queryBuilder->where(
+                $this->allSearchCriteriasMustMatch
+                ? $queryBuilder->expr()->andX($whereExpressions)
+                : $queryBuilder->expr()->orX($whereExpressions)
+            );
         }
 
         return $queryBuilder->getQuery();

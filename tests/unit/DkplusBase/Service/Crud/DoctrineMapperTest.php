@@ -133,9 +133,10 @@ class DoctrineMapperTest extends TestCase
      * @test
      * @group unit
      * @group Component/Service/Crud
+     * @testdox throws an exception when a not existing entity should be deleted
      * @expectedException DkplusBase\Service\Exception\EntityNotFound
      */
-    public function throwsAnExceptionWhenAnNotExistingEntityShouldBeDeleted()
+    public function throwsAnExceptionWhenNotExistingEntityShouldBeDeleted()
     {
         $this->entityManager->expects($this->any())
                             ->method('find')
@@ -216,6 +217,53 @@ class DoctrineMapperTest extends TestCase
                             ->method('createQueryBuilder')
                             ->will($this->returnValue($queryBuilder));
 
+        $this->mapper->findAll(array('name' => 'foo', 'email' => 'bar'));
+    }
+
+    /**
+     * @test
+     * @group unit
+     * @group Component/Service/Crud
+     */
+    public function canAlsoSearchForEntitiesWhereOnlyOneSearchParamMatches()
+    {
+        $query = $this->getMock('stdClass', array('execute'));
+
+        $nameExpression  = $this->getMockIgnoringConstructor('Doctrine\ORM\Query\Expr\Comparison');
+        $emailExpression = $this->getMockIgnoringConstructor('Doctrine\ORM\Query\Expr\Comparison');
+        $orExpression   = $this->getMockIgnoringConstructor('Doctrine\ORM\Query\Expr\Orx');
+
+        $expressionBuilder = $this->getMockIgnoringConstructor('Doctrine\ORM\Query\Expr');
+        $expressionBuilder->expects($this->at(0))
+                          ->method('like')
+                          ->with('e.name', '%foo%')
+                          ->will($this->returnValue($nameExpression));
+        $expressionBuilder->expects($this->at(1))
+                          ->method('like')
+                          ->with('e.email', '%bar%')
+                          ->will($this->returnValue($emailExpression));
+        $expressionBuilder->expects($this->at(2))
+                          ->method('orX')
+                          ->with(array($nameExpression, $emailExpression))
+                          ->will($this->returnValue($orExpression));
+
+        $queryBuilder = $this->getMockIgnoringConstructor('Doctrine\ORM\QueryBuilder');
+
+        $queryBuilder->expects($this->any())
+                     ->method('expr')
+                     ->will($this->returnValue($expressionBuilder));
+        $queryBuilder->expects($this->once())
+                     ->method('where')
+                     ->with($andExpression);
+        $queryBuilder->expects($this->any())
+                     ->method('getQuery')
+                     ->will($this->returnValue($query));
+
+        $this->entityManager->expects($this->any())
+                            ->method('createQueryBuilder')
+                            ->will($this->returnValue($queryBuilder));
+
+        $this->mapper->setOnlyOneSearchCriteriumMustMatch(true);
         $this->mapper->findAll(array('name' => 'foo', 'email' => 'bar'));
     }
 
