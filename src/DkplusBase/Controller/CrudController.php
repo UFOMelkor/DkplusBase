@@ -31,10 +31,10 @@ class CrudController extends AbstractActionController
     protected $read404Message;
 
     /**
-     * Redirect to this route when no item has been found.
+     * Replace the content with this controller action when no item has been found.
      * @var string
      */
-    protected $read404Route = 'home';
+    protected $read404Controller = array('Application\Controller\Index', 'index', array());
 
     /**
      * Message that is shown when no item has been found.
@@ -43,10 +43,10 @@ class CrudController extends AbstractActionController
     protected $update404Message;
 
     /**
-     * Redirect to this route when no item has been found.
+     * Replace the content with this controller action when no item has been found.
      * @var string
      */
-    protected $update404Route = 'home';
+    protected $update404Controller = array('Application\Controller\Index', 'index', array());
 
     /** @var string */
     protected $updateSuccessRoute;
@@ -61,10 +61,10 @@ class CrudController extends AbstractActionController
     protected $delete404Message;
 
     /**
-     * Redirect to this route when no item has been found.
+     * Replace the content with this controller action when no item has been found.
      * @var string
      */
-    protected $delete404Route = 'home';
+    protected $delete404Controller = array('Application\Controller\Index', 'index', array());
 
     /** @var string */
     protected $deleteSuccessRoute = 'home';
@@ -128,7 +128,7 @@ class CrudController extends AbstractActionController
             $data = $this->service->get($identifier);
 
         } catch (EntityNotFoundException $e) {
-            $dsl = $this->dsl()->redirect()->to()->route($this->read404Route);
+            $dsl = $this->dsl()->redirect()->to()->route($this->read404Controller);
 
             if ($this->read404Message) {
                 $dsl->with()->notFound()->message($this->read404Message);
@@ -139,9 +139,12 @@ class CrudController extends AbstractActionController
         return $this->dsl()->assign($data)->as('item');
     }
 
-    public function setRedirectRouteForNotFoundDataOnReading($route)
-    {
-        $this->read404Route = $route;
+    public function setControllerActionForContentReplacingForNotFoundDataOnReading(
+        $controller,
+        $action,
+        array $routeParams = array()
+    ) {
+        $this->read404Controller = array($controller, $action, $routeParams);
     }
 
     public function setErrorMessageForNotFoundDataOnReading($message)
@@ -160,7 +163,7 @@ class CrudController extends AbstractActionController
             $form = $this->service->getUpdateForm($identifier);
 
         } catch (EntityNotFoundException $e) {
-            $dsl = $this->dsl()->redirect()->to()->route($this->update404Route);
+            $dsl = $this->dsl()->redirect()->to()->route($this->update404Controller);
 
             if ($this->update404Message) {
                 $dsl->with()->notFound()->message($this->update404Message);
@@ -198,9 +201,12 @@ class CrudController extends AbstractActionController
         return 'Item has been updated.';
     }
 
-    public function setRedirectRouteForNotFoundDataOnUpdating($route)
-    {
-        $this->update404Route = $route;
+    public function setControllerActionForContentReplacingForNotFoundDataOnUpdating(
+        $controller,
+        $action,
+        array $routeParams = array()
+    ) {
+        $this->update404Controller = array($controller, $action, $routeParams);
     }
 
     public function setErrorMessageForNotFoundDataOnUpdating($message)
@@ -217,7 +223,7 @@ class CrudController extends AbstractActionController
             $this->service->delete($identifier);
 
         } catch (EntityNotFoundException $e) {
-            $dsl = $this->dsl()->redirect()->to()->route($this->delete404Route);
+            $dsl = $this->dsl()->redirect()->to()->route($this->delete404Controller);
 
             if ($this->delete404Message) {
                 $dsl->with()->notFound()->message($this->delete404Message);
@@ -229,9 +235,12 @@ class CrudController extends AbstractActionController
                            ->with()->success()->message($this->getDeletionSuccessMessage($item));
     }
 
-    public function setRedirectRouteForNotFoundDataOnDeletion($route)
-    {
-        $this->delete404Route = $route;
+    public function setControllerActionForContentReplacingForNotFoundDataOnDeletion(
+        $controller,
+        $action,
+        array $routeParams = array()
+    ) {
+        $this->delete404Controller = array($controller, $action, $routeParams);
     }
 
     public function setErrorMessageForNotFoundDataOnDeletion($message)

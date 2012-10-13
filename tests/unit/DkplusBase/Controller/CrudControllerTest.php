@@ -126,14 +126,14 @@ class CrudControllerTest extends TestCase
      * @group Component/Controller
      * @group unit
      */
-    public function redirectsWhenNoDataHasBeenFoundWhileReading()
+    public function replacesContentWithAnotherControllerActionWhenNoDataHasBeenFoundWhileReading()
     {
         $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
         $this->service->expects($this->any())
                       ->method('get')
                       ->will($this->throwException($exception));
 
-        $this->expectsDsl()->toRedirectToRoute();
+        $this->expectsDsl()->toReplaceContentWithControllerAction();
 
         $this->controller->readAction();
     }
@@ -143,16 +143,19 @@ class CrudControllerTest extends TestCase
      * @group Component/Controller
      * @group unit
      */
-    public function canConfigurateRouteForRedirectionWhenNoDataHasBeenFoundWhileReading()
+    public function canConfigurateControllerActionForContentReplacingWhenNoDataHasBeenFoundWhileReading()
     {
-        $route     = 'foo/bar';
+        $controller  = 'my-controller';
+        $action      = 'my-action';
+        $routeParams = array('my-route' => 'params');
+
         $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
-        $this->controller->setRedirectRouteForNotFoundDataOnReading($route);
+        $this->controller->setControllerActionForContentReplacingOnReading($controller, $action, $routeParams);
         $this->service->expects($this->any())
                       ->method('get')
                       ->will($this->throwException($exception));
 
-        $this->expectsDsl()->toRedirectToRoute($route);
+        $this->expectsDsl()->toReplaceContentWithControllerAction($controller, $action, $routeParams);
 
         $this->controller->readAction();
     }
@@ -179,7 +182,7 @@ class CrudControllerTest extends TestCase
      * @group Component/Controller
      * @group unit
      */
-    public function canConfigurateAn404NotFoundMessageWhenNoDataHasBeenFoundWhileReading()
+    public function canConfigurateA404NotFoundMessageWhenNoDataHasBeenFoundWhileReading()
     {
         $message   = 'could not found any data';
         $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
@@ -672,14 +675,14 @@ class CrudControllerTest extends TestCase
      * @group Component/Controller
      * @group unit
      */
-    public function redirectsWhenNoDataHasBeenFoundWhileUpdating()
+    public function replacesContentWithAnotherControllerActionWhenNoDataHasBeenFoundWhileUpdating()
     {
         $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
         $this->service->expects($this->any())
                       ->method('getUpdateForm')
                       ->will($this->throwException($exception));
 
-        $this->expectsDsl()->toRedirectToRoute();
+        $this->expectsDsl()->toReplaceContentWithControllerAction();
 
         $this->controller->updateAction();
     }
@@ -691,14 +694,17 @@ class CrudControllerTest extends TestCase
      */
     public function canConfigurateRouteForRedirectionWhenNoDataHasBeenFoundWhileUpdating()
     {
-        $route     = 'foo/bar';
+        $controller  = 'my-controller';
+        $action      = 'my-action';
+        $routeParams = array('my-route' => 'params');
+
         $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
-        $this->controller->setRedirectRouteForNotFoundDataOnUpdating($route);
+        $this->controller->setControllerActionForContentReplacingOnUpdating($controller, $action, $routeParams);
         $this->service->expects($this->any())
                       ->method('getUpdateForm')
                       ->will($this->throwException($exception));
 
-        $this->expectsDsl()->toRedirectToRoute($route);
+        $this->expectsDsl()->toReplaceContentWithControllerAction($controller, $action, $routeParams);
 
         $this->controller->updateAction();
     }
@@ -804,14 +810,14 @@ class CrudControllerTest extends TestCase
      * @group Component/Controller
      * @group unit
      */
-    public function redirectsWhenNoDataHasBeenFoundWhileDeleting()
+    public function replacesContentWithAnotherControllerActionWhenNoDataHasBeenFoundWhileDeleting()
     {
         $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
         $this->service->expects($this->any())
                       ->method('delete')
                       ->will($this->throwException($exception));
 
-        $this->expectsDsl()->toRedirectToRoute();
+        $this->expectsDsl()->toReplaceContentWithControllerAction();
 
         $this->controller->deleteAction();
     }
@@ -821,16 +827,19 @@ class CrudControllerTest extends TestCase
      * @group Component/Controller
      * @group unit
      */
-    public function canConfigurateRouteForRedirectionWhenNoDataHasBeenFoundWhileDeleting()
+    public function canConfigurateControllerActionForContentReplacingWhenNoDataHasBeenFoundWhileDeleting()
     {
-        $route     = 'foo/bar';
+        $controller  = 'my-controller';
+        $action      = 'my-action';
+        $routeParams = array('my-route' => 'params');
+
         $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
-        $this->controller->setRedirectRouteForNotFoundDataOnDeletion($route);
+        $this->controller->setControllerActionForContentReplacingOnDeletion($controller, $action, $routeParams);
         $this->service->expects($this->any())
                       ->method('delete')
                       ->will($this->throwException($exception));
 
-        $this->expectsDsl()->toRedirectToRoute($route);
+        $this->expectsDsl()->toReplaceContentWithControllerAction($controller, $action, $routeParams);
 
         $this->controller->deleteAction();
     }
@@ -840,7 +849,7 @@ class CrudControllerTest extends TestCase
      * @group Component/Controller
      * @group unit
      */
-    public function addsNoErrorMessageUntilItIsConfiguratedWhenNoDataHasBeenFoundWhileDeleting()
+    public function addsNo404NotFoundMessageUntilItIsConfiguratedWhenNoDataHasBeenFoundWhileDeleting()
     {
         $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
         $this->service->expects($this->any())
