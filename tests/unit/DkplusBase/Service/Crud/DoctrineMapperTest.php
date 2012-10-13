@@ -29,7 +29,7 @@ class DoctrineMapperTest extends TestCase
         parent::setUp();
 
         $this->entityManager = $this->getMockIgnoringConstructor('Doctrine\ORM\EntityManager');
-        $this->mapper        = new DoctrineMapper($this->entityManager, 'stdClass');
+        $this->mapper        = new DoctrineMapper($this->entityManager, 'stdClass', 'name', 'ASC');
     }
 
     /**
@@ -217,6 +217,58 @@ class DoctrineMapperTest extends TestCase
                             ->will($this->returnValue($queryBuilder));
 
         $this->mapper->findAll(array('name' => 'foo', 'email' => 'bar'));
+    }
+
+    /**
+     * @test
+     * @group unit
+     * @group Component/Service/Crud
+     */
+    public function canHaveDefaultOrder()
+    {
+        $query = $this->getMock('stdClass', array('execute'));
+
+        $queryBuilder = $this->getMockIgnoringConstructor('Doctrine\ORM\QueryBuilder');
+
+        $queryBuilder->expects($this->once())
+                     ->method('orderBy')
+                     ->with('e.name', 'ASC');
+        $queryBuilder->expects($this->any())
+                     ->method('getQuery')
+                     ->will($this->returnValue($query));
+
+        $this->entityManager->expects($this->any())
+                            ->method('createQueryBuilder')
+                            ->will($this->returnValue($queryBuilder));
+
+        $this->mapper->setDefaultOrderBy('name', 'ASC');
+        $this->mapper->findAll(array());
+    }
+
+    /**
+     * @test
+     * @group unit
+     * @group Component/Service/Crud
+     */
+    public function canOverwriteDefaultOrderByMethod()
+    {
+        $query = $this->getMock('stdClass', array('execute'));
+
+        $queryBuilder = $this->getMockIgnoringConstructor('Doctrine\ORM\QueryBuilder');
+
+        $queryBuilder->expects($this->once())
+                     ->method('orderBy')
+                     ->with('e.email', 'DESC');
+        $queryBuilder->expects($this->any())
+                     ->method('getQuery')
+                     ->will($this->returnValue($query));
+
+        $this->entityManager->expects($this->any())
+                            ->method('createQueryBuilder')
+                            ->will($this->returnValue($queryBuilder));
+
+        $this->mapper->setDefaultOrderBy('name', 'ASC');
+        $this->mapper->findAll(array(), 'email', 'DESC');
     }
 
     /**

@@ -29,7 +29,7 @@ interface ServiceInterface
 
     public function getCreationForm();
 
-    public function getAll(array $searchData = array());
+    public function getAll(array $searchData = array(), $orderCrit = null, $orderDirection = null);
 
     /**
      * @param mixed $data
@@ -54,5 +54,11 @@ interface ServiceInterface
      * @param array $searchData
      * @return \Zend\Paginator\Paginator
      */
-    public function getPaginator($pageNumber, $itemCountPerPage, array $searchData = array());
+    public function getPaginator(
+        $pageNumber,
+        $itemCountPerPage,
+        array $searchData = array(),
+        $orderCrit = null,
+        $orderDirection = null
+    );
 }

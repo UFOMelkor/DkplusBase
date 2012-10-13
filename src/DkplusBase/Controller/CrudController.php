@@ -280,15 +280,23 @@ class CrudController extends AbstractActionController
     {
         $pageNumber       = $this->getEvent()->getRouteMatch()->getParam($this->routeMatchPage, 1);
         $itemCountPerPage = $this->itemCountPerPage;
-        $searchData       = $this->getPaginationSearchData();
-        return $this->dsl()->assign($this->service->getPaginator($pageNumber, $itemCountPerPage, $searchData))
+        return $this->dsl()->assign($this->getPaginator($pageNumber, $itemCountPerPage))
                            ->as('paginator');
     }
 
-    /** @return array */
-    protected function getPaginationSearchData()
+    /**
+     *
+     * @param type $pageNumber
+     * @param type $itemCountPerPage
+     * @return \Zend\Paginator\Paginator
+     */
+    protected function getPaginator($pageNumber, $itemCountPerPage)
     {
-        return $this->getRequest()->getPost()->toArray();
+        return $this->service->getPaginator(
+            $pageNumber,
+            $itemCountPerPage,
+            $this->getRequest()->getPost()->toArray()
+        );
     }
 
     public function setPageParameter($page)
@@ -303,13 +311,13 @@ class CrudController extends AbstractActionController
 
     public function listAction()
     {
-        return $this->dsl()->assign($this->service->getAll($this->getListingSearchData()))
+        return $this->dsl()->assign($this->getAllItems())
                            ->as('items');
     }
 
     /** @return array */
-    protected function getListingSearchData()
+    protected function getAllItems()
     {
-        return $this->getRequest()->getPost()->toArray();
+        return $this->service->getAll($this->getRequest()->getPost()->toArray());
     }
 }

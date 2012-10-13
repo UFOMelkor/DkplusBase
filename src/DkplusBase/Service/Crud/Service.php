@@ -47,9 +47,9 @@ class Service implements ServiceInterface
         return $this->formStrategy->getCreationForm();
     }
 
-    public function getAll(array $searchData = array())
+    public function getAll(array $searchData = array(), $orderCrit = null, $orderDirection = null)
     {
-        return $this->mapper->findAll($searchData);
+        return $this->mapper->findAll($searchData, $orderCrit, $orderDirection);
     }
 
     public function update($data, $identifier)
@@ -79,11 +79,18 @@ class Service implements ServiceInterface
      * @param int $pageNumber
      * @param int $itemCountPerPage
      * @param array $searchData
+     * @param string $orderCrit
+     * @param string $orderDirection
      * @return \Zend\Paginator\Paginator
      */
-    public function getPaginator($pageNumber, $itemCountPerPage, array $searchData = array())
-    {
-        $adapter   = $this->mapper->getPaginationAdapter($searchData);
+    public function getPaginator(
+        $pageNumber,
+        $itemCountPerPage,
+        array $searchData = array(),
+        $orderCrit = null,
+        $orderDirection = null
+    ) {
+        $adapter   = $this->mapper->getPaginationAdapter($searchData, $orderCrit, $orderDirection);
         $paginator = new \Zend\Paginator\Paginator($adapter);
         $paginator->setItemCountPerPage($itemCountPerPage);
         $paginator->setCurrentPageNumber($pageNumber);

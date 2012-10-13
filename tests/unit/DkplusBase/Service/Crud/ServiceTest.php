@@ -288,6 +288,20 @@ class ServiceTest extends TestCase
      * @group unit
      * @group Component/Service/Crud
      */
+    public function canUseOrderingToGetAllItems()
+    {
+        $this->mapper->expects($this->once())
+                     ->method('findAll')
+                     ->with($this->anything(), 'name', 'ASC');
+
+        $this->service->getAll(array(), 'name', 'ASC');
+    }
+
+    /**
+     * @test
+     * @group unit
+     * @group Component/Service/Crud
+     */
     public function getsTheItemForTheUpdateFormFromTheMapper()
     {
         $this->mapper->expects($this->once())
@@ -369,6 +383,23 @@ class ServiceTest extends TestCase
                      ->will($this->returnValue($adapter));
 
         $this->service->getPaginator(5, 10, $searchData);
+    }
+
+    /**
+     * @test
+     * @group unit
+     * @group Component/Service/Crud
+     */
+    public function canUseSpecifiedOrderToGetTheAdapterFromTheMapper()
+    {
+        $adapter    = $this->getMock('Zend\Paginator\Adapter\AdapterInterface');
+
+        $this->mapper->expects($this->once())
+                     ->method('getPaginationAdapter')
+                     ->with($this->anything(), 'name', 'ASC')
+                     ->will($this->returnValue($adapter));
+
+        $this->service->getPaginator(5, 10, array(), 'name', 'ASC');
     }
 
     /**

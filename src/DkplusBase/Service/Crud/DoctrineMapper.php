@@ -27,10 +27,26 @@ class DoctrineMapper implements MapperInterface
     /** @var string */
     protected $modelClass;
 
+    /** @var string */
+    protected $orderCrit;
+
+    /** @var string */
+    protected $orderDirection = 'ASC';
+
     public function __construct(EntityManager $entityManager, $modelClass)
     {
-        $this->entityManager = $entityManager;
-        $this->modelClass    = $modelClass;
+        $this->entityManager  = $entityManager;
+        $this->modelClass     = $modelClass;
+    }
+
+    /**
+     * @param string $orderCrit
+     * @param string $orderDirection
+     */
+    public function setDefaultOrderBy($orderCrit, $orderDirection = 'ASC')
+    {
+        $this->orderCrit      = $orderCrit;
+        $this->orderDirection = $orderDirection;
     }
 
     public function save($item)
@@ -54,20 +70,33 @@ class DoctrineMapper implements MapperInterface
         return $result;
     }
 
-    public function findAll(array $searchData)
+    public function findAll(array $searchData, $orderCrit = null, $orderDirection = null)
     {
-        return $this->getQuery($searchData)->execute();
+        return $this->getQuery($searchData, $orderCrit, $orderDirection)->execute();
     }
 
     /**
      * @param array $searchData
+     * @param string $orderCrit
+     * @param string $orderDirection
      * @return \Doctrine\ORM\Query
      */
-    protected function getQuery(array $searchData)
+    protected function getQuery(array $searchData, $orderCrit, $orderDirection)
     {
+        $orderCrit = $orderCrit === null
+                   ? $this->orderCrit
+                   : $orderCrit;
+        $orderDirection = $orderDirection === null
+                        ? $this->orderDirection
+                        : $orderDirection;
+
         $queryBuilder = $this->entityManager->createQueryBuilder();
         $queryBuilder->select('e');
         $queryBuilder->from($this->modelClass, 'e');
+
+        if ($orderCrit !== null) {
+            $queryBuilder->orderBy('e.' . $orderCrit, $orderDirection);
+        }
 
         $whereExpressions = array();
 
@@ -100,7 +129,7 @@ class DoctrineMapper implements MapperInterface
      * @return \Zend\Paginator\Adapter\AdapterInterface
      * @codeCoverageIgnore
      */
-    public function getPaginationAdapter(array $searchData)
+    public function getPaginationAdapter(array $searchData, $orderCrit = null, $orderDirection = null)
     {
         $query = $this->getQuery($searchData);
         return new PaginationAdapter(new DoctrinePaginator($query));

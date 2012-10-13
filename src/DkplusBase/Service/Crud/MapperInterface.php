@@ -23,7 +23,13 @@ interface MapperInterface
      */
     public function find($identifier);
 
-    public function findAll(array $searchData);
+    /**
+     *
+     * @param array $searchData
+     * @param string $orderByCrit
+     * @param string $orderDirection
+     */
+    public function findAll(array $searchData, $orderByCrit = null, $orderDirection = null);
 
     /**
      * @throws \DkplusBase\Service\Exception\EntityNotFound
@@ -32,7 +38,9 @@ interface MapperInterface
 
     /**
      * @param array $searchData
+     * @param string $orderByCrit
+     * @param string $orderDirection
      * @return \Zend\Paginator\Adapter\AdapterInterface
      */
-    public function getPaginationAdapter(array $searchData);
+    public function getPaginationAdapter(array $searchData, $orderByCrit = null, $orderDirection = null);
 }
