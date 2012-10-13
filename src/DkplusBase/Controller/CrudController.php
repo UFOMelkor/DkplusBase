@@ -34,7 +34,7 @@ class CrudController extends AbstractActionController
      * Replace the content with this controller action when no item has been found.
      * @var string
      */
-    protected $read404Controller = array('Application\Controller\Index', 'index', array());
+    protected $read404Controller = array('Application\Controller\Index', 'index', array(), null);
 
     /**
      * Message that is shown when no item has been found.
@@ -46,7 +46,7 @@ class CrudController extends AbstractActionController
      * Replace the content with this controller action when no item has been found.
      * @var string
      */
-    protected $update404Controller = array('Application\Controller\Index', 'index', array());
+    protected $update404Controller = array('Application\Controller\Index', 'index', array(), null);
 
     /** @var string */
     protected $updateSuccessRoute;
@@ -64,7 +64,7 @@ class CrudController extends AbstractActionController
      * Replace the content with this controller action when no item has been found.
      * @var string
      */
-    protected $delete404Controller = array('Application\Controller\Index', 'index', array());
+    protected $delete404Controller = array('Application\Controller\Index', 'index', array(), null);
 
     /** @var string */
     protected $deleteSuccessRoute = 'home';
@@ -132,7 +132,8 @@ class CrudController extends AbstractActionController
                 $this->read404Controller[0],
                 $this->read404Controller[1],
                 $this->read404Controller[2]
-            );
+            )->and()->with()->route($this->read404Controller[3])
+             ->and()->pageNotFound()->but()->ignore404NotFoundController();
 
             if ($this->read404Message) {
                 $dsl->and()->add()->notFound()->message($this->read404Message);
@@ -146,9 +147,10 @@ class CrudController extends AbstractActionController
     public function setControllerActionForContentReplacingForNotFoundDataOnReading(
         $controller,
         $action,
-        array $routeParams = array()
+        array $routeParams = array(),
+        $route = null
     ) {
-        $this->read404Controller = array($controller, $action, $routeParams);
+        $this->read404Controller = array($controller, $action, $routeParams, $route);
     }
 
     public function setErrorMessageForNotFoundDataOnReading($message)
@@ -171,7 +173,8 @@ class CrudController extends AbstractActionController
                 $this->update404Controller[0],
                 $this->update404Controller[1],
                 $this->update404Controller[2]
-            );
+            )->and()->with()->route($this->update404Controller[3])
+            ->and()->pageNotFound()->but()->ignore404NotFoundController();
 
             if ($this->update404Message) {
                 $dsl->and()->add()->notFound()->message($this->update404Message);
@@ -212,9 +215,10 @@ class CrudController extends AbstractActionController
     public function setControllerActionForContentReplacingForNotFoundDataOnUpdating(
         $controller,
         $action,
-        array $routeParams = array()
+        array $routeParams = array(),
+        $route = null
     ) {
-        $this->update404Controller = array($controller, $action, $routeParams);
+        $this->update404Controller = array($controller, $action, $routeParams, $route);
     }
 
     public function setErrorMessageForNotFoundDataOnUpdating($message)
@@ -235,7 +239,8 @@ class CrudController extends AbstractActionController
                 $this->delete404Controller[0],
                 $this->delete404Controller[1],
                 $this->delete404Controller[2]
-            );
+            )->and()->with()->route($this->read404Controller[3])
+            ->and()->pageNotFound()->but()->ignore404NotFoundController();
 
             if ($this->delete404Message) {
                 $dsl->and()->add()->notFound()->message($this->delete404Message);
@@ -250,9 +255,10 @@ class CrudController extends AbstractActionController
     public function setControllerActionForContentReplacingForNotFoundDataOnDeletion(
         $controller,
         $action,
-        array $routeParams = array()
+        array $routeParams = array(),
+        $route = null
     ) {
-        $this->delete404Controller = array($controller, $action, $routeParams);
+        $this->delete404Controller = array($controller, $action, $routeParams, $route);
     }
 
     public function setErrorMessageForNotFoundDataOnDeletion($message)

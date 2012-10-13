@@ -143,6 +143,23 @@ class CrudControllerTest extends TestCase
      * @group Component/Controller
      * @group unit
      */
+    public function setsAn404ResponseHeaderButIgnoresZfErrorHandlingWhenNoDataHasBeenFoundWhileReading()
+    {
+        $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
+        $this->service->expects($this->any())
+                      ->method('get')
+                      ->will($this->throwException($exception));
+
+        $this->expectsDsl()->toMarkPageAsNotFound(true);
+
+        $this->controller->readAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group unit
+     */
     public function canConfigurateControllerActionForContentReplacingWhenNoDataHasBeenFoundWhileReading()
     {
         $controller  = 'my-controller';
@@ -696,6 +713,22 @@ class CrudControllerTest extends TestCase
      * @group Component/Controller
      * @group unit
      */
+    public function setsAn404ResponseHeaderButIgnoresZfErrorHandlingWhenNoDataHasBeenFoundWhileUpdating()
+    {
+        $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
+        $this->service->expects($this->any())
+                      ->method('getUpdateForm')
+                      ->will($this->throwException($exception));
+
+        $this->expectsDsl()->toMarkPageAsNotFound(true);
+
+        $this->controller->updateAction();
+    }
+    /**
+     * @test
+     * @group Component/Controller
+     * @group unit
+     */
     public function canConfigurateRouteForRedirectionWhenNoDataHasBeenFoundWhileUpdating()
     {
         $controller  = 'my-controller';
@@ -826,6 +859,23 @@ class CrudControllerTest extends TestCase
                       ->will($this->throwException($exception));
 
         $this->expectsDsl()->toReplaceContentWithControllerAction();
+
+        $this->controller->deleteAction();
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group unit
+     */
+    public function setsAn404ResponseHeaderButIgnoresZfErrorHandlingWhenNoDataHasBeenFoundWhileDeleting()
+    {
+        $exception = $this->getMockIgnoringConstructor('DkplusBase\Service\Exception\EntityNotFound');
+        $this->service->expects($this->any())
+                      ->method('delete')
+                      ->will($this->throwException($exception));
+
+        $this->expectsDsl()->toMarkPageAsNotFound(true);
 
         $this->controller->deleteAction();
     }
