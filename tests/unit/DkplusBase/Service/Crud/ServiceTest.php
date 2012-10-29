@@ -27,13 +27,18 @@ class ServiceTest extends TestCase
     /** @var Service */
     private $service;
 
+    /** @var \Zend\EventManager\EventManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
+    private $eventManager;
+
     protected function setUp()
     {
         parent::setUp();
 
         $this->mapper       = $this->getMockForAbstractClass('DkplusBase\Service\Crud\MapperInterface');
         $this->formStrategy = $this->getMockForAbstractClass('DkplusBase\Service\Crud\FormStrategyInterface');
+        $this->eventManager = $this->getMockForAbstractClass('Zend\EventManager\EventManagerInterface');
         $this->service      = new Service($this->mapper, $this->formStrategy);
+        $this->service->setEventManager($this->eventManager);
     }
 
     /**
@@ -45,6 +50,26 @@ class ServiceTest extends TestCase
     public function isCrudService()
     {
         $this->assertInstanceOf('DkplusBase\Service\Crud\ServiceInterface', $this->service);
+    }
+
+    /**
+     * @test
+     * @group unit
+     * @group Component/Service/Crud
+     */
+    public function needsAnEventManager()
+    {
+        $this->assertInstanceOf('Zend\EventManager\EventManagerAwareInterface', $this->service);
+    }
+
+    /**
+     * @test
+     * @group unit
+     * @group Component/Service/Crud
+     */
+    public function providesTheEventManager()
+    {
+        $this->assertSame($this->eventManager, $this->service->getEventManager());
     }
 
     /**
@@ -434,5 +459,18 @@ class ServiceTest extends TestCase
 
         $paginator = $this->service->getPaginator(1, 50);
         $this->assertEquals(50, $paginator->getItemCountPerPage());
+    }
+
+    /**
+     * @test
+     * @group unit
+     * @group Component/Service/Crud
+     */
+    public function triggersAnEventBeforeCreatingAnNewItem()
+    {
+        $this->eventManager->expects($this->once())
+                           ->method('trigger')
+                           ->with('crud.preCreate', $this->service);
+        $this->service->create(array());
     }
 }

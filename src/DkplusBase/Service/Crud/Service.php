@@ -8,19 +8,25 @@
 
 namespace DkplusBase\Service\Crud;
 
+use Zend\EventManager\EventManagerAwareInterface;
+use Zend\EventManager\EventManagerInterface as EventManager;
+
 /**
  * @category   Dkplus
  * @package    Base
  * @subpackage Service\Crud
  * @author     Oskar Bley <oskar@programming-php.net>
  */
-class Service implements ServiceInterface
+class Service implements ServiceInterface, EventManagerAwareInterface
 {
     /** @var MapperInterface */
     protected $mapper;
 
     /** @var FormStrategyInterface */
     protected $formStrategy;
+
+    /** @var EventManager */
+    protected $eventManager;
 
     public function __construct(MapperInterface $mapper, FormStrategyInterface $formStrategy)
     {
@@ -30,6 +36,7 @@ class Service implements ServiceInterface
 
     public function create($data)
     {
+        $this->eventManager->trigger('crud.preCreate', $this);
         $item = $this->formStrategy->createItem($data);
         return $this->mapper->save($item);
     }
@@ -95,5 +102,16 @@ class Service implements ServiceInterface
         $paginator->setItemCountPerPage($itemCountPerPage);
         $paginator->setCurrentPageNumber($pageNumber);
         return $paginator;
+    }
+
+    /** @return EventManager */
+    public function getEventManager()
+    {
+        return $this->eventManager;
+    }
+
+    public function setEventManager(EventManager $eventManager)
+    {
+        $this->eventManager = $eventManager;
     }
 }

@@ -3,6 +3,13 @@
 return array(
     'DkplusBase\Authentication\Storage\Chain'              => __DIR__ . '/src/DkplusBase/Authentication/Storage/Chain.php',
     'DkplusBase\Controller\CrudController'                 => __DIR__ . '/src/DkplusBase/Controller/CrudController.php',
+    'DkplusBase\Crud\Controller\CrudController'            => __DIR__ . '/src/DkplusBase/Crud/Controller/CrudController.php',
+    'DkplusBase\Crud\Controller\CrudController2'           => __DIR__ . '/src/DkplusBase/Crud/Controller/CrudController2.php',
+    'DkplusBase\Crud\Controller\NotFoundOptions'           => __DIR__ . '/src/DkplusBase/Crud/Controller/NotFoundOptions.php',
+    'DkplusBase\Crud\Controller\SuccessOptions'            => __DIR__ . '/src/DkplusBase/Crud/Controller/SuccessOptions.php',
+    'DkplusBase\Crud\Listener\AssignListener'              => __DIR__ . '/src/DkplusBase/Crud/Listener/AssignListener.php',
+    'DkplusBase\Crud\Listener\ControllerListener'          => __DIR__ . '/src/DkplusBase/Crud/Listener/ControllerListener.php',
+    'DkplusBase\Crud\Service\ServiceInterface'             => __DIR__ . '/src/DkplusBase/Crud/Service/ServiceInterface.php',
     'DkplusBase\Module'                                    => __DIR__ . '/src/DkplusBase/Module.php',
     'DkplusBase\Service\Crud\BindFormStrategy'             => __DIR__ . '/src/DkplusBase/Service/Crud/BindFormStrategy.php',
     'DkplusBase\Service\Crud\DoctrineMapper'               => __DIR__ . '/src/DkplusBase/Service/Crud/DoctrineMapper.php',
