@@ -30,7 +30,7 @@ class AssignListenerTest extends TestCase
     {
         parent::setUp();
         $this->controller = new CrudController();
-        $this->listener   = new AssignListener('read', 'data', 'paginator');
+        $this->listener   = new AssignListener('data', 'paginator');
     }
 
     /**
@@ -38,14 +38,9 @@ class AssignListenerTest extends TestCase
      * @group Component/Listener
      * @group unit
      */
-    public function attachesTheAssignMethodToTheEventManager()
+    public function isCrudListener()
     {
-        $eventManager = $this->getMockForAbstractClass('Zend\EventManager\EventManagerInterface');
-        $eventManager->expects($this->once())
-                     ->method('attach')
-                     ->with('read', array($this->listener, 'assign'));
-
-        $this->listener->attach($eventManager);
+        $this->assertInstanceOf('DkplusBase\Crud\Listener\ListenerInterface', $this->listener);
     }
 
     /**
@@ -53,20 +48,16 @@ class AssignListenerTest extends TestCase
      * @group Component/Listener
      * @group unit
      */
-    public function canDetachTheAttachedMethods()
+    public function returnsDsl()
     {
-        $listener = 123;
+        $this->setUpController($this->controller);
 
-        $eventManager = $this->getMockForAbstractClass('Zend\EventManager\EventManagerInterface');
-        $eventManager->expects($this->at(0))
-                     ->method('attach')
-                     ->will($this->returnValue($listener));
-        $eventManager->expects($this->at(1))
-                     ->method('detach')
-                     ->with($listener);
+        $event = $this->getMockIgnoringConstructor('Zend\Mvc\MvcEvent');
+        $event->expects($this->any())
+              ->method('getTarget')
+              ->will($this->returnValue($this->controller));
 
-        $this->listener->attach($eventManager);
-        $this->listener->detach($eventManager);
+        $this->assertDsl($this->listener->execute($event));
     }
 
     /**
@@ -80,7 +71,7 @@ class AssignListenerTest extends TestCase
 
         $paginator = $this->getMockIgnoringConstructor('Zend\Paginator\Paginator');
 
-        $event = $this->getMockIgnoringConstructor('Zend\EventManager\Event');
+        $event = $this->getMockIgnoringConstructor('Zend\Mvc\MvcEvent');
         $event->expects($this->any())
               ->method('getParam')
               ->with('paginator')
@@ -90,6 +81,6 @@ class AssignListenerTest extends TestCase
               ->will($this->returnValue($this->controller));
 
         $this->expectsDsl()->toAssign($paginator, 'data');
-        $this->listener->assign($event);
+        $this->listener->execute($event);
     }
 }

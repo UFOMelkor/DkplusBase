@@ -2,19 +2,19 @@
 /**
  * @category   Dkplus
  * @package    Base
- * @subpackage Crud\Controller
+ * @subpackage Crud\Listener
  * @author     Oskar Bley <oskar@programming-php.net>
  */
 
-namespace DkplusBase\Crud\Controller;
+namespace DkplusBase\Crud\Listener\Options;
 
 /**
  * @category   Dkplus
  * @package    Base
- * @subpackage Crud\Controller
+ * @subpackage Crud\Listener
  * @author     Oskar Bley <oskar@programming-php.net>
  */
-class NotFoundOptions
+class NotFoundReplaceOptions
 {
     /** @var string */
     protected $crController = 'Application\Controller\Index';

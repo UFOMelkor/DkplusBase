@@ -8,9 +8,7 @@
 
 namespace DkplusBase\Crud\Listener;
 
-use Zend\EventManager\Event;
-use Zend\EventManager\EventManagerInterface as EventManager;
-use Zend\EventManager\ListenerAggregateInterface;
+use Zend\Mvc\MvcEvent;
 
 /**
  * @category   Dkplus
@@ -18,40 +16,21 @@ use Zend\EventManager\ListenerAggregateInterface;
  * @subpackage Crud\Listener
  * @author     Oskar Bley <oskar@programming-php.net>
  */
-class AssignListener implements ListenerAggregateInterface
+class AssignListener implements ListenerInterface
 {
-    /** @var string */
-    private $eventName;
-
     /** @var string */
     private $assignAlias;
 
     /** @var string */
     private $eventParameter;
 
-    /** @var array */
-    private $listeners = array();
-
-    public function __construct($eventName, $assignAlias, $eventParameter)
+    public function __construct($assignAlias, $eventParameter)
     {
         $this->assignAlias    = $assignAlias;
-        $this->eventName      = $eventName;
         $this->eventParameter = $eventParameter;
     }
 
-    public function attach(EventManager $eventManager)
-    {
-        $this->listeners[] = $eventManager->attach($this->eventName, array($this, 'assign'));
-    }
-
-    public function detach(EventManager $eventManager)
-    {
-        foreach ($this->listeners as $listener) {
-            $eventManager->detach($listener);
-        }
-    }
-
-    public function assign(Event $event)
+    public function execute(MvcEvent $event)
     {
         $controller = $event->getTarget();
         $assignable = $event->getParam($this->eventParameter);

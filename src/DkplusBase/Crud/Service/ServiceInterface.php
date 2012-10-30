@@ -29,7 +29,7 @@ interface ServiceInterface
 
     public function getCreationForm();
 
-    public function getAll(array $searchData = array(), $orderCrit = null, $orderDirection = null);
+    public function getAll();
 
     /**
      * @param mixed $data
@@ -46,7 +46,7 @@ interface ServiceInterface
     /**
      * @throws \DkplusBase\Service\Exception\EntityNotFound
      */
-    public function delete($identifier);
+    public function delete($entity);
 
     /**
      * @param int $pageNumber
@@ -54,11 +54,8 @@ interface ServiceInterface
      * @param array $searchData
      * @return \Zend\Paginator\Paginator
      */
-    public function getPaginator(
-        $pageNumber,
-        $itemCountPerPage,
-        array $searchData = array(),
-        $orderCrit = null,
-        $orderDirection = null
-    );
+    public function getPaginator($pageNumber);
+
+    /** @param int $value */
+    public function setItemCountPerPage($value);
 }

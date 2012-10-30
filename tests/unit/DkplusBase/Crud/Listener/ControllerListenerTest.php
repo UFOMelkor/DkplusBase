@@ -9,7 +9,7 @@
 namespace DkplusBase\Crud\Listener;
 
 use DkplusBase\Crud\Controller\CrudController;
-use DkplusUnitTest\TestCase;
+use DkplusControllerDsl\Test\TestCase;
 
 /**
  * @category   DkplusTesting
@@ -18,20 +18,19 @@ use DkplusUnitTest\TestCase;
  * @author     Oskar Bley <oskar@programming-php.net>
  * @covers     DkplusBase\Crud\Listener\AssignListener
  */
-class PaginationRetrieveListenerTest extends TestCase
+class ControllerListenerTest extends TestCase
 {
-    /** @var \Zend\Http\Request|\PHPUnit_Framework_MockObject_MockObject */
-    protected $request;
+    /** @var CrudController */
+    protected $controller;
 
-    /** @var PaginationRetrieveListener */
+    /** @var AssignListener */
     protected $listener;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->request  = $this->getMockIgnoringConstructor('Zend\Http\Request');
-        $this->service  = $this->getMockForAbstractClass('DkplusBase\Crud\\Service\ServiceInterface');
-        $this->listener = new PaginationRetrievelListener('preRead', $this->request, $this->service);
+        $this->controller = new CrudController();
+        $this->listener   = new AssignListener('read', 'data', 'paginator');
     }
 
     /**
@@ -39,12 +38,12 @@ class PaginationRetrieveListenerTest extends TestCase
      * @group Component/Listener
      * @group unit
      */
-    public function attachesTheGetPaginatorMethodToTheEventManager()
+    public function attachesTheAssignMethodToTheEventManager()
     {
         $eventManager = $this->getMockForAbstractClass('Zend\EventManager\EventManagerInterface');
         $eventManager->expects($this->once())
                      ->method('attach')
-                     ->with('preRead', array($this->listener, 'getPaginator'));
+                     ->with('read', array($this->listener, 'assign'));
 
         $this->listener->attach($eventManager);
     }
