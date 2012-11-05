@@ -63,7 +63,10 @@ class CreateAggregate implements ListenerAggregateInterface
 
     public function attach(EventManager $eventManager)
     {
-        $this->aggregate->addListener(new Listener\CreateFormRetrievalListener($this->service), 'CrudController.preCreate');
+        $this->aggregate->addListener(
+            new Listener\CreateFormRetrievalListener($this->service),
+            'CrudController.preCreate'
+        );
         $this->aggregate->addListener(
             new Listener\FormSubmissionRedirectListener($this->service, $this->successOptions, $this->template),
             'CrudController.create'

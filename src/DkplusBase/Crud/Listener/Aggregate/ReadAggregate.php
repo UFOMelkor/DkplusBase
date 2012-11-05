@@ -65,8 +65,14 @@ class ReadAggregate implements ListenerAggregateInterface
     {
         $this->aggregate->addListener(new Listener\IdentifierProviderListener(), 'CrudController.preRead', 2);
         $this->aggregate->addListener(new Listener\EntityRetrievalListener($this->service), 'CrudController.preRead');
-        $this->aggregate->addListener(new Listener\AssignListener('entity', 'entity', $this->template), 'CrudController.read');
-        $this->aggregate->addListener(new Listener\NotFoundReplaceListener($this->notFoundOptions), 'CrudController.readNotFound');
+        $this->aggregate->addListener(
+            new Listener\AssignListener('entity', 'entity', $this->template),
+            'CrudController.read'
+        );
+        $this->aggregate->addListener(
+            new Listener\NotFoundReplaceListener($this->notFoundOptions),
+            'CrudController.readNotFound'
+        );
         $this->aggregate->attach($eventManager);
     }
 

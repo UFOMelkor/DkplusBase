@@ -55,8 +55,14 @@ class PaginateAggregate implements ListenerAggregateInterface
 
     public function attach(EventManager $eventManager)
     {
-        $this->aggregate->addListener(new Listener\PaginationRetrievalListener($this->service), 'CrudController.prePaginate');
-        $this->aggregate->addListener(new Listener\AssignListener('entities', 'paginator', $this->template), 'CrudController.paginate');
+        $this->aggregate->addListener(
+            new Listener\PaginationRetrievalListener($this->service),
+            'CrudController.prePaginate'
+        );
+        $this->aggregate->addListener(
+            new Listener\AssignListener('entities', 'paginator', $this->template),
+            'CrudController.paginate'
+        );
         $this->aggregate->attach($eventManager);
     }
 

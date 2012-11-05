@@ -57,7 +57,10 @@ class ReadAggregate implements ListenerAggregateInterface
     public function attach(EventManager $eventManager)
     {
         $this->aggregate->addListener(new Listener\EntitiesRetrievalListener($this->service), 'CrudController.preList');
-        $this->aggregate->addListener(new Listener\AssignListener('entities', 'data', $this->template), 'CrudController.list');
+        $this->aggregate->addListener(
+            new Listener\AssignListener('entities', 'data', $this->template),
+            'CrudController.list'
+        );
         $this->aggregate->attach($eventManager);
     }
 
