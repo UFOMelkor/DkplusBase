@@ -38,6 +38,6 @@ class AssignListener implements ListenerInterface
     {
         $controller = $event->getTarget();
         $assignable = $event->getParam($this->eventParameter);
-        return $controller->dsl()->assign($assignable)->as($this->assignAlias)->and()->render($this->template);
+        return $controller->dsl()->assign($assignable)->as($this->assignAlias)->render($this->template);
     }
 }
