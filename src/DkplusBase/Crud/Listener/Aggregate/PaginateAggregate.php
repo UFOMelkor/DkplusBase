@@ -19,7 +19,7 @@ use Zend\EventManager\ListenerAggregateInterface;
  * @subpackage Crud\Listener
  * @author     Oskar Bley <oskar@programming-php.net>
  */
-class ReadAggregate implements ListenerAggregateInterface
+class PaginateAggregate implements ListenerAggregateInterface
 {
     /** @var ActionAggregate */
     protected $aggregate;
@@ -30,9 +30,6 @@ class ReadAggregate implements ListenerAggregateInterface
     /** @var string */
     protected $template;
 
-    /** @var Listener\Options\NotFoundOptions */
-    protected $notFoundOptions;
-
     public function setService(Service $service)
     {
         $this->service = $service;
@@ -41,11 +38,6 @@ class ReadAggregate implements ListenerAggregateInterface
     public function setTemplate($template)
     {
         $this->template = $template;
-    }
-
-    public function setNotFoundOptions(Listener\Options\NotFoundReplaceOptions $options)
-    {
-        $this->notFoundOptions = $options;
     }
 
     /** @return ActionAggregate */
@@ -63,10 +55,8 @@ class ReadAggregate implements ListenerAggregateInterface
 
     public function attach(EventManager $eventManager)
     {
-        $this->aggregate->addListener(new Listener\IdentifierProviderListener(), 'CrudController.preRead', 2);
-        $this->aggregate->addListener(new Listener\EntityRetrievalListener($this->service), 'CrudController.preRead');
-        $this->aggregate->addListener(new Listener\AssignListener('entity', 'entity', $this->template), 'CrudController.read');
-        $this->aggregate->addListener(new Listener\NotFoundReplaceListener($this->notFoundOptions), 'CrudController.readNotFound');
+        $this->aggregate->addListener(new Listener\PaginationRetrievalListener($this->service), 'CrudController.prePaginate');
+        $this->aggregate->addListener(new Listener\AssignListener('entities', 'paginator', $this->template), 'CrudController.paginate');
         $this->aggregate->attach($eventManager);
     }
 

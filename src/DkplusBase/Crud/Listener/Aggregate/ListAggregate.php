@@ -30,8 +30,6 @@ class ReadAggregate implements ListenerAggregateInterface
     /** @var string */
     protected $template;
 
-    /** @var Listener\Options\NotFoundOptions */
-    protected $notFoundOptions;
 
     public function setService(Service $service)
     {
@@ -41,11 +39,6 @@ class ReadAggregate implements ListenerAggregateInterface
     public function setTemplate($template)
     {
         $this->template = $template;
-    }
-
-    public function setNotFoundOptions(Listener\Options\NotFoundReplaceOptions $options)
-    {
-        $this->notFoundOptions = $options;
     }
 
     /** @return ActionAggregate */
@@ -63,10 +56,8 @@ class ReadAggregate implements ListenerAggregateInterface
 
     public function attach(EventManager $eventManager)
     {
-        $this->aggregate->addListener(new Listener\IdentifierProviderListener(), 'CrudController.preRead', 2);
-        $this->aggregate->addListener(new Listener\EntityRetrievalListener($this->service), 'CrudController.preRead');
-        $this->aggregate->addListener(new Listener\AssignListener('entity', 'entity', $this->template), 'CrudController.read');
-        $this->aggregate->addListener(new Listener\NotFoundReplaceListener($this->notFoundOptions), 'CrudController.readNotFound');
+        $this->aggregate->addListener(new Listener\EntitiesRetrievalListener($this->service), 'CrudController.preList');
+        $this->aggregate->addListener(new Listener\AssignListener('entities', 'data', $this->template), 'CrudController.list');
         $this->aggregate->attach($eventManager);
     }
 

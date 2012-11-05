@@ -19,7 +19,7 @@ use Zend\EventManager\ListenerAggregateInterface;
  * @subpackage Crud\Listener
  * @author     Oskar Bley <oskar@programming-php.net>
  */
-class ReadAggregate implements ListenerAggregateInterface
+class UpdateAggregate implements ListenerAggregateInterface
 {
     /** @var ActionAggregate */
     protected $aggregate;
@@ -27,25 +27,33 @@ class ReadAggregate implements ListenerAggregateInterface
     /** @var Service */
     protected $service;
 
-    /** @var string */
-    protected $template;
-
     /** @var Listener\Options\NotFoundOptions */
     protected $notFoundOptions;
+
+    /** @var Listener\Options\SuccessOptions */
+    protected $successOptions;
+
+    /** @var string */
+    protected $template;
 
     public function setService(Service $service)
     {
         $this->service = $service;
     }
 
-    public function setTemplate($template)
+    public function setSuccessOptions(Listener\Options\SuccessOptions $options)
     {
-        $this->template = $template;
+        $this->successOptions = $options;
     }
 
     public function setNotFoundOptions(Listener\Options\NotFoundReplaceOptions $options)
     {
         $this->notFoundOptions = $options;
+    }
+
+    public function setTemplate($template)
+    {
+        $this->template = $template;
     }
 
     /** @return ActionAggregate */
@@ -63,10 +71,19 @@ class ReadAggregate implements ListenerAggregateInterface
 
     public function attach(EventManager $eventManager)
     {
-        $this->aggregate->addListener(new Listener\IdentifierProviderListener(), 'CrudController.preRead', 2);
-        $this->aggregate->addListener(new Listener\EntityRetrievalListener($this->service), 'CrudController.preRead');
-        $this->aggregate->addListener(new Listener\AssignListener('entity', 'entity', $this->template), 'CrudController.read');
-        $this->aggregate->addListener(new Listener\NotFoundReplaceListener($this->notFoundOptions), 'CrudController.readNotFound');
+        $this->aggregate->addListener(new Listener\IdentifierProviderListener(), 'CrudController.preUpdate', 2);
+        $this->aggregate->addListener(
+            new Listener\UpdateFormRetrievalListener($this->service),
+            'CrudController.preUpdate'
+        );
+        $this->aggregate->addListener(
+            new Listener\FormSubmissionRedirectListener($this->service, $this->successOptions, $this->template),
+            'CrudController.update'
+        );
+        $this->aggregate->addListener(
+            new Listener\NotFoundReplaceListener($this->notFoundOptions),
+            'CrudController.updateNotFound'
+        );
         $this->aggregate->attach($eventManager);
     }
 

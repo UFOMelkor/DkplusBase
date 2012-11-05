@@ -18,6 +18,9 @@ use DkplusUnitTest\TestCase;
  */
 class PaginationRetrievalListenerTest extends TestCase
 {
+    /** @var \Zend\Mvc\MvcEvent|\PHPUnit_Framework_MockObject_MockObject */
+    protected $event;
+
     /** @var \Zend\Http\Request|\PHPUnit_Framework_MockObject_MockObject */
     protected $routeMatch;
 
@@ -27,8 +30,23 @@ class PaginationRetrievalListenerTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->routeMatch = $this->getMockIgnoringConstructor('Zend\Mvc\Router\RouteMatch');
         $this->service    = $this->getMockForAbstractClass('DkplusBase\Crud\\Service\ServiceInterface');
+        $this->listener   = new PaginationRetrievalListener($this->service);
+        $this->routeMatch = $this->getMockIgnoringConstructor('Zend\Mvc\Router\RouteMatch');
+        $this->event      = $this->getMockIgnoringConstructor('Zend\Mvc\MvcEvent');
+        $this->event->expects($this->any())
+                    ->method('getRouteMatch')
+                    ->will($this->returnValue($this->routeMatch));
+    }
+
+    /**
+     * @test
+     * @group Component/Listener
+     * @group unit
+     */
+    public function isListener()
+    {
+        $this->assertInstanceOf('DkplusBase\Crud\Listener\ListenerInterface', $this->listener);
     }
 
     /**
@@ -42,8 +60,7 @@ class PaginationRetrievalListenerTest extends TestCase
                          ->method('getParam')
                          ->with('page', 0);
 
-        $listener = new PaginationRetrievalListener($this->routeMatch, $this->service);
-        $listener->getPaginator();
+        $this->listener->execute($this->event);
     }
 
     /**
@@ -57,8 +74,8 @@ class PaginationRetrievalListenerTest extends TestCase
                          ->method('getParam')
                          ->with('my-page-param', 0);
 
-        $listener = new PaginationRetrievalListener($this->routeMatch, $this->service, 'my-page-param');
-        $listener->getPaginator();
+        $listener = new PaginationRetrievalListener($this->service, 'my-page-param');
+        $listener->execute($this->event);
     }
 
     /**
@@ -79,7 +96,6 @@ class PaginationRetrievalListenerTest extends TestCase
                       ->with(5)
                       ->will($this->returnValue($paginator));
 
-        $listener = new PaginationRetrievalListener($this->routeMatch, $this->service);
-        $this->assertSame($paginator, $listener->getPaginator());
+        $this->assertSame($paginator, $this->listener->execute($this->event));
     }
 }

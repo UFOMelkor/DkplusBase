@@ -9,7 +9,7 @@
 namespace DkplusBase\Crud\Listener;
 
 use DkplusBase\Crud\Service\ServiceInterface as Service;
-use Zend\Mvc\Router\RouteMatch;
+use Zend\Mvc\MvcEvent;
 
 /**
  * @category   Dkplus
@@ -17,11 +17,8 @@ use Zend\Mvc\Router\RouteMatch;
  * @subpackage Crud\Listener
  * @author     Oskar Bley <oskar@programming-php.net>
  */
-class PaginationRetrievalListener
+class PaginationRetrievalListener implements ListenerInterface
 {
-    /** @var RouteMatch */
-    protected $routeMatch;
-
     /** @var Service */
     protected $service;
 
@@ -29,20 +26,18 @@ class PaginationRetrievalListener
     protected $pageParameter;
 
     /**
-     * @param RouteMatch $routeMatch
      * @param Service $service
      * @param string $pageParameter
      */
-    public function __construct(RouteMatch $routeMatch, Service $service, $pageParameter = 'page')
+    public function __construct(Service $service, $pageParameter = 'page')
     {
-        $this->routeMatch    = $routeMatch;
         $this->service       = $service;
         $this->pageParameter = (string) $pageParameter;
     }
 
-    public function getPaginator()
+    public function execute(MvcEvent $event)
     {
-        $pageNumber = $this->routeMatch->getParam($this->pageParameter);
+        $pageNumber = $event->getRouteMatch()->getParam($this->pageParameter);
         return $this->service->getPaginator($pageNumber);
     }
 }

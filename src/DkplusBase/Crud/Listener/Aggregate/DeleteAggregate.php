@@ -19,7 +19,7 @@ use Zend\EventManager\ListenerAggregateInterface;
  * @subpackage Crud\Listener
  * @author     Oskar Bley <oskar@programming-php.net>
  */
-class ReadAggregate implements ListenerAggregateInterface
+class DeleteAggregate implements ListenerAggregateInterface
 {
     /** @var ActionAggregate */
     protected $aggregate;
@@ -27,20 +27,20 @@ class ReadAggregate implements ListenerAggregateInterface
     /** @var Service */
     protected $service;
 
-    /** @var string */
-    protected $template;
-
     /** @var Listener\Options\NotFoundOptions */
     protected $notFoundOptions;
+
+    /** @var Listener\Options\SuccessOptions */
+    protected $successOptions;
 
     public function setService(Service $service)
     {
         $this->service = $service;
     }
 
-    public function setTemplate($template)
+    public function setSuccessOptions(Listener\Options\SuccessOptions $options)
     {
-        $this->template = $template;
+        $this->successOptions = $options;
     }
 
     public function setNotFoundOptions(Listener\Options\NotFoundReplaceOptions $options)
@@ -63,10 +63,16 @@ class ReadAggregate implements ListenerAggregateInterface
 
     public function attach(EventManager $eventManager)
     {
-        $this->aggregate->addListener(new Listener\IdentifierProviderListener(), 'CrudController.preRead', 2);
-        $this->aggregate->addListener(new Listener\EntityRetrievalListener($this->service), 'CrudController.preRead');
-        $this->aggregate->addListener(new Listener\AssignListener('entity', 'entity', $this->template), 'CrudController.read');
-        $this->aggregate->addListener(new Listener\NotFoundReplaceListener($this->notFoundOptions), 'CrudController.readNotFound');
+        $this->aggregate->addListener(new Listener\IdentifierProviderListener(), 'CrudController.preDelete', 2);
+        $this->aggregate->addListener(new Listener\EntityRetrievalListener($this->service), 'CrudController.preDelete');
+        $this->aggregate->addListener(
+            new Listener\DeleteRedirectListener($this->service, $this->successOptions),
+            'CrudController.delete'
+        );
+        $this->aggregate->addListener(
+            new Listener\NotFoundReplaceListener($this->notFoundOptions),
+            'CrudController.deleteNotFound'
+        );
         $this->aggregate->attach($eventManager);
     }
 

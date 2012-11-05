@@ -19,7 +19,7 @@ use Zend\EventManager\ListenerAggregateInterface;
  * @subpackage Crud\Listener
  * @author     Oskar Bley <oskar@programming-php.net>
  */
-class ReadAggregate implements ListenerAggregateInterface
+class CreateAggregate implements ListenerAggregateInterface
 {
     /** @var ActionAggregate */
     protected $aggregate;
@@ -30,8 +30,8 @@ class ReadAggregate implements ListenerAggregateInterface
     /** @var string */
     protected $template;
 
-    /** @var Listener\Options\NotFoundOptions */
-    protected $notFoundOptions;
+    /** @var Listener\Options\SuccessOptions */
+    protected $successOptions;
 
     public function setService(Service $service)
     {
@@ -43,9 +43,9 @@ class ReadAggregate implements ListenerAggregateInterface
         $this->template = $template;
     }
 
-    public function setNotFoundOptions(Listener\Options\NotFoundReplaceOptions $options)
+    public function setSuccessOptions(Listener\Options\SuccessOptions $options)
     {
-        $this->notFoundOptions = $options;
+        $this->successOptions = $options;
     }
 
     /** @return ActionAggregate */
@@ -63,10 +63,11 @@ class ReadAggregate implements ListenerAggregateInterface
 
     public function attach(EventManager $eventManager)
     {
-        $this->aggregate->addListener(new Listener\IdentifierProviderListener(), 'CrudController.preRead', 2);
-        $this->aggregate->addListener(new Listener\EntityRetrievalListener($this->service), 'CrudController.preRead');
-        $this->aggregate->addListener(new Listener\AssignListener('entity', 'entity', $this->template), 'CrudController.read');
-        $this->aggregate->addListener(new Listener\NotFoundReplaceListener($this->notFoundOptions), 'CrudController.readNotFound');
+        $this->aggregate->addListener(new Listener\CreateFormRetrievalListener($this->service), 'CrudController.preCreate');
+        $this->aggregate->addListener(
+            new Listener\FormSubmissionRedirectListener($this->service, $this->successOptions, $this->template),
+            'CrudController.create'
+        );
         $this->aggregate->attach($eventManager);
     }
 
