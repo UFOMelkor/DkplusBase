@@ -6,7 +6,7 @@
  * @author     Oskar Bley <oskar@programming-php.net>
  */
 
-namespace DkplusBase\Crud\Listener\Aggregate;
+namespace DkplusBase\Crud\Listener\Aggregate\Parameter;
 
 /**
  * @category   Dkplus

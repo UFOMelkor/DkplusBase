@@ -9,9 +9,7 @@
 namespace DkplusBase\Crud\Listener\Aggregate;
 
 use DkplusBase\Crud\Listener;
-use DkplusBase\Crud\Service\ServiceInterface as Service;
 use Zend\EventManager\EventManagerInterface as EventManager;
-use Zend\EventManager\ListenerAggregateInterface;
 
 /**
  * @category   Dkplus
@@ -19,14 +17,8 @@ use Zend\EventManager\ListenerAggregateInterface;
  * @subpackage Crud\Listener
  * @author     Oskar Bley <oskar@programming-php.net>
  */
-class UpdateAggregate implements ListenerAggregateInterface
+class UpdateAggregate extends ActionAggregate
 {
-    /** @var ActionAggregate */
-    protected $aggregate;
-
-    /** @var Service */
-    protected $service;
-
     /** @var Listener\Options\NotFoundOptions */
     protected $notFoundOptions;
 
@@ -35,11 +27,6 @@ class UpdateAggregate implements ListenerAggregateInterface
 
     /** @var string */
     protected $template;
-
-    public function setService(Service $service)
-    {
-        $this->service = $service;
-    }
 
     public function setSuccessOptions(Listener\Options\SuccessOptions $options)
     {
@@ -54,19 +41,6 @@ class UpdateAggregate implements ListenerAggregateInterface
     public function setTemplate($template)
     {
         $this->template = $template;
-    }
-
-    /** @return ActionAggregate */
-    public function getAggregate()
-    {
-        if ($this->aggregate === null) {
-            $this->aggregate = new ActionAggregate();
-        }
-    }
-
-    public function setAggregate(ActionAggregate $aggregate)
-    {
-        $this->aggregate = $aggregate;
     }
 
     public function attach(EventManager $eventManager)
@@ -84,11 +58,6 @@ class UpdateAggregate implements ListenerAggregateInterface
             new Listener\NotFoundReplaceListener($this->notFoundOptions),
             'CrudController.updateNotFound'
         );
-        $this->aggregate->attach($eventManager);
-    }
-
-    public function detach(EventManager $eventManager)
-    {
-        $this->aggregate->detach($eventManager);
+        parent::attach($eventManager);
     }
 }
