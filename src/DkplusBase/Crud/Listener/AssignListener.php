@@ -19,21 +19,25 @@ use Zend\Mvc\MvcEvent;
 class AssignListener implements ListenerInterface
 {
     /** @var string */
-    private $assignAlias;
+    protected $assignAlias;
 
     /** @var string */
-    private $eventParameter;
+    protected $eventParameter;
 
-    public function __construct($assignAlias, $eventParameter)
+    /** @var string */
+    protected $template;
+
+    public function __construct($assignAlias, $eventParameter, $template)
     {
         $this->assignAlias    = $assignAlias;
         $this->eventParameter = $eventParameter;
+        $this->template       = $template;
     }
 
     public function execute(MvcEvent $event)
     {
         $controller = $event->getTarget();
         $assignable = $event->getParam($this->eventParameter);
-        return $controller->dsl()->assign($assignable)->as($this->assignAlias);
+        return $controller->dsl()->assign($assignable)->as($this->assignAlias)->and()->render($this->template);
     }
 }

@@ -40,7 +40,7 @@ class FormSubmissionRedirectListenerTest extends TestCase
         parent::setUp();
         $this->options  = $this->getMockIgnoringConstructor('DkplusBase\Crud\Listener\Options\SuccessOptions');
         $this->service  = $this->getMockForAbstractClass('DkplusBase\Crud\Service\ServiceInterface');
-        $this->listener = new FormSubmissionRedirectListener($this->service, $this->options);
+        $this->listener = new FormSubmissionRedirectListener($this->service, $this->options, 'user/edit.phtml');
 
         $this->event      = $this->getMockIgnoringConstructor('Zend\Mvc\MvcEvent');
         $this->controller = new CrudController();
@@ -266,6 +266,17 @@ class FormSubmissionRedirectListenerTest extends TestCase
             ->with($successDsl)
             ->will($this->returnSelf());
 
+        $this->listener->execute($this->event);
+    }
+
+    /**
+     * @test
+     * @group Component/Listener
+     * @group unit
+     */
+    public function rendersTheTemplate()
+    {
+        $this->expectsDsl()->toRender('user/edit.phtml');
         $this->listener->execute($this->event);
     }
 }

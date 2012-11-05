@@ -25,10 +25,14 @@ class FormSubmissionRedirectListener implements ListenerInterface
     /** @var Service */
     protected $service;
 
-    public function __construct(Service $service, Options\SuccessOptions $options)
+    /** @var string */
+    protected $template;
+
+    public function __construct(Service $service, Options\SuccessOptions $options, $template)
     {
-        $this->service = $service;
-        $this->options = $options;
+        $this->service  = $service;
+        $this->options  = $options;
+        $this->template = $template;
     }
 
     public function execute(MvcEvent $event)
@@ -42,7 +46,8 @@ class FormSubmissionRedirectListener implements ListenerInterface
                     : array($this->service, 'update');
 
         return $ctrl->dsl()
-                    ->use($form)->and()->assign()
+                    ->render($this->template)
+                    ->and()->use($form)->and()->assign()
                     ->and()->validate()->against('postredirectget')
                     ->and()->onSuccess(
                         $ctrl->dsl()

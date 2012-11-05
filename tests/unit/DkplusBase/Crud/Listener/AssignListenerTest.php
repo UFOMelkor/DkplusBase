@@ -30,7 +30,7 @@ class AssignListenerTest extends TestCase
     {
         parent::setUp();
         $this->controller = new CrudController();
-        $this->listener   = new AssignListener('data', 'paginator');
+        $this->listener   = new AssignListener('data', 'paginator', 'crud/read');
     }
 
     /**
@@ -81,6 +81,24 @@ class AssignListenerTest extends TestCase
               ->will($this->returnValue($this->controller));
 
         $this->expectsDsl()->toAssign($paginator, 'data');
+        $this->listener->execute($event);
+    }
+
+    /**
+     * @test
+     * @group Component/Listener
+     * @group unit
+     */
+    public function rendersTheTemplate()
+    {
+        $this->setUpController($this->controller);
+
+        $event = $this->getMockIgnoringConstructor('Zend\Mvc\MvcEvent');
+        $event->expects($this->any())
+              ->method('getTarget')
+              ->will($this->returnValue($this->controller));
+
+        $this->expectsDsl()->toRender('crud/read');
         $this->listener->execute($event);
     }
 }
