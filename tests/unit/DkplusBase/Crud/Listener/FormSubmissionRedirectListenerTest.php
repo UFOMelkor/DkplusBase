@@ -97,11 +97,11 @@ class FormSubmissionRedirectListenerTest extends TestCase
         $dsl = $this->getDslMockBuilder()
                     ->withMockedPhrases(array('assign'))
                     ->getMock();
-        $dsl->expects($this->at(0))
+        $dsl->expects($this->at(2))
             ->method('__call')
             ->with('use', array($form))
             ->will($this->returnSelf());
-        $dsl->expects($this->at(2))
+        $dsl->expects($this->at(4))
             ->method('assign')
             ->will($this->returnSelf());
     }
