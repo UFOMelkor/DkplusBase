@@ -80,7 +80,17 @@ class AssignListenerTest extends TestCase
               ->method('getTarget')
               ->will($this->returnValue($this->controller));
 
-        $this->expectsDsl()->toAssign($paginator, 'data');
+        $dsl = $this->getDslMockBuilder()
+                    ->withMockedPhrases(array('assign'))
+                    ->getMock();
+        $dsl->expects($this->at(0))
+            ->method('assign')
+            ->with($paginator)
+            ->will($this->returnSelf());
+        $dsl->expects($this->at(1))
+            ->method('__call')
+            ->with('as', array('data'))
+            ->will($this->returnSelf());
         $this->listener->execute($event);
     }
 
