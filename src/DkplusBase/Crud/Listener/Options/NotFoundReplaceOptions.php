@@ -8,13 +8,15 @@
 
 namespace DkplusBase\Crud\Listener\Options;
 
+use Zend\Stdlib\AbstractOptions;
+
 /**
  * @category   Dkplus
  * @package    Base
  * @subpackage Crud\Listener
  * @author     Oskar Bley <oskar@programming-php.net>
  */
-class NotFoundReplaceOptions
+class NotFoundReplaceOptions extends AbstractOptions
 {
     /** @var string */
     protected $crController = 'Application\Controller\Index';
@@ -28,10 +30,19 @@ class NotFoundReplaceOptions
     /** @var string */
     protected $crRoute = 'home';
 
+    /** @var string|null */
+    protected $errorMessage;
+
     /** @return string */
     public function getContentReplaceController()
     {
         return $this->crController;
+    }
+
+    /** @param string $controller */
+    public function setContentReplaceController($controller)
+    {
+        $this->crController = $controller;
     }
 
     /** @return string */
@@ -40,10 +51,22 @@ class NotFoundReplaceOptions
         return $this->crAction;
     }
 
+    /** @param string $action */
+    public function setContentReplaceAction($action)
+    {
+        $this->crAction = $action;
+    }
+
     /** @return string[] */
     public function getContentReplaceRouteParams()
     {
         return $this->crRouteParams;
+    }
+
+    /** @param array $routeParams */
+    public function setContentReplaceRouteParams(array $routeParams)
+    {
+        $this->crRouteParams = $routeParams;
     }
 
     /** @return string */
@@ -52,11 +75,27 @@ class NotFoundReplaceOptions
         return $this->crRoute;
     }
 
-    public function hasErrorMessage()
+    /** @param string $route */
+    public function setContentReplaceRoute($route)
     {
+        $this->crRoute = $route;
     }
 
+    /** @return boolean */
+    public function hasErrorMessage()
+    {
+        return \is_string($this->errorMessage);
+    }
+
+    /** @return string */
     public function getErrorMessage()
     {
+        return $this->errorMessage;
+    }
+
+    /** @param string|null $errorMessage */
+    public function setErrorMessage($errorMessage)
+    {
+        $this->errorMessage = $errorMessage;
     }
 }
