@@ -44,6 +44,7 @@ class ActionAggregate implements ListenerAggregateInterface
         if ($this->aggregate === null) {
             $this->aggregate = new Aggregate();
         }
+        return $this->aggregate;
     }
 
     public function setAggregate(Aggregate $aggregate)
