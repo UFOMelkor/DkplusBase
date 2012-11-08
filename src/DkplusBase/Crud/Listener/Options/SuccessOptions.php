@@ -8,13 +8,15 @@
 
 namespace DkplusBase\Crud\Listener\Options;
 
+use \Zend\Stdlib\AbstractOptions;
+
 /**
  * @category   Dkplus
  * @package    Base
  * @subpackage Crud\Listener
  * @author     Oskar Bley <oskar@programming-php.net>
  */
-class SuccessOptions
+class SuccessOptions extends AbstractOptions
 {
     /** @var string|callable */
     protected $message = '';
@@ -31,6 +33,12 @@ class SuccessOptions
         return $this->redirectRoute;
     }
 
+    /** @param string $redirectRoute */
+    public function setRedirectRoute($redirectRoute)
+    {
+        $this->redirectRoute = $redirectRoute;
+    }
+
     /** @return array */
     public function getComputatedRedirectRouteParams($entity)
     {
@@ -41,6 +49,12 @@ class SuccessOptions
         return $this->redirectRouteParams;
     }
 
+    /** @param array|callable $redirectRouteParams */
+    public function setRedirectRouteParams($redirectRouteParams)
+    {
+        $this->redirectRouteParams = $redirectRouteParams;
+    }
+
     /** @return string */
     public function getComputatedMessage($entity)
     {
@@ -49,5 +63,11 @@ class SuccessOptions
         }
 
         return $this->message;
+    }
+
+    /** @param string|callable $message */
+    public function setMessage($message)
+    {
+        $this->message = $message;
     }
 }
