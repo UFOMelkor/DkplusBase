@@ -24,7 +24,6 @@ class AggregateParameter implements ParameterInterface
     /** @var int */
     protected $priority;
 
-
     public function __construct(ListenerAggregateInterface $aggregate, $priority = 1)
     {
         $this->aggregate = $aggregate;
