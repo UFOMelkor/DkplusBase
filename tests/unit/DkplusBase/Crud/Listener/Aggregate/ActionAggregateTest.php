@@ -15,7 +15,7 @@ use DkplusUnitTest\TestCase;
  * @package    Base
  * @subpackage Crud\Listener
  * @author     Oskar Bley <oskar@programming-php.net>
- * @covers     DkplusBase\Crud\Listener\Aggregate\Aggregate
+ * @covers     DkplusBase\Crud\Listener\Aggregate\ActionAggregate
  */
 class ActionAggregateTest extends TestCase
 {
