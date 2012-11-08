@@ -2,7 +2,7 @@
 /**
  * @category   DkplusTesting
  * @package    Base
- * @subpackage Crud\Controller
+ * @subpackage Crud\Listener
  * @author     Oskar Bley <oskar@programming-php.net>
  */
 
@@ -14,7 +14,7 @@ use DkplusControllerDsl\Test\TestCase;
 /**
  * @category   DkplusTesting
  * @package    Base
- * @subpackage Crud\Controller
+ * @subpackage Crud\Listener
  * @author     Oskar Bley <oskar@programming-php.net>
  * @covers     DkplusBase\Crud\Listener\AssignListener
  */

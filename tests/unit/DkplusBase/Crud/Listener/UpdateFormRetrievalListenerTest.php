@@ -2,7 +2,7 @@
 /**
  * @category   DkplusTesting
  * @package    Base
- * @subpackage Crud\Controller
+ * @subpackage Crud\Listener
  * @author     Oskar Bley <oskar@programming-php.net>
  */
 
@@ -13,7 +13,7 @@ use DkplusUnitTest\TestCase;
 /**
  * @category   DkplusTesting
  * @package    Base
- * @subpackage Crud\Controller
+ * @subpackage Crud\Listener
  * @author     Oskar Bley <oskar@programming-php.net>
  */
 class UpdateFormRetrievalListenerTest extends TestCase
