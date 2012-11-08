@@ -23,13 +23,30 @@ class Aggregate implements ListenerAggregate
     /** @var array */
     private $addedListeners = array();
 
+    /** @var Parameter\Factory */
+    protected $parameterFactory;
+
     /** @var ParameterInterface[] */
     protected $listeners = array();
+
+    /** @return Parameter\Factory */
+    public function getParameterFactory()
+    {
+        if ($this->parameterFactory === null) {
+            $this->parameterFactory = new Parameter\Factory();
+        }
+        return $this->parameterFactory;
+    }
+
+    public function setParameterFactory(Parameter\Factory $factory)
+    {
+        $this->parameterFactory = $factory;
+    }
 
     public function attach(EventManager $eventManager)
     {
         foreach ($this->listeners as $param) {
-            $this->addedListener = $eventManager->attach(
+            $this->addedListeners[] = $eventManager->attach(
                 $param->getEvent(),
                 $param->getCallback(),
                 $param->getPriority()
@@ -47,20 +64,19 @@ class Aggregate implements ListenerAggregate
 
     public function addAggregate(ListenerAggregate $aggregate, $priority = 1)
     {
-        $this->addParameter(Parameter\AggregateParameter($aggregate, $priority));
+        $parameter = $this->getParameterFactory()->create($aggregate, $priority);
+        $this->addParameter($parameter);
     }
 
     public function addListener(Listener $listener, $event, $priority = 1)
     {
-        $parameter = new Parameter\ListenerParameter($event, $priority);
-        $parameter->setListener($listener);
+        $parameter = $this->getParameterFactory()->create($listener, $event, $priority);
         $this->addParameter($parameter);
     }
 
     public function addCallback($callback, $event, $priority = 1)
     {
-        $parameter = new Parameter\ListenerParameter($event, $priority);
-        $parameter->setCallback($callback);
+        $parameter = $this->getParameterFactory()->create($callback, $event, $priority);
         $this->addParameter($parameter);
     }
 
