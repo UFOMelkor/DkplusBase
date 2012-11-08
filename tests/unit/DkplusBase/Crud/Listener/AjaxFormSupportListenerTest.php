@@ -16,7 +16,7 @@ use DkplusControllerDsl\Test\TestCase;
  * @package    Base
  * @subpackage Crud\Listener
  * @author     Oskar Bley <oskar@programming-php.net>
- * @covers     DkplusBase\Crud\Listener\FormSubmissionRedirectListener
+ * @covers     DkplusBase\Crud\Listener\AjaxFormSupportListener
  */
 class AjaxFormSupportListenerTest extends TestCase
 {
