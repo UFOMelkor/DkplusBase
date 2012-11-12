@@ -10,12 +10,10 @@
     "require": {
         "php": ">=5.3.3",
 
-        "zendframework/zendframework": "2.*@stable",
+        "zendframework/zendframework": "2.*",
 
         "dkplus/unit-test": "dev-master",
-        "dkplus/controller-dsl": "dev-master",
-
-        "doctrine/doctrine-orm-module": "dev-master"
+        "dkplus/controller-dsl": "dev-master"
     },
     "autoload": {
         "psr-0": {
