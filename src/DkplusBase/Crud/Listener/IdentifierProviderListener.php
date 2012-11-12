@@ -32,6 +32,9 @@ class IdentifierProviderListener implements ListenerInterface
 
     public function execute(EventInterface $event)
     {
-        $event->setParam('identifier', $event->getTarget()->getEvent()->getRouteMatch()->getParam($this->routeMatchParam));
+        $event->setParam(
+            'identifier',
+            $event->getTarget()->getEvent()->getRouteMatch()->getParam($this->routeMatchParam)
+        );
     }
 }
