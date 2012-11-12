@@ -43,9 +43,6 @@ interface ServiceInterface
      */
     public function getUpdateForm($identifier);
 
-    /**
-     * @throws \DkplusBase\Service\Exception\EntityNotFound
-     */
     public function delete($entity);
 
     /**

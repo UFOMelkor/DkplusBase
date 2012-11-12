@@ -2,39 +2,39 @@
 /**
  * @category   Dkplus
  * @package    Base
- * @subpackage Service\Crud
+ * @subpackage Crud\FormHandler
  * @author     Oskar Bley <oskar@programming-php.net>
  */
 
-namespace DkplusBase\Service\Crud;
+namespace DkplusBase\Crud\FormHandler;
 
 /**
  * @category   Dkplus
  * @package    Base
- * @subpackage Service\Crud
+ * @subpackage Crud\FormHandler
  * @author     Oskar Bley <oskar@programming-php.net>
  */
-interface FormStrategyInterface
+interface FormHandlerInterface
 {
     /**
      * @param mixed $data
-     * @return mixed the created item
+     * @return mixed the created entity
      */
-    public function createItem($data);
+    public function createEntity($data);
 
     /**
      * @param mixed $data
-     * @param mixed $item
-     * @return mixed the updated item
+     * @param mixed $entity
+     * @return mixed the updated entity
      */
-    public function updateItem($data, $item);
+    public function updateEntity($data, $entity);
 
     /** @return \Zend\Form\FormInterface */
     public function getCreationForm();
 
     /**
-     * @param mixed $item The model
+     * @param mixed $entity The model
      * @return \Zend\Form\FormInterface
      */
-    public function getUpdateForm($item);
+    public function getUpdateForm($entity);
 }

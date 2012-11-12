@@ -2,21 +2,21 @@
 /**
  * @category   Dkplus
  * @package    Base
- * @subpackage Service\Crud
+ * @subpackage Crud\FormHandler
  * @author     Oskar Bley <oskar@programming-php.net>
  */
 
-namespace DkplusBase\Service\Crud;
+namespace DkplusBase\Crud\FormHandler;
 
 use Zend\Form\FormInterface as Form;
 
 /**
  * @category   Dkplus
  * @package    Base
- * @subpackage Service\Crud
+ * @subpackage Crud\FormHandler
  * @author     Oskar Bley <oskar@programming-php.net>
  */
-class BindFormStrategy implements FormStrategyInterface
+class BindFormHandler implements FormHandlerInterface
 {
     /** @var Form */
     private $form;
@@ -34,19 +34,19 @@ class BindFormStrategy implements FormStrategyInterface
      * @param mixed $data
      * @return mixed
      */
-    public function createItem($data)
+    public function createEntity($data)
     {
         return $data;
     }
 
     /**
      * @param mixed $data
-     * @param mixed $item
+     * @param mixed $entity
      * @return mixed
      */
-    public function updateItem($data, $item)
+    public function updateEntity($data, $entity)
     {
-        return $item;
+        return $entity;
     }
 
     /** @return Form */

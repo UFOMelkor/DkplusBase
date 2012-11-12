@@ -2,46 +2,46 @@
 /**
  * @category   Dkplus
  * @package    Base
- * @subpackage Service\Crud
+ * @subpackage Crud\FormHandler
  * @author     Oskar Bley <oskar@programming-php.net>
  */
 
-namespace DkplusBase\Service\Crud;
+namespace DkplusBase\Crud\FormHandler;
 
 use DkplusUnitTest\TestCase;
 
 /**
  * @category   Dkplus
  * @package    Base
- * @subpackage Service\Crud
+ * @subpackage Crud\FormHandler
  * @author     Oskar Bley <oskar@programming-php.net>
- * @covers     DkplusBase\Service\Crud\BindFormStrategy
+ * @covers     DkplusBase\Crud\FormHandler\BindFormHandler
  */
-class BindFormStrategyTest extends TestCase
+class BindFormHandlerTest extends TestCase
 {
     /** @var \Zend\Form\FormInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $form;
 
-    /** @var BindFormStrategy */
-    private $formStrategy;
+    /** @var BindFormHandler */
+    private $formHandler;
 
     protected function setUp()
     {
         parent::setUp();
 
-        $this->form         = $this->getMockForAbstractClass('Zend\Form\FormInterface');
-        $this->formStrategy = new BindFormStrategy($this->form, 'stdClass');
+        $this->form        = $this->getMockForAbstractClass('Zend\Form\FormInterface');
+        $this->formHandler = new BindFormHandler($this->form, 'stdClass');
     }
 
     /**
      * @test
      * @group unit
      * @group Component/Service/Crud
-     * @testdox is a form strategy
+     * @testdox Is a form strategy
      */
     public function isFormStrategy()
     {
-        $this->assertInstanceOf('DkplusBase\Service\Crud\FormStrategyInterface', $this->formStrategy);
+        $this->assertInstanceOf('DkplusBase\Crud\FormHandler\FormHandlerInterface', $this->formHandler);
     }
 
     /**
@@ -51,7 +51,7 @@ class BindFormStrategyTest extends TestCase
      */
     public function returnsTheOvergivenFormAsCreationForm()
     {
-        $this->assertSame($this->form, $this->formStrategy->getCreationForm());
+        $this->assertSame($this->form, $this->formHandler->getCreationForm());
     }
 
     /**
@@ -64,7 +64,7 @@ class BindFormStrategyTest extends TestCase
         $this->form->expects($this->once())
                    ->method('bind')
                    ->with($this->isInstanceOf('stdClass'));
-        $this->formStrategy->getCreationForm();
+        $this->formHandler->getCreationForm();
     }
 
     /**
@@ -74,8 +74,8 @@ class BindFormStrategyTest extends TestCase
      */
     public function returnsTheOvergivenFormAsUpdateForm()
     {
-        $item = $this->getMock('stdClass');
-        $this->assertSame($this->form, $this->formStrategy->getUpdateForm($item));
+        $entity = $this->getMock('stdClass');
+        $this->assertSame($this->form, $this->formHandler->getUpdateForm($entity));
     }
 
     /**
@@ -85,12 +85,12 @@ class BindFormStrategyTest extends TestCase
      */
     public function bindsTheGivenInstanceOfTheModelToTheUpdateForm()
     {
-        $item = $this->getMock('stdClass');
+        $entity = $this->getMock('stdClass');
 
         $this->form->expects($this->once())
                    ->method('bind')
-                   ->with($item);
-        $this->formStrategy->getUpdateForm($item);
+                   ->with($entity);
+        $this->formHandler->getUpdateForm($entity);
     }
 
     /**
@@ -98,10 +98,10 @@ class BindFormStrategyTest extends TestCase
      * @group unit
      * @group Component/Service/Crud
      */
-    public function doesNotNeedToCreateNewItemsBecauseTheyAreAlreadyCreated()
+    public function doesNotNeedToCreateNewEntitiesBecauseTheyAreAlreadyCreated()
     {
-        $item = $this->getMock('stdClass');
-        $this->assertSame($item, $this->formStrategy->createItem($item));
+        $entity = $this->getMock('stdClass');
+        $this->assertSame($entity, $this->formHandler->createEntity($entity));
     }
 
     /**
@@ -109,10 +109,10 @@ class BindFormStrategyTest extends TestCase
      * @group unit
      * @group Component/Service/Crud
      */
-    public function doesNotNeedToUpdateNewItemsBecauseTheyAreAlreadyUpdated()
+    public function doesNotNeedToUpdateNewEntitiesBecauseTheyAreAlreadyUpdated()
     {
         $data = array('foo', 'bar', 'baz');
-        $item = $this->getMock('stdClass');
-        $this->assertSame($item, $this->formStrategy->updateItem($data, $item));
+        $entity = $this->getMock('stdClass');
+        $this->assertSame($entity, $this->formHandler->updateEntity($data, $entity));
     }
 }

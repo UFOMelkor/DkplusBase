@@ -6,7 +6,7 @@
  * @author     Oskar Bley <oskar@programming-php.net>
  */
 
-namespace DkplusBase\Service\Crud;
+namespace DkplusBase\Crud\FormHandler;
 
 use DkplusBase\Stdlib\Hydrator\HydrationFactoryInterface as HydrationFactory;
 use Zend\Form\FormInterface as Form;
@@ -17,7 +17,7 @@ use Zend\Form\FormInterface as Form;
  * @subpackage Service\Crud
  * @author     Oskar Bley <oskar@programming-php.net>
  */
-class FactoryFormStrategy implements FormStrategyInterface
+class FactoryFormHandler implements FormHandlerInterface
 {
     /** @var Form */
     private $form;
@@ -35,20 +35,20 @@ class FactoryFormStrategy implements FormStrategyInterface
      * @param mixed $data
      * @return mixed
      */
-    public function createItem($data)
+    public function createEntity($data)
     {
         return $this->factory->create($data);
     }
 
     /**
      * @param mixed $data
-     * @param mixed $item
+     * @param mixed $entity
      * @return mixed
      */
-    public function updateItem($data, $item)
+    public function updateEntity($data, $entity)
     {
-        $this->factory->hydrate($data, $item);
-        return $item;
+        $this->factory->hydrate($data, $entity);
+        return $entity;
     }
 
     /** @return Form */
@@ -58,12 +58,12 @@ class FactoryFormStrategy implements FormStrategyInterface
     }
 
     /**
-     * @param mixed $item
+     * @param mixed $entity
      * @return Form
      */
-    public function getUpdateForm($item)
+    public function getUpdateForm($entity)
     {
-        $data = $this->factory->extract($item);
+        $data = $this->factory->extract($entity);
         $this->form->populateValues($data);
         return $this->form;
     }

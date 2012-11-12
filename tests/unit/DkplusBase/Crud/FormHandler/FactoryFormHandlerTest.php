@@ -2,22 +2,22 @@
 /**
  * @category   Dkplus
  * @package    Base
- * @subpackage Service\Crud
+ * @subpackage Crud\FormHandler
  * @author     Oskar Bley <oskar@programming-php.net>
  */
 
-namespace DkplusBase\Service\Crud;
+namespace DkplusBase\Crud\FormHandler;
 
 use DkplusUnitTest\TestCase;
 
 /**
  * @category   Dkplus
  * @package    Base
- * @subpackage Service\Crud
+ * @subpackage Crud\FormHandler
  * @author     Oskar Bley <oskar@programming-php.net>
- * @covers     DkplusBase\Service\Crud\FactoryFormStrategy
+ * @covers     DkplusBase\Crud\FormHandler\FactoryFormHandler
  */
-class FactoryFormStrategyTest extends TestCase
+class FactoryFormHandlerTest extends TestCase
 {
     /** @var \Zend\Form\FormInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $form;
@@ -25,8 +25,8 @@ class FactoryFormStrategyTest extends TestCase
     /** @var \DkplusBase\Stdlib\Hydrator\HydrationFactoryInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $hydrationFactory;
 
-    /** @var BindFormStrategy */
-    private $formStrategy;
+    /** @var FactoryFormHandler */
+    private $formHandler;
 
     protected function setUp()
     {
@@ -36,7 +36,7 @@ class FactoryFormStrategyTest extends TestCase
         $this->hydrationFactory = $this->getMockForAbstractClass(
             'DkplusBase\Stdlib\Hydrator\HydrationFactoryInterface'
         );
-        $this->formStrategy     = new FactoryFormStrategy($this->form, $this->hydrationFactory);
+        $this->formHandler     = new FactoryFormHandler($this->form, $this->hydrationFactory);
     }
 
     /**
@@ -47,7 +47,7 @@ class FactoryFormStrategyTest extends TestCase
      */
     public function isFormStrategy()
     {
-        $this->assertInstanceOf('DkplusBase\Service\Crud\FormStrategyInterface', $this->formStrategy);
+        $this->assertInstanceOf('DkplusBase\Crud\FormHandler\FormHandlerInterface', $this->formHandler);
     }
 
     /**
@@ -57,7 +57,7 @@ class FactoryFormStrategyTest extends TestCase
      */
     public function returnsTheOvergivenFormAsCreationForm()
     {
-        $this->assertSame($this->form, $this->formStrategy->getCreationForm());
+        $this->assertSame($this->form, $this->formHandler->getCreationForm());
     }
 
     /**
@@ -67,8 +67,8 @@ class FactoryFormStrategyTest extends TestCase
      */
     public function returnsTheOvergivenFormAsUpdateForm()
     {
-        $item = $this->getMock('stdClass');
-        $this->assertSame($this->form, $this->formStrategy->getUpdateForm($item));
+        $entity = $this->getMock('stdClass');
+        $this->assertSame($this->form, $this->formHandler->getUpdateForm($entity));
     }
 
     /**
@@ -78,19 +78,19 @@ class FactoryFormStrategyTest extends TestCase
      */
     public function putsTheDataOfTheModelIntoTheUpdateForm()
     {
-        $item = $this->getMock('stdClass');
+        $entity = $this->getMock('stdClass');
         $data = array('foo' => 'bar');
 
         $this->hydrationFactory->expects($this->any())
                                ->method('extract')
-                               ->with($item)
+                               ->with($entity)
                                ->will($this->returnValue($data));
 
         $this->form->expects($this->once())
                    ->method('populateValues')
                    ->with($data);
 
-        $this->formStrategy->getUpdateForm($item);
+        $this->formHandler->getUpdateForm($entity);
     }
 
     /**
@@ -98,17 +98,17 @@ class FactoryFormStrategyTest extends TestCase
      * @group unit
      * @group Component/Service/Crud
      */
-    public function createsNewItemsUsingTheHydrationFactory()
+    public function createsNewEntitiesUsingTheHydrationFactory()
     {
-        $item = $this->getMock('stdClass');
+        $entity = $this->getMock('stdClass');
         $data = array('foo' => 'bar');
 
         $this->hydrationFactory->expects($this->any())
                                ->method('create')
                                ->with($data)
-                               ->will($this->returnValue($item));
+                               ->will($this->returnValue($entity));
 
-        $this->assertSame($item, $this->formStrategy->createItem($data));
+        $this->assertSame($entity, $this->formHandler->createEntity($data));
     }
 
     /**
@@ -116,16 +116,16 @@ class FactoryFormStrategyTest extends TestCase
      * @group unit
      * @group Component/Service/Crud
      */
-    public function updatesItemsUsingTheHydrationFactory()
+    public function updatesEntitiesUsingTheHydrationFactory()
     {
         $data = array('foo', 'bar', 'baz');
-        $item = $this->getMock('stdClass');
+        $entity = $this->getMock('stdClass');
 
         $this->hydrationFactory->expects($this->once())
                                ->method('hydrate')
-                               ->with($data, $item);
+                               ->with($data, $entity);
 
-        $this->formStrategy->updateItem($data, $item);
+        $this->formHandler->updateEntity($data, $entity);
     }
 
     /**
@@ -133,10 +133,10 @@ class FactoryFormStrategyTest extends TestCase
      * @group unit
      * @group Component/Service/Crud
      */
-    public function returnsTheUpdatedItem()
+    public function returnsTheUpdatedEntity()
     {
-        $item = $this->getMock('stdClass');
+        $entity = $this->getMock('stdClass');
 
-        $this->assertSame($item, $this->formStrategy->updateItem(array(), $item));
+        $this->assertSame($entity, $this->formHandler->updateEntity(array(), $entity));
     }
 }

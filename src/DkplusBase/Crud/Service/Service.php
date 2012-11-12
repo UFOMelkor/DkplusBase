@@ -2,19 +2,21 @@
 /**
  * @category   Dkplus
  * @package    Base
- * @subpackage Service\Crud
+ * @subpackage Crud\Service
  * @author     Oskar Bley <oskar@programming-php.net>
  */
 
-namespace DkplusBase\Service\Crud;
+namespace DkplusBase\Crud\Service;
 
+use DkplusBase\Crud\FormHandler\FormHandlerInterface;
+use DkplusBase\Crud\Mapper\MapperInterface;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerInterface as EventManager;
 
 /**
  * @category   Dkplus
  * @package    Base
- * @subpackage Service\Crud
+ * @subpackage Crud\Service
  * @author     Oskar Bley <oskar@programming-php.net>
  */
 class Service implements ServiceInterface, EventManagerAwareInterface
@@ -22,22 +24,25 @@ class Service implements ServiceInterface, EventManagerAwareInterface
     /** @var MapperInterface */
     protected $mapper;
 
-    /** @var FormStrategyInterface */
-    protected $formStrategy;
+    /** @var FormHandlerInterface */
+    protected $formHandler;
 
     /** @var EventManager */
     protected $eventManager;
 
-    public function __construct(MapperInterface $mapper, FormStrategyInterface $formStrategy)
+    /** @var int */
+    protected $itemCountPerPage = 10;
+
+    public function __construct(MapperInterface $mapper, FormHandlerInterface $formStrategy)
     {
         $this->mapper       = $mapper;
-        $this->formStrategy = $formStrategy;
+        $this->formHandler = $formStrategy;
     }
 
     public function create($data)
     {
         $this->eventManager->trigger('crud.preCreate', $this);
-        $item = $this->formStrategy->createItem($data);
+        $item = $this->formHandler->createEntity($data);
         return $this->mapper->save($item);
     }
 
@@ -51,17 +56,17 @@ class Service implements ServiceInterface, EventManagerAwareInterface
 
     public function getCreationForm()
     {
-        return $this->formStrategy->getCreationForm();
+        return $this->formHandler->getCreationForm();
     }
 
-    public function getAll(array $searchData = array(), $orderCrit = null, $orderDirection = null)
+    public function getAll()
     {
-        return $this->mapper->findAll($searchData, $orderCrit, $orderDirection);
+        return $this->mapper->findAll();
     }
 
     public function update($data, $identifier)
     {
-        $item = $this->formStrategy->updateItem($data, $this->mapper->find($identifier));
+        $item = $this->formHandler->updateEntity($data, $this->mapper->find($identifier));
         return $this->mapper->save($item);
     }
 
@@ -71,36 +76,27 @@ class Service implements ServiceInterface, EventManagerAwareInterface
     public function getUpdateForm($identifier)
     {
         $item = $this->mapper->find($identifier);
-        return $this->formStrategy->getUpdateForm($item);
+        return $this->formHandler->getUpdateForm($item);
     }
 
     /**
      * @throws \DkplusBase\Service\Exception\EntityNotFound
      */
-    public function delete($identifier)
+    public function delete($entity)
     {
-        $this->mapper->delete($identifier);
+        $this->mapper->delete($entity);
     }
 
     /**
      * @param int $pageNumber
-     * @param int $itemCountPerPage
-     * @param array $searchData
-     * @param string $orderCrit
-     * @param string $orderDirection
      * @return \Zend\Paginator\Paginator
      */
-    public function getPaginator(
-        $pageNumber,
-        $itemCountPerPage,
-        array $searchData = array(),
-        $orderCrit = null,
-        $orderDirection = null
-    ) {
-        $adapter   = $this->mapper->getPaginationAdapter($searchData, $orderCrit, $orderDirection);
+    public function getPaginator($pageNumber)
+    {
+        $adapter   = $this->mapper->getPaginationAdapter();
         $paginator = new \Zend\Paginator\Paginator($adapter);
-        $paginator->setItemCountPerPage($itemCountPerPage);
         $paginator->setCurrentPageNumber($pageNumber);
+        $paginator->setItemCountPerPage($this->itemCountPerPage);
         return $paginator;
     }
 
@@ -113,5 +109,10 @@ class Service implements ServiceInterface, EventManagerAwareInterface
     public function setEventManager(EventManager $eventManager)
     {
         $this->eventManager = $eventManager;
+    }
+
+    public function setItemCountPerPage($value)
+    {
+        $this->itemCountPerPage = $value;
     }
 }
