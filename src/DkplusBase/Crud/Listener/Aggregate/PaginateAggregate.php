@@ -34,7 +34,7 @@ class PaginateAggregate extends ActionAggregate
             'CrudController.prePaginate'
         );
         $this->getAggregate()->addListener(
-            new Listener\AssignListener('entities', 'paginator', $this->template),
+            new Listener\AssignListener('paginator', 'paginator', $this->template),
             'CrudController.paginate'
         );
         parent::attach($eventManager);
