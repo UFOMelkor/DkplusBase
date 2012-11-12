@@ -26,7 +26,7 @@ class FormSubmissionRedirectListenerTest extends TestCase
     /** @var \DkplusBase\Crud\Service\ServiceInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $service;
 
-    /** @var \Zend\EventManager\MvcEvent|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \Zend\EventManager\EventInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $event;
 
     /** @var \DkplusBase\Crud\Listener\Options\SuccessOptions|\PHPUnit_Framework_MockObject_MockObject */
@@ -40,9 +40,9 @@ class FormSubmissionRedirectListenerTest extends TestCase
         parent::setUp();
         $this->options  = $this->getMockIgnoringConstructor('DkplusBase\Crud\Listener\Options\SuccessOptions');
         $this->service  = $this->getMockForAbstractClass('DkplusBase\Crud\Service\ServiceInterface');
-        $this->listener = new FormSubmissionRedirectListener($this->service, $this->options, 'user/edit.phtml');
+        $this->listener = new FormSubmissionRedirectListener($this->service, $this->options, 'user/edit');
 
-        $this->event      = $this->getMockIgnoringConstructor('Zend\Mvc\MvcEvent');
+        $this->event      = $this->getMockForAbstractClass('Zend\EventManager\EventInterface');
         $this->controller = new CrudController();
         $this->event->expects($this->any())
                     ->method('getTarget')
@@ -276,7 +276,7 @@ class FormSubmissionRedirectListenerTest extends TestCase
      */
     public function rendersTheTemplate()
     {
-        $this->expectsDsl()->toRender('user/edit.phtml');
+        $this->expectsDsl()->toRender('user/edit');
         $this->listener->execute($this->event);
     }
 }

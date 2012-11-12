@@ -42,7 +42,7 @@ class DeleteRedirectListenerTest extends TestCase
         $this->service  = $this->getMockForAbstractClass('DkplusBase\Crud\Service\ServiceInterface');
         $this->listener = new DeleteRedirectListener($this->service, $this->options);
 
-        $this->event      = $this->getMockIgnoringConstructor('Zend\Mvc\MvcEvent');
+        $this->event      = $this->getMockForAbstractClass('Zend\EventManager\EventInterface');
         $this->controller = new CrudController();
         $this->event->expects($this->any())
                     ->method('getTarget')

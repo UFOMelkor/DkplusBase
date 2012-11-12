@@ -52,7 +52,7 @@ class AssignListenerTest extends TestCase
     {
         $this->setUpController($this->controller);
 
-        $event = $this->getMockIgnoringConstructor('Zend\Mvc\MvcEvent');
+        $event = $this->getMockForAbstractClass('Zend\EventManager\EventInterface');
         $event->expects($this->any())
               ->method('getTarget')
               ->will($this->returnValue($this->controller));
@@ -71,7 +71,7 @@ class AssignListenerTest extends TestCase
 
         $paginator = $this->getMockIgnoringConstructor('Zend\Paginator\Paginator');
 
-        $event = $this->getMockIgnoringConstructor('Zend\Mvc\MvcEvent');
+        $event = $this->getMockForAbstractClass('Zend\EventManager\EventInterface');
         $event->expects($this->any())
               ->method('getParam')
               ->with('paginator')
@@ -103,7 +103,7 @@ class AssignListenerTest extends TestCase
     {
         $this->setUpController($this->controller);
 
-        $event = $this->getMockIgnoringConstructor('Zend\Mvc\MvcEvent');
+        $event = $this->getMockForAbstractClass('Zend\EventManager\EventInterface');
         $event->expects($this->any())
               ->method('getTarget')
               ->will($this->returnValue($this->controller));

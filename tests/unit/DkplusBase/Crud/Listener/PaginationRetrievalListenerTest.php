@@ -18,7 +18,7 @@ use DkplusUnitTest\TestCase;
  */
 class PaginationRetrievalListenerTest extends TestCase
 {
-    /** @var \Zend\Mvc\MvcEvent|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \Zend\EventManager\EventInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $event;
 
     /** @var \Zend\Http\Request|\PHPUnit_Framework_MockObject_MockObject */
@@ -33,10 +33,18 @@ class PaginationRetrievalListenerTest extends TestCase
         $this->service    = $this->getMockForAbstractClass('DkplusBase\Crud\\Service\ServiceInterface');
         $this->listener   = new PaginationRetrievalListener($this->service);
         $this->routeMatch = $this->getMockIgnoringConstructor('Zend\Mvc\Router\RouteMatch');
-        $this->event      = $this->getMockIgnoringConstructor('Zend\Mvc\MvcEvent');
+        $mvcEvent         = $this->getMock('Zend\Mvc\MvcEvent');
+        $mvcEvent->expects($this->any())
+                 ->method('getRouteMatch')
+                 ->will($this->returnValue($this->routeMatch));
+        $controller       = $this->getMock('stdClass', array('getEvent'));
+        $controller->expects($this->any())
+                   ->method('getEvent')
+                   ->will($this->returnValue($mvcEvent));
+        $this->event      = $this->getMockForAbstractClass('Zend\EventManager\EventInterface');
         $this->event->expects($this->any())
-                    ->method('getRouteMatch')
-                    ->will($this->returnValue($this->routeMatch));
+                    ->method('getTarget')
+                    ->will($this->returnValue($controller));
     }
 
     /**

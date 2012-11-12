@@ -9,7 +9,7 @@
 namespace DkplusBase\Crud\Listener;
 
 use DkplusBase\Crud\Service\ServiceInterface as Service;
-use Zend\Mvc\MvcEvent;
+use Zend\EventManager\EventInterface;
 
 /**
  * @category   Dkplus
@@ -35,7 +35,7 @@ class FormSubmissionRedirectListener implements ListenerInterface
         $this->template = $template;
     }
 
-    public function execute(MvcEvent $event)
+    public function execute(EventInterface $event)
     {
         $opt        = $this->options;
         $ctrl       = $event->getTarget();

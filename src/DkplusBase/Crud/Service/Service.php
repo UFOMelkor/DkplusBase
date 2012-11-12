@@ -33,10 +33,10 @@ class Service implements ServiceInterface, EventManagerAwareInterface
     /** @var int */
     protected $itemCountPerPage = 10;
 
-    public function __construct(MapperInterface $mapper, FormHandlerInterface $formStrategy)
+    public function __construct(MapperInterface $mapper, FormHandlerInterface $formHandler)
     {
         $this->mapper       = $mapper;
-        $this->formHandler = $formStrategy;
+        $this->formHandler = $formHandler;
     }
 
     public function create($data)

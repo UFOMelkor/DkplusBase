@@ -8,7 +8,7 @@
 
 namespace DkplusBase\Crud\Listener;
 
-use Zend\Mvc\MvcEvent;
+use Zend\EventManager\EventInterface;
 
 /**
  * @category   Dkplus
@@ -26,7 +26,7 @@ class NotFoundReplaceListener implements ListenerInterface
         $this->options = $options;
     }
 
-    public function execute(MvcEvent $event)
+    public function execute(EventInterface $event)
     {
         $opt        = $this->options;
         $controller = $event->getTarget();

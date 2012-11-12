@@ -9,7 +9,7 @@
 namespace DkplusBase\Crud\Listener;
 
 use DkplusBase\Crud\Service\ServiceInterface as Service;
-use Zend\Mvc\MvcEvent;
+use Zend\EventManager\EventInterface;
 
 /**
  * @category   Dkplus
@@ -30,8 +30,8 @@ class IdentifierProviderListener implements ListenerInterface
         $this->routeMatchParam = (string) $routeMatchParam;
     }
 
-    public function execute(MvcEvent $event)
+    public function execute(EventInterface $event)
     {
-        $event->setParam('identifier', $event->getRouteMatch()->getParam($this->routeMatchParam));
+        $event->setParam('identifier', $event->getTarget()->getEvent()->getRouteMatch()->getParam($this->routeMatchParam));
     }
 }

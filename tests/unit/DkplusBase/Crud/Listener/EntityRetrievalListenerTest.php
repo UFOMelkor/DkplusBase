@@ -21,14 +21,14 @@ class EntityRetrievalListenerTest extends TestCase
     /** @var \DkplusBase\Crud\Service\ServiceInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $service;
 
-    /** @var \Zend\EventManager\MvcEvent|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \Zend\EventManager\EventInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $event;
 
     protected function setUp()
     {
         parent::setUp();
         $this->service = $this->getMockForAbstractClass('DkplusBase\Crud\Service\ServiceInterface');
-        $this->event   = $this->getMockIgnoringConstructor('Zend\Mvc\MvcEvent');
+        $this->event   = $this->getMockForAbstractClass('Zend\EventManager\EventInterface');
     }
 
     /**

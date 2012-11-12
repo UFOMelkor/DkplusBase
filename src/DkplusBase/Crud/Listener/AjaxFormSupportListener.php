@@ -8,7 +8,7 @@
 
 namespace DkplusBase\Crud\Listener;
 
-use Zend\Mvc\MvcEvent;
+use Zend\EventManager\EventInterface;
 
 /**
  * @category   Dkplus
@@ -18,7 +18,7 @@ use Zend\Mvc\MvcEvent;
  */
 class AjaxFormSupportListener implements ListenerInterface
 {
-    public function execute(MvcEvent $event)
+    public function execute(EventInterface $event)
     {
         $ctrl       = $event->getTarget();
         $dsl        = $event->getParam('result');

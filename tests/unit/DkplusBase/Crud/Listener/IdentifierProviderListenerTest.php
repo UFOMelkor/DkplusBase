@@ -21,17 +21,25 @@ class IdentifierProviderListenerTest extends TestCase
     /** @var \Zend\Mvc\Router\RouteMatch|\PHPUnit_Framework_MockObject_MockObject */
     protected $routeMatch;
 
-    /** @var \Zend\EventManager\MvcEvent|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \Zend\EventManager\EventInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $event;
 
     protected function setUp()
     {
         parent::setUp();
         $this->routeMatch = $this->getMockIgnoringConstructor('Zend\Mvc\Router\RouteMatch');
-        $this->event      = $this->getMockIgnoringConstructor('Zend\Mvc\MvcEvent');
+        $mvcEvent         = $this->getMock('Zend\Mvc\MvcEvent');
+        $mvcEvent->expects($this->any())
+                 ->method('getRouteMatch')
+                 ->will($this->returnValue($this->routeMatch));
+        $controller       = $this->getMock('stdClass', array('getEvent'));
+        $controller->expects($this->any())
+                   ->method('getEvent')
+                   ->will($this->returnValue($mvcEvent));
+        $this->event      = $this->getMockForAbstractClass('Zend\EventManager\EventInterface');
         $this->event->expects($this->any())
-                    ->method('getRouteMatch')
-                    ->will($this->returnValue($this->routeMatch));
+                    ->method('getTarget')
+                    ->will($this->returnValue($controller));
     }
 
     /**

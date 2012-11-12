@@ -9,7 +9,7 @@
 namespace DkplusBase\Crud\Listener;
 
 use DkplusBase\Crud\Service\ServiceInterface as Service;
-use Zend\Mvc\MvcEvent;
+use Zend\EventManager\EventInterface;
 
 /**
  * @category   Dkplus
@@ -35,9 +35,9 @@ class PaginationRetrievalListener implements ListenerInterface
         $this->pageParameter = (string) $pageParameter;
     }
 
-    public function execute(MvcEvent $event)
+    public function execute(EventInterface $event)
     {
-        $pageNumber = $event->getRouteMatch()->getParam($this->pageParameter);
+        $pageNumber = $event->getTarget()->getEvent()->getRouteMatch()->getParam($this->pageParameter);
         return $this->service->getPaginator($pageNumber);
     }
 }

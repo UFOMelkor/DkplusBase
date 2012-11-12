@@ -28,7 +28,7 @@ class UpdateFormRetrievalListenerTest extends TestCase
     {
         parent::setUp();
         $this->service = $this->getMockForAbstractClass('DkplusBase\Crud\Service\ServiceInterface');
-        $this->event   = $this->getMockIgnoringConstructor('Zend\Mvc\MvcEvent');
+        $this->event   = $this->getMockForAbstractClass('Zend\EventManager\EventInterface');
     }
 
     /**

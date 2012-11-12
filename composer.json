@@ -6,7 +6,6 @@
         "zf2"
     ],
     "homepage": "https://github.com/UFOMelkor/DkplusBase",
-    "minimum-stability": "alpha",
     "require": {
         "php": ">=5.3.3",
 

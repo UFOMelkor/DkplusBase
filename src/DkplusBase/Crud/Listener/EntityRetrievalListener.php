@@ -9,7 +9,7 @@
 namespace DkplusBase\Crud\Listener;
 
 use DkplusBase\Crud\Service\ServiceInterface as Service;
-use Zend\Mvc\MvcEvent;
+use Zend\EventManager\EventInterface;
 
 /**
  * @category   Dkplus
@@ -31,7 +31,7 @@ class EntityRetrievalListener implements ListenerInterface
         $this->service = $service;
     }
 
-    public function execute(MvcEvent $event)
+    public function execute(EventInterface $event)
     {
         $identifier = $event->getParam('identifier');
         return $this->service->get($identifier);

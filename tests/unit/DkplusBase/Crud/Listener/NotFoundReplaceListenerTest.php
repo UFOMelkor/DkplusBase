@@ -29,7 +29,7 @@ class NotFoundReplaceListenerTest extends TestCase
     /** @var Options\NotFoundOptions|\PHPUnit_Framework_MockObject_MockObject */
     protected $options;
 
-    /** @var \Zend\Mvc\MvcEvent|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \Zend\EventManager\EventInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $event;
 
     protected function setUp()
@@ -40,7 +40,7 @@ class NotFoundReplaceListenerTest extends TestCase
         );
         $this->listener   = new NotFoundReplaceListener($this->options);
         $this->controller = new CrudController();
-        $this->event      = $this->getMockIgnoringConstructor('Zend\Mvc\MvcEvent');
+        $this->event      = $this->getMockForAbstractClass('Zend\EventManager\EventInterface');
         $this->event->expects($this->any())
                     ->method('getTarget')
                     ->will($this->returnValue($this->controller));

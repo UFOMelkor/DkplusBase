@@ -23,7 +23,7 @@ class AjaxFormSupportListenerTest extends TestCase
     /** @var CrudController */
     protected $controller;
 
-    /** @var \Zend\EventManager\MvcEvent|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \Zend\EventManager\EventInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $event;
 
     /** @var FormSubmissionRedirectListener */
@@ -34,7 +34,7 @@ class AjaxFormSupportListenerTest extends TestCase
         parent::setUp();
 
         $this->listener   = new AjaxFormSupportListener();
-        $this->event      = $this->getMockIgnoringConstructor('Zend\Mvc\MvcEvent');
+        $this->event      = $this->getMockForAbstractClass('Zend\EventManager\EventInterface');
         $this->controller = new CrudController();
 
         $this->setUpController($this->controller);

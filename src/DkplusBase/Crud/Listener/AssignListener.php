@@ -8,7 +8,7 @@
 
 namespace DkplusBase\Crud\Listener;
 
-use Zend\Mvc\MvcEvent;
+use Zend\EventManager\EventInterface;
 
 /**
  * @category   Dkplus
@@ -34,7 +34,7 @@ class AssignListener implements ListenerInterface
         $this->template       = $template;
     }
 
-    public function execute(MvcEvent $event)
+    public function execute(EventInterface $event)
     {
         $controller = $event->getTarget();
         $assignable = $event->getParam($this->eventParameter);
