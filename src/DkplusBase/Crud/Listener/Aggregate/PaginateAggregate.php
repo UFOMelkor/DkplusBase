@@ -29,11 +29,11 @@ class PaginateAggregate extends ActionAggregate
 
     public function attach(EventManager $eventManager)
     {
-        $this->aggregate->addListener(
+        $this->getAggregate()->addListener(
             new Listener\PaginationRetrievalListener($this->service),
             'CrudController.prePaginate'
         );
-        $this->aggregate->addListener(
+        $this->getAggregate()->addListener(
             new Listener\AssignListener('entities', 'paginator', $this->template),
             'CrudController.paginate'
         );
