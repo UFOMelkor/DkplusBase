@@ -10,6 +10,7 @@ namespace DkplusBase\EventManager;
 
 use BadMethodCallException;
 use Zend\EventManager\EventManagerInterface;
+use Zend\EventManager\ListenerAggregateInterface;
 use Zend\EventManager\SharedEventManagerInterface;
 use Zend\EventManager\StaticEventManager;
 
@@ -41,8 +42,7 @@ class SharedEventManagerAdapter implements EventManagerInterface
         }
     }
 
-    public function attachAggregate(\Zend\EventManager\ListenerAggregateInterface $aggregate,
-                                    $priority = 1)
+    public function attachAggregate(ListenerAggregateInterface $aggregate, $priority = 1)
     {
         $aggregate->attach($this);
     }
@@ -112,8 +112,7 @@ class SharedEventManagerAdapter implements EventManagerInterface
         $this->sharedManager = $sharedEventManager;
     }
 
-    public function trigger($event, $target = null, $argv = array(),
-                            $callback = null)
+    public function trigger($event, $target = null, $argv = array(), $callback = null)
     {
         throw new BadMethodCallException();
     }

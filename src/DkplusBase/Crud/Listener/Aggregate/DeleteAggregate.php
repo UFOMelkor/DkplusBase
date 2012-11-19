@@ -10,6 +10,7 @@ namespace DkplusBase\Crud\Listener\Aggregate;
 
 use DkplusBase\Crud\Listener;
 use Zend\EventManager\EventManagerInterface as EventManager;
+
 /**
  * @category   Dkplus
  * @package    Base
@@ -37,7 +38,10 @@ class DeleteAggregate extends ActionAggregate
     public function attach(EventManager $eventManager)
     {
         $this->getAggregate()->addListener(new Listener\IdentifierProviderListener(), 'CrudController.preDelete', 2);
-        $this->getAggregate()->addListener(new Listener\EntityRetrievalListener($this->service), 'CrudController.preDelete');
+        $this->getAggregate()->addListener(
+            new Listener\EntityRetrievalListener($this->service),
+            'CrudController.preDelete'
+        );
         $this->getAggregate()->addListener(
             new Listener\DeleteRedirectListener($this->service, $this->successOptions),
             'CrudController.delete'
