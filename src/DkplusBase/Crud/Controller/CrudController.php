@@ -32,6 +32,14 @@ class CrudController extends AbstractActionController
     }
 
     /**
+     * @param string $identifier
+     */
+    public function setEventIdentifier($identifier)
+    {
+        $this->eventIdentifier = $identifier;
+    }
+
+    /**
      * @param string $name
      * @param array $arguments
      * @param callable $callback

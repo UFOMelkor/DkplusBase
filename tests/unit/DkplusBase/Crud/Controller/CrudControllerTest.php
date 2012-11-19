@@ -62,6 +62,22 @@ class CrudControllerTest extends TestCase
      * @test
      * @group Component/Controller
      * @group unit
+     * @covers DkplusBase\Crud\Controller\CrudController::setEventIdentifier
+     */
+    public function canHaveAnotherEventIdentifier()
+    {
+        $eventManager = $this->getMockForAbstractClass('Zend\EventManager\EventManagerInterface');
+        $eventManager->expects($this->once())
+                     ->method('setIdentifiers')
+                     ->with($this->contains('My\Crud\Controller'));
+        $this->controller->setEventIdentifier('My\Crud\Controller');
+        $this->controller->setEventManager($eventManager);
+    }
+
+    /**
+     * @test
+     * @group Component/Controller
+     * @group unit
      * @covers DkplusBase\Crud\Controller\CrudController::setEventManager
      * @dataProvider provideRejectedResults
      */
