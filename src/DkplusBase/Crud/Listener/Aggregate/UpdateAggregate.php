@@ -38,6 +38,12 @@ class UpdateAggregate extends ActionAggregate
         $this->notFoundOptions = $options;
     }
 
+    /** @return string */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
     public function setTemplate($template)
     {
         $this->template = $template;

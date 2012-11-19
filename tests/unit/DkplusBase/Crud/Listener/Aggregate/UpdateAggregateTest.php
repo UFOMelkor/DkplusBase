@@ -103,6 +103,13 @@ class UpdateAggregateTest extends TestCase
                   ->method('attach')
                   ->with($eventManager);
 
+        $this->aggregate->setSuccessOptions(
+            $this->getMockForAbstractClass('DkplusBase\Crud\Listener\Options\SuccessOptions')
+        );
+        $this->aggregate->setNotFoundOptions(
+            $this->getMockIgnoringConstructor('DkplusBase\Crud\Listener\Options\NotFoundReplaceOptions')
+        );
+        $this->aggregate->setService($this->getMockForAbstractClass('DkplusBase\Crud\Service\ServiceInterface'));
         $this->aggregate->setAggregate($aggregate);
         $this->aggregate->attach($eventManager);
     }
