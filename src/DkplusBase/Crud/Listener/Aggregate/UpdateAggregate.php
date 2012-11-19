@@ -45,16 +45,16 @@ class UpdateAggregate extends ActionAggregate
 
     public function attach(EventManager $eventManager)
     {
-        $this->aggregate->addListener(new Listener\IdentifierProviderListener(), 'CrudController.preUpdate', 2);
-        $this->aggregate->addListener(
+        $this->getAggregate()->addListener(new Listener\IdentifierProviderListener(), 'CrudController.preUpdate', 2);
+        $this->getAggregate()->addListener(
             new Listener\UpdateFormRetrievalListener($this->service),
             'CrudController.preUpdate'
         );
-        $this->aggregate->addListener(
+        $this->getAggregate()->addListener(
             new Listener\FormSubmissionRedirectListener($this->service, $this->successOptions, $this->template),
             'CrudController.update'
         );
-        $this->aggregate->addListener(
+        $this->getAggregate()->addListener(
             new Listener\NotFoundReplaceListener($this->notFoundOptions),
             'CrudController.updateNotFound'
         );

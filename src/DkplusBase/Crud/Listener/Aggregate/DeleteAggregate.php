@@ -36,13 +36,13 @@ class DeleteAggregate extends ActionAggregate
 
     public function attach(EventManager $eventManager)
     {
-        $this->aggregate->addListener(new Listener\IdentifierProviderListener(), 'CrudController.preDelete', 2);
-        $this->aggregate->addListener(new Listener\EntityRetrievalListener($this->service), 'CrudController.preDelete');
-        $this->aggregate->addListener(
+        $this->getAggregate()->addListener(new Listener\IdentifierProviderListener(), 'CrudController.preDelete', 2);
+        $this->getAggregate()->addListener(new Listener\EntityRetrievalListener($this->service), 'CrudController.preDelete');
+        $this->getAggregate()->addListener(
             new Listener\DeleteRedirectListener($this->service, $this->successOptions),
             'CrudController.delete'
         );
-        $this->aggregate->addListener(
+        $this->getAggregate()->addListener(
             new Listener\NotFoundReplaceListener($this->notFoundOptions),
             'CrudController.deleteNotFound'
         );

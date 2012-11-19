@@ -37,13 +37,13 @@ class ReadAggregate extends ActionAggregate
 
     public function attach(EventManager $eventManager)
     {
-        $this->aggregate->addListener(new Listener\IdentifierProviderListener(), 'CrudController.preRead', 2);
-        $this->aggregate->addListener(new Listener\EntityRetrievalListener($this->service), 'CrudController.preRead');
-        $this->aggregate->addListener(
+        $this->getAggregate()->addListener(new Listener\IdentifierProviderListener(), 'CrudController.preRead', 2);
+        $this->getAggregate()->addListener(new Listener\EntityRetrievalListener($this->service), 'CrudController.preRead');
+        $this->getAggregate()->addListener(
             new Listener\AssignListener('entity', 'entity', $this->template),
             'CrudController.read'
         );
-        $this->aggregate->addListener(
+        $this->getAggregate()->addListener(
             new Listener\NotFoundReplaceListener($this->notFoundOptions),
             'CrudController.readNotFound'
         );

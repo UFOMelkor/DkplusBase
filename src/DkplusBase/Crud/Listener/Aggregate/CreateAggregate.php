@@ -37,11 +37,11 @@ class CreateAggregate extends ActionAggregate
 
     public function attach(EventManager $eventManager)
     {
-        $this->aggregate->addListener(
+        $this->getAggregate()->addListener(
             new Listener\CreateFormRetrievalListener($this->service),
             'CrudController.preCreate'
         );
-        $this->aggregate->addListener(
+        $this->getAggregate()->addListener(
             new Listener\FormSubmissionRedirectListener($this->service, $this->successOptions, $this->template),
             'CrudController.create'
         );
