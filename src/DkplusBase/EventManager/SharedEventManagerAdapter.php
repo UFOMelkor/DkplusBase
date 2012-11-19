@@ -18,6 +18,8 @@ use Zend\EventManager\StaticEventManager;
  * @package    Base
  * @subpackage EventManager
  * @author     Oskar Bley <oskar@programming-php.net>
+ * @todo       Waiting for https://github.com/zendframework/zf2/pull/2819
+ * @see        https://github.com/zendframework/zf2/pull/2819
  */
 class SharedEventManagerAdapter implements EventManagerInterface
 {
