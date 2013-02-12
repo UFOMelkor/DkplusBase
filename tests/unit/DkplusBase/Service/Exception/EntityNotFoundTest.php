@@ -20,19 +20,14 @@ class EntityNotFoundTest extends TestCase
 {
     /**
      * @test
-     * @group unit
-     * @group Component/Service/Exception
-     * @testdox is a runtime exception
      */
-    public function isRuntimeException()
+    public function isARuntimeException()
     {
         $this->assertInstanceOf('RuntimeException', new EntityNotFound(42));
     }
 
     /**
      * @test
-     * @group unit
-     * @group Component/Service/Exception
      */
     public function providesAnMessageIncludingTheGivenIdentifier()
     {
