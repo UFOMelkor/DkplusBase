@@ -5,13 +5,13 @@
     "keywords": ["zf2"],
     "homepage": "https://github.com/UFOMelkor/DkplusBase",
     "require": {
-        "zendframework/zend-authentication": "2.*",
-        "zendframework/zend-eventmanager": "2.*",
-        "zendframework/zend-modulemanager": "2.*",
-        "zendframework/zend-mvc": "2.*",
-        "zendframework/zend-servicemanager": "2.*",
+        "zendframework/zend-authentication": ">=2.1",
+        "zendframework/zend-eventmanager": ">=2.1",
+        "zendframework/zend-modulemanager": ">=2.1",
+        "zendframework/zend-mvc": ">=2.1",
+        "zendframework/zend-servicemanager": ">=2.1",
         "zendframework/zend-stdlib": "dev-master as 2.1.1",
-        "zendframework/zend-view": "2.*"
+        "zendframework/zend-view": ">=2.1"
     },
     "autoload": {
         "psr-0": {
