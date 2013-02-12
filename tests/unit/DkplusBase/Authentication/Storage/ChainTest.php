@@ -8,7 +8,7 @@
 
 namespace DkplusBase\Authentication\Storage;
 
-use DkplusUnitTest\TestCase;
+use PHPUnit_Framework_TestCase as TestCase;
 
 /**
  * @category   Dkplus
