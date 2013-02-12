@@ -27,14 +27,16 @@ class FlashMessengerTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->controllerPlugin = $this->getMock('Zend\Mvc\Controller\Plugin\FlashMessenger');
+
+        $methods                = array('hasMessages', 'setNamespace', 'getMessages',
+                                        'hasCurrentMessages', 'getCurrentMessages',
+                                        'clearCurrentMessages');
+        $this->controllerPlugin = $this->getMock('Zend\Mvc\Controller\Plugin\FlashMessenger', $methods);
         $this->viewHelper       = new FlashMessenger($this->controllerPlugin);
     }
 
     /**
      * @test
-     * @group Component/ViewHelper
-     * @group unit
      * @dataProvider hasMessagesProvider
      */
     public function canDetectWhetherMessagesDoesExistOrDoesNot($hasMessages)
@@ -52,8 +54,6 @@ class FlashMessengerTest extends TestCase
 
     /**
      * @test
-     * @group Component/ViewHelper
-     * @group unit
      */
     public function usesDefaultAsNamespaceWhenNoOtherNamespaceIsGiven()
     {
@@ -65,8 +65,6 @@ class FlashMessengerTest extends TestCase
 
     /**
      * @test
-     * @group Component/ViewHelper
-     * @group unit
      */
     public function canUseCustomNamespaces()
     {
@@ -78,8 +76,6 @@ class FlashMessengerTest extends TestCase
 
     /**
      * @test
-     * @group Component/ViewHelper
-     * @group unit
      */
     public function canRetrieveMessages()
     {
@@ -94,8 +90,6 @@ class FlashMessengerTest extends TestCase
 
     /**
      * @test
-     * @group Component/ViewHelper
-     * @group unit
      */
     public function canRetrieveCurrentMessages()
     {
@@ -110,8 +104,6 @@ class FlashMessengerTest extends TestCase
 
     /**
      * @test
-     * @group Component/ViewHelper
-     * @group unit
      */
     public function cleansCurrentMessagesAfterRetrieving()
     {
