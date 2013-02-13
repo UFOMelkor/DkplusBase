@@ -1,5 +1,5 @@
 {
-    "hash": "2fc00388fde08d6f204821b641da8f19",
+    "hash": "e4fae0e9788ed1404c0a28a5c22fbbfd",
     "packages": [
         {
             "name": "zendframework/zend-authentication",
@@ -705,7 +705,85 @@
         }
     ],
     "packages-dev": [
-
+        {
+            "name": "zendframework/zend-form",
+            "version": "2.1.1",
+            "target-dir": "Zend/Form",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/Component_ZendForm.git",
+                "reference": "release-2.1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendForm/zipball/release-2.1.1",
+                "reference": "release-2.1.1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "zendframework/zend-inputfilter": "self.version",
+                "zendframework/zend-stdlib": "self.version"
+            },
+            "require-dev": {
+                "zendframework/zendservice-recaptcha": "*"
+            },
+            "suggest": {
+                "zendframework/zendservice-recaptcha": "ZendService\\ReCaptcha component"
+            },
+            "time": "2013-02-06 18:25:17",
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Zend\\Form\\": ""
+                }
+            },
+            "notification-url": "http://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "keywords": [
+                "form",
+                "zf2"
+            ]
+        },
+        {
+            "name": "zendframework/zend-inputfilter",
+            "version": "2.1.1",
+            "target-dir": "Zend/InputFilter",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/Component_ZendInputFilter.git",
+                "reference": "release-2.1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendInputFilter/zipball/release-2.1.1",
+                "reference": "release-2.1.1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "zendframework/zend-filter": "self.version",
+                "zendframework/zend-validator": "self.version",
+                "zendframework/zend-stdlib": "self.version"
+            },
+            "time": "2013-02-05 16:18:31",
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Zend\\InputFilter\\": ""
+                }
+            },
+            "notification-url": "http://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "keywords": [
+                "zf2",
+                "inputfilter"
+            ]
+        }
     ],
     "aliases": [
         {

@@ -13,6 +13,9 @@
         "zendframework/zend-stdlib": "dev-master as 2.1.1",
         "zendframework/zend-view": ">=2.1"
     },
+    "require-dev": {
+        "zendframework/zend-form": ">=2.1"
+    },
     "autoload": {
         "psr-0": {
             "DkplusBase": "src/"
