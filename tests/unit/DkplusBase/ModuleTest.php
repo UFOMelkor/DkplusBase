@@ -29,8 +29,6 @@ class ModuleTest extends TestCase
 
     /**
      * @test
-     * @group unit
-     * @group Component/Module
      */
     public function implementsConfigProviderInterface()
     {
@@ -39,8 +37,6 @@ class ModuleTest extends TestCase
 
     /**
      * @test
-     * @group unit
-     * @group Component/Module
      * @depends implementsConfigProviderInterface
      */
     public function providesConfigAsArray()
@@ -50,8 +46,6 @@ class ModuleTest extends TestCase
 
     /**
      * @test
-     * @group unit
-     * @group Component/Module
      */
     public function implementsServiceProviderInterface()
     {
@@ -60,8 +54,6 @@ class ModuleTest extends TestCase
 
     /**
      * @test
-     * @group unit
-     * @group Component/Module
      * @depends implementsServiceProviderInterface
      */
     public function providesServiceConfigAsArray()
@@ -71,8 +63,6 @@ class ModuleTest extends TestCase
 
     /**
      * @test
-     * @group unit
-     * @group Component/Module
      */
     public function implementsControllerPluginProviderInterface()
     {
@@ -81,8 +71,6 @@ class ModuleTest extends TestCase
 
     /**
      * @test
-     * @group unit
-     * @group Component/Module
      * @depends implementsControllerPluginProviderInterface
      */
     public function providesControllerPluginConfigAsArray()
@@ -92,8 +80,6 @@ class ModuleTest extends TestCase
 
     /**
      * @test
-     * @group unit
-     * @group Component/Module
      */
     public function implementsViewHelperProviderInterface()
     {
@@ -102,8 +88,6 @@ class ModuleTest extends TestCase
 
     /**
      * @test
-     * @group unit
-     * @group Component/Module
      * @depends implementsViewHelperProviderInterface
      */
     public function providesViewHelperConfigAsArray()
@@ -113,8 +97,6 @@ class ModuleTest extends TestCase
 
     /**
      * @test
-     * @group unit
-     * @group Component/Module
      */
     public function implementsAutoloaderProviderInterface()
     {
@@ -123,8 +105,6 @@ class ModuleTest extends TestCase
 
     /**
      * @test
-     * @group unit
-     * @group Component/Module
      * @depends implementsAutoloaderProviderInterface
      */
     public function providesAutoloaderConfigAsArray()

@@ -35,27 +35,30 @@ class Module implements
                 __DIR__ . '/../../autoload_classmap.php',
             )
         );
-
     }
 
     public function getConfig()
     {
-        return include __DIR__ . '/../../config/module.config.php';
+        return array();
     }
 
     public function getControllerPluginConfig()
     {
-        return include __DIR__ . '/../../config/controller_plugin.config.php';
+        return array();
 
     }
 
     public function getServiceConfig()
     {
-        return include __DIR__ . '/../../config/service.config.php';
+        return array();
     }
 
     public function getViewHelperConfig()
     {
-        return include __DIR__ . '/../../config/view_helper.config.php';
+        return array(
+            'factories' => array(
+                'flashmessenger' => 'DkplusBase\View\Helper\Service\FlashMessengerFactory'
+            )
+        );
     }
 }
