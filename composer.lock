@@ -3,17 +3,17 @@
     "packages": [
         {
             "name": "zendframework/zend-authentication",
-            "version": "2.1.1",
+            "version": "dev-master",
             "target-dir": "Zend/Authentication",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendAuthentication.git",
-                "reference": "release-2.1.1"
+                "reference": "2e0a518c0d8fc05670fd4a3133b920609a6dc05a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendAuthentication/zipball/release-2.1.1",
-                "reference": "release-2.1.1",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendAuthentication/zipball/2e0a518c0d8fc05670fd4a3133b920609a6dc05a",
+                "reference": "2e0a518c0d8fc05670fd4a3133b920609a6dc05a",
                 "shasum": ""
             },
             "require": {
@@ -25,7 +25,7 @@
                 "zendframework/zend-session": "Zend\\Session component",
                 "zendframework/zend-uri": "Zend\\Uri component"
             },
-            "time": "2013-02-01 18:50:22",
+            "time": "2013-02-07 22:26:44",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -44,17 +44,17 @@
         },
         {
             "name": "zendframework/zend-code",
-            "version": "2.1.1",
+            "version": "dev-master",
             "target-dir": "Zend/Code",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendCode.git",
-                "reference": "release-2.1.1"
+                "reference": "db851ded3faccc89eaf55b5e9a5e30302688fd99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendCode/zipball/release-2.1.1",
-                "reference": "release-2.1.1",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendCode/zipball/db851ded3faccc89eaf55b5e9a5e30302688fd99",
+                "reference": "db851ded3faccc89eaf55b5e9a5e30302688fd99",
                 "shasum": ""
             },
             "require": {
@@ -67,7 +67,7 @@
             "suggest": {
                 "doctrine/common": "Doctrine\\Common >=2.1 for annotation features"
             },
-            "time": "2013-02-01 01:31:13",
+            "time": "2013-02-07 22:26:44",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -86,24 +86,24 @@
         },
         {
             "name": "zendframework/zend-console",
-            "version": "2.1.1",
+            "version": "dev-master",
             "target-dir": "Zend/Console",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendConsole.git",
-                "reference": "release-2.1.1"
+                "reference": "2f688fdffc33a13334d668833fab6113441cbd77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendConsole/zipball/release-2.1.1",
-                "reference": "release-2.1.1",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendConsole/zipball/2f688fdffc33a13334d668833fab6113441cbd77",
+                "reference": "2f688fdffc33a13334d668833fab6113441cbd77",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
                 "zendframework/zend-stdlib": "self.version"
             },
-            "time": "2013-02-05 22:06:17",
+            "time": "2013-02-07 22:26:44",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -121,17 +121,17 @@
         },
         {
             "name": "zendframework/zend-di",
-            "version": "2.1.1",
+            "version": "dev-master",
             "target-dir": "Zend/Di",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendDi.git",
-                "reference": "release-2.1.1"
+                "reference": "f8a44387eaeaf21c792b62ab8df060e8820ac799"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendDi/zipball/release-2.1.1",
-                "reference": "release-2.1.1",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendDi/zipball/f8a44387eaeaf21c792b62ab8df060e8820ac799",
+                "reference": "f8a44387eaeaf21c792b62ab8df060e8820ac799",
                 "shasum": ""
             },
             "require": {
@@ -139,7 +139,7 @@
                 "zendframework/zend-code": "self.version",
                 "zendframework/zend-stdlib": "self.version"
             },
-            "time": "2013-01-24 20:26:13",
+            "time": "2013-02-07 22:26:44",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -157,23 +157,23 @@
         },
         {
             "name": "zendframework/zend-escaper",
-            "version": "2.1.1",
+            "version": "dev-master",
             "target-dir": "Zend/Escaper",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendEscaper.git",
-                "reference": "release-2.1.1"
+                "reference": "b0682a9103c20000d1fcbb7171936443840acb7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendEscaper/zipball/release-2.1.1",
-                "reference": "release-2.1.1",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendEscaper/zipball/b0682a9103c20000d1fcbb7171936443840acb7e",
+                "reference": "b0682a9103c20000d1fcbb7171936443840acb7e",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "2013-01-21 22:14:27",
+            "time": "2013-02-07 22:26:44",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -191,24 +191,24 @@
         },
         {
             "name": "zendframework/zend-eventmanager",
-            "version": "2.1.1",
+            "version": "dev-master",
             "target-dir": "Zend/EventManager",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendEventManager.git",
-                "reference": "release-2.1.1"
+                "reference": "2eec8ee2a9f6c4eaf3bfd95ee749860b162ef5e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendEventManager/zipball/release-2.1.1",
-                "reference": "release-2.1.1",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendEventManager/zipball/2eec8ee2a9f6c4eaf3bfd95ee749860b162ef5e3",
+                "reference": "2eec8ee2a9f6c4eaf3bfd95ee749860b162ef5e3",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
                 "zendframework/zend-stdlib": "self.version"
             },
-            "time": "2013-02-01 01:31:13",
+            "time": "2013-02-07 22:26:44",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -226,17 +226,17 @@
         },
         {
             "name": "zendframework/zend-filter",
-            "version": "2.1.1",
+            "version": "dev-master",
             "target-dir": "Zend/Filter",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendFilter.git",
-                "reference": "release-2.1.1"
+                "reference": "ec877c401130d60f16501c69411c59937b184ca0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendFilter/zipball/release-2.1.1",
-                "reference": "release-2.1.1",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendFilter/zipball/ec877c401130d60f16501c69411c59937b184ca0",
+                "reference": "ec877c401130d60f16501c69411c59937b184ca0",
                 "shasum": ""
             },
             "require": {
@@ -253,7 +253,7 @@
                 "zendframework/zend-uri": "Zend\\Uri component for UriNormalize filter",
                 "zendframework/zend-validator": "Zend\\Validator component"
             },
-            "time": "2013-02-05 20:00:43",
+            "time": "2013-02-07 22:26:44",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -271,18 +271,60 @@
             ]
         },
         {
+            "name": "zendframework/zend-form",
+            "version": "dev-master",
+            "target-dir": "Zend/Form",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/Component_ZendForm.git",
+                "reference": "fb2b47c6fda132d3aa6ab994383b7bd2ec79b605"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendForm/zipball/fb2b47c6fda132d3aa6ab994383b7bd2ec79b605",
+                "reference": "fb2b47c6fda132d3aa6ab994383b7bd2ec79b605",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "zendframework/zend-inputfilter": "self.version",
+                "zendframework/zend-stdlib": "self.version"
+            },
+            "require-dev": {
+                "zendframework/zendservice-recaptcha": "*"
+            },
+            "suggest": {
+                "zendframework/zendservice-recaptcha": "ZendService\\ReCaptcha component"
+            },
+            "time": "2013-02-07 22:26:44",
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Zend\\Form\\": ""
+                }
+            },
+            "notification-url": "http://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "keywords": [
+                "form",
+                "zf2"
+            ]
+        },
+        {
             "name": "zendframework/zend-http",
-            "version": "2.1.1",
+            "version": "dev-master",
             "target-dir": "Zend/Http",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendHttp.git",
-                "reference": "release-2.1.1"
+                "reference": "e4afdaadc3bcfecdd674b5e214cbabde3b2f6372"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendHttp/zipball/release-2.1.1",
-                "reference": "release-2.1.1",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendHttp/zipball/e4afdaadc3bcfecdd674b5e214cbabde3b2f6372",
+                "reference": "e4afdaadc3bcfecdd674b5e214cbabde3b2f6372",
                 "shasum": ""
             },
             "require": {
@@ -291,7 +333,7 @@
                 "zendframework/zend-stdlib": "self.version",
                 "zendframework/zend-uri": "self.version"
             },
-            "time": "2013-02-05 20:00:43",
+            "time": "2013-02-07 22:26:44",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -310,17 +352,17 @@
         },
         {
             "name": "zendframework/zend-i18n",
-            "version": "2.1.1",
+            "version": "dev-master",
             "target-dir": "Zend/I18n",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendI18n.git",
-                "reference": "release-2.1.1"
+                "reference": "05b902bc0ae3775efcaa55c70ffdb5d351365e60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendI18n/zipball/release-2.1.1",
-                "reference": "release-2.1.1",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendI18n/zipball/05b902bc0ae3775efcaa55c70ffdb5d351365e60",
+                "reference": "05b902bc0ae3775efcaa55c70ffdb5d351365e60",
                 "shasum": ""
             },
             "require": {
@@ -329,7 +371,7 @@
                 "zendframework/zend-filter": "self.version",
                 "zendframework/zend-stdlib": "self.version"
             },
-            "time": "2013-02-01 01:31:13",
+            "time": "2013-02-07 22:26:44",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -346,18 +388,55 @@
             ]
         },
         {
+            "name": "zendframework/zend-inputfilter",
+            "version": "dev-master",
+            "target-dir": "Zend/InputFilter",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/Component_ZendInputFilter.git",
+                "reference": "63ad63374e5bc23986c4f02659e919fa868402b4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendInputFilter/zipball/63ad63374e5bc23986c4f02659e919fa868402b4",
+                "reference": "63ad63374e5bc23986c4f02659e919fa868402b4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "zendframework/zend-filter": "self.version",
+                "zendframework/zend-stdlib": "self.version",
+                "zendframework/zend-validator": "self.version"
+            },
+            "time": "2013-02-07 22:26:44",
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Zend\\InputFilter\\": ""
+                }
+            },
+            "notification-url": "http://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "keywords": [
+                "inputfilter",
+                "zf2"
+            ]
+        },
+        {
             "name": "zendframework/zend-loader",
-            "version": "2.1.1",
+            "version": "dev-master",
             "target-dir": "Zend/Loader",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendLoader.git",
-                "reference": "release-2.1.1"
+                "reference": "32e2e7f581167c97efef6bd47bd0fcca55914473"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendLoader/zipball/release-2.1.1",
-                "reference": "release-2.1.1",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendLoader/zipball/32e2e7f581167c97efef6bd47bd0fcca55914473",
+                "reference": "32e2e7f581167c97efef6bd47bd0fcca55914473",
                 "shasum": ""
             },
             "require": {
@@ -366,7 +445,7 @@
             "suggest": {
                 "zendframework/zend-stdlib": "Zend\\Stdlib component"
             },
-            "time": "2013-02-05 20:00:43",
+            "time": "2013-02-07 22:26:44",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -384,17 +463,17 @@
         },
         {
             "name": "zendframework/zend-modulemanager",
-            "version": "2.1.1",
+            "version": "dev-master",
             "target-dir": "Zend/ModuleManager",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendModuleManager.git",
-                "reference": "release-2.1.1"
+                "reference": "598b84a8c41ac8ec96cbbfed0c8997ffce43e4f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendModuleManager/zipball/release-2.1.1",
-                "reference": "release-2.1.1",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendModuleManager/zipball/598b84a8c41ac8ec96cbbfed0c8997ffce43e4f1",
+                "reference": "598b84a8c41ac8ec96cbbfed0c8997ffce43e4f1",
                 "shasum": ""
             },
             "require": {
@@ -407,7 +486,7 @@
                 "zendframework/zend-loader": "Zend\\Loader component",
                 "zendframework/zend-servicemanager": "Zend\\ServiceManager component"
             },
-            "time": "2013-02-05 20:00:43",
+            "time": "2013-02-07 22:26:44",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -425,17 +504,17 @@
         },
         {
             "name": "zendframework/zend-mvc",
-            "version": "2.1.1",
+            "version": "dev-master",
             "target-dir": "Zend/Mvc",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendMvc.git",
-                "reference": "release-2.1.1"
+                "reference": "8812cea6869a410c91580cebaa32593b68f8ed10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendMvc/zipball/release-2.1.1",
-                "reference": "release-2.1.1",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendMvc/zipball/8812cea6869a410c91580cebaa32593b68f8ed10",
+                "reference": "8812cea6869a410c91580cebaa32593b68f8ed10",
                 "shasum": ""
             },
             "require": {
@@ -443,6 +522,7 @@
                 "zendframework/zend-console": "self.version",
                 "zendframework/zend-di": "self.version",
                 "zendframework/zend-eventmanager": "self.version",
+                "zendframework/zend-form": "self.version",
                 "zendframework/zend-http": "self.version",
                 "zendframework/zend-modulemanager": "self.version",
                 "zendframework/zend-servicemanager": "self.version",
@@ -451,7 +531,7 @@
                 "zendframework/zend-uri": "self.version",
                 "zendframework/zend-view": "self.version"
             },
-            "time": "2013-02-06 18:18:34",
+            "time": "2013-02-07 22:26:44",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -469,17 +549,17 @@
         },
         {
             "name": "zendframework/zend-servicemanager",
-            "version": "2.1.1",
+            "version": "dev-master",
             "target-dir": "Zend/ServiceManager",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendServiceManager.git",
-                "reference": "release-2.1.1"
+                "reference": "1dd87be3a149c90aba6f61277962b90e0399c35a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendServiceManager/zipball/release-2.1.1",
-                "reference": "release-2.1.1",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendServiceManager/zipball/1dd87be3a149c90aba6f61277962b90e0399c35a",
+                "reference": "1dd87be3a149c90aba6f61277962b90e0399c35a",
                 "shasum": ""
             },
             "require": {
@@ -488,7 +568,7 @@
             "suggest": {
                 "zendframework/zend-di": "Zend\\Di component"
             },
-            "time": "2013-02-05 21:54:09",
+            "time": "2013-02-07 22:26:44",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -506,17 +586,17 @@
         },
         {
             "name": "zendframework/zend-stdlib",
-            "version": "2.1.1",
+            "version": "dev-master",
             "target-dir": "Zend/Stdlib",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendStdlib.git",
-                "reference": "release-2.1.1"
+                "reference": "08611883b22d4ec5e01a3c2fff5e366b23945142"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendStdlib/zipball/release-2.1.1",
-                "reference": "release-2.1.1",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendStdlib/zipball/08611883b22d4ec5e01a3c2fff5e366b23945142",
+                "reference": "08611883b22d4ec5e01a3c2fff5e366b23945142",
                 "shasum": ""
             },
             "require": {
@@ -525,14 +605,14 @@
             "suggest": {
                 "pecl-weakref": "Implementation of weak references for Stdlib\\CallbackHandler"
             },
-            "time": "2013-02-06 18:18:34",
+            "time": "2013-02-07 22:26:44",
             "type": "library",
             "autoload": {
                 "psr-0": {
                     "Zend\\Stdlib\\": ""
                 },
                 "files": [
-                    "compatibility/autoload.php"
+                    "Zend/Stdlib/compatibility/autoload.php"
                 ]
             },
             "notification-url": "http://packagist.org/downloads/",
@@ -546,17 +626,17 @@
         },
         {
             "name": "zendframework/zend-text",
-            "version": "2.1.1",
+            "version": "dev-master",
             "target-dir": "Zend/Text",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendText.git",
-                "reference": "release-2.1.1"
+                "reference": "eb45f0e944a1668dc53eac3bf1f56b05f5a0ab4e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendText/zipball/release-2.1.1",
-                "reference": "release-2.1.1",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendText/zipball/eb45f0e944a1668dc53eac3bf1f56b05f5a0ab4e",
+                "reference": "eb45f0e944a1668dc53eac3bf1f56b05f5a0ab4e",
                 "shasum": ""
             },
             "require": {
@@ -564,7 +644,7 @@
                 "zendframework/zend-servicemanager": "self.version",
                 "zendframework/zend-stdlib": "self.version"
             },
-            "time": "2013-01-21 22:14:27",
+            "time": "2013-02-07 22:26:44",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -582,17 +662,17 @@
         },
         {
             "name": "zendframework/zend-uri",
-            "version": "2.1.1",
+            "version": "dev-master",
             "target-dir": "Zend/Uri",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendUri.git",
-                "reference": "release-2.1.1"
+                "reference": "2e3d391d29e0400c7e24c87e50b98415fdb13d81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendUri/zipball/release-2.1.1",
-                "reference": "release-2.1.1",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendUri/zipball/2e3d391d29e0400c7e24c87e50b98415fdb13d81",
+                "reference": "2e3d391d29e0400c7e24c87e50b98415fdb13d81",
                 "shasum": ""
             },
             "require": {
@@ -600,7 +680,7 @@
                 "zendframework/zend-escaper": "self.version",
                 "zendframework/zend-validator": "self.version"
             },
-            "time": "2013-01-21 22:14:27",
+            "time": "2013-02-07 22:26:44",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -619,17 +699,17 @@
         },
         {
             "name": "zendframework/zend-validator",
-            "version": "2.1.1",
+            "version": "dev-master",
             "target-dir": "Zend/Validator",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendValidator.git",
-                "reference": "release-2.1.1"
+                "reference": "17ff22da937cd9016d6de69a5d9584923d422ec6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendValidator/zipball/release-2.1.1",
-                "reference": "release-2.1.1",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendValidator/zipball/17ff22da937cd9016d6de69a5d9584923d422ec6",
+                "reference": "17ff22da937cd9016d6de69a5d9584923d422ec6",
                 "shasum": ""
             },
             "require": {
@@ -645,7 +725,7 @@
                 "zendframework/zend-db": "Zend\\Db component",
                 "zendframework/zend-math": "Zend\\Math component"
             },
-            "time": "2013-02-06 18:18:34",
+            "time": "2013-02-07 22:26:44",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -664,17 +744,17 @@
         },
         {
             "name": "zendframework/zend-view",
-            "version": "2.1.1",
+            "version": "dev-master",
             "target-dir": "Zend/View",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendView.git",
-                "reference": "release-2.1.1"
+                "reference": "fafddac7fa06ff63983d37f896f444d068aaeb3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendView/zipball/release-2.1.1",
-                "reference": "release-2.1.1",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendView/zipball/fafddac7fa06ff63983d37f896f444d068aaeb3e",
+                "reference": "fafddac7fa06ff63983d37f896f444d068aaeb3e",
                 "shasum": ""
             },
             "require": {
@@ -686,7 +766,7 @@
             "suggest": {
                 "zendframework/zend-filter": "Zend\\Filter component"
             },
-            "time": "2013-02-05 20:00:43",
+            "time": "2013-02-07 22:26:44",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -705,85 +785,7 @@
         }
     ],
     "packages-dev": [
-        {
-            "name": "zendframework/zend-form",
-            "version": "2.1.1",
-            "target-dir": "Zend/Form",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/Component_ZendForm.git",
-                "reference": "release-2.1.1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendForm/zipball/release-2.1.1",
-                "reference": "release-2.1.1",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3",
-                "zendframework/zend-inputfilter": "self.version",
-                "zendframework/zend-stdlib": "self.version"
-            },
-            "require-dev": {
-                "zendframework/zendservice-recaptcha": "*"
-            },
-            "suggest": {
-                "zendframework/zendservice-recaptcha": "ZendService\\ReCaptcha component"
-            },
-            "time": "2013-02-06 18:25:17",
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Zend\\Form\\": ""
-                }
-            },
-            "notification-url": "http://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "keywords": [
-                "form",
-                "zf2"
-            ]
-        },
-        {
-            "name": "zendframework/zend-inputfilter",
-            "version": "2.1.1",
-            "target-dir": "Zend/InputFilter",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/Component_ZendInputFilter.git",
-                "reference": "release-2.1.1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendInputFilter/zipball/release-2.1.1",
-                "reference": "release-2.1.1",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3",
-                "zendframework/zend-filter": "self.version",
-                "zendframework/zend-stdlib": "self.version",
-                "zendframework/zend-validator": "self.version"
-            },
-            "time": "2013-02-05 16:18:31",
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Zend\\InputFilter\\": ""
-                }
-            },
-            "notification-url": "http://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "keywords": [
-                "inputfilter",
-                "zf2"
-            ]
-        }
+
     ],
     "aliases": [
 
