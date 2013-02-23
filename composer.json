@@ -4,6 +4,7 @@
     "type": "library",
     "keywords": ["zf2"],
     "homepage": "https://github.com/UFOMelkor/DkplusBase",
+    "license": "MIT",
     "require": {
         "zendframework/zend-authentication": ">=2.1",
         "zendframework/zend-eventmanager": ">=2.1",
