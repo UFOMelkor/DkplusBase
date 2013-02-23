@@ -1,4 +1,4 @@
-# DkplusBase
+# DkplusBase [![Build Status](https://secure.travis-ci.org/UFOMelkor/DkplusBase.png?branch=master)](http://travis-ci.org/UFOMelkor/DkplusBase)
 
 Utility for other zf2 modules
 
