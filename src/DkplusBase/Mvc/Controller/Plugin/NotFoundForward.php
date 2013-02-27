@@ -9,7 +9,6 @@
 namespace DkplusBase\Mvc\Controller\Plugin;
 
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
-use Zend\Mvc\View\Http\RouteNotFoundStrategy;
 use Zend\View\Model\ModelInterface as ViewModelInterface;
 
 /**
@@ -20,10 +19,10 @@ use Zend\View\Model\ModelInterface as ViewModelInterface;
  */
 class NotFoundForward extends AbstractPlugin
 {
-    /** @var RouteNotFoundStrategy */
+    /** @var \Zend\Mvc\View\Http\RouteNotFoundStrategy */
     protected $notFoundStrategy;
 
-    public function __construct(RouteNotFoundStrategy $notFoundStrategy)
+    public function __construct($notFoundStrategy)
     {
         $this->notFoundStrategy = $notFoundStrategy;
     }

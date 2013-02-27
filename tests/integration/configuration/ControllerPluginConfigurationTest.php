@@ -45,7 +45,7 @@ class ControllerPluginConfigurationTest extends TestCase
     {
         $this->assertInstanceOf(
             'DkplusBase\Mvc\Controller\Plugin\NotFoundForward',
-            self::$pluginManager->get('notFoundForward')
+            self::$pluginManager->get('notfoundforward')
         );
     }
 }

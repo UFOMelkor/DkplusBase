@@ -44,8 +44,11 @@ class Module implements
 
     public function getControllerPluginConfig()
     {
-        return array();
-
+        return array(
+            'factories' => array(
+                'notfoundforward' => 'DkplusBase\Mvc\Controller\Plugin\Service\NotFoundForwardFactory'
+            )
+        );
     }
 
     public function getServiceConfig()
