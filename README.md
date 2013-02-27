@@ -11,7 +11,7 @@ The NotFoundForward-Plugin might help you in this case because it extends the or
 First it sets a 404 status code, so you don't need to bother about this, since if a 404 status code appears the RouteNotFoundStrategy it will be triggered, the plugin also sets the template of the RouteNotFoundStrategy to the one of your viewModel so your template will be rendered anyway.
 Furthermore it can help you when need a MatchedRouteName inside your view, e.g. when you use a paginator. You can give the MatchedRouteName as third parameter to the plugin and it will put it into the RouteMatch.
 
-One example
+One example:
 
 ```php
 class MyController
