@@ -1,9 +1,7 @@
 <?php
 /**
- * @category   Dkplus
- * @package    Base
- * @subpackage Authentication
- * @author     Oskar Bley <oskar@programming-php.net>
+ * @license MIT
+ * @link    https://github.com/UFOMelkor/DkplusCrud canonical source repository
  */
 
 namespace DkplusBase\Authentication\Storage;
@@ -11,11 +9,9 @@ namespace DkplusBase\Authentication\Storage;
 use PHPUnit_Framework_TestCase as TestCase;
 
 /**
- * @category   Dkplus
- * @package    Base
- * @subpackage Authentication
- * @author     Oskar Bley <oskar@programming-php.net>
- * @covers     DkplusBase\Authentication\Storage\Chain
+ * @author Oskar Bley <oskar@programming-php.net>
+ * @since  0.1.0
+ * @covers DkplusBase\Authentication\Storage\Chain
  */
 class ChainTest extends TestCase
 {

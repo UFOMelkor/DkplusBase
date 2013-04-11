@@ -1,9 +1,7 @@
 <?php
 /**
- * @category   Dkplus
- * @package    Base
- * @subpackage IntegrationTest
- * @author     Oskar Bley <oskar@programming-php.net>
+ * @license MIT
+ * @link    https://github.com/UFOMelkor/DkplusCrud canonical source repository
  */
 
 namespace DkplusBase;
@@ -14,10 +12,8 @@ use Zend\Mvc\Application;
 /**
  * Testing whether the view helpers can be loaded from the ViewHelperManager or not.
  *
- * @category   Dkplus
- * @package    Base
- * @subpackage IntegrationTest
- * @author     Oskar Bley <oskar@programming-php.net>
+ * @author Oskar Bley <oskar@programming-php.net>
+ * @since  0.1.0
  * @coversNothing
  */
 class ViewHelperConfigurationTest extends TestCase
@@ -40,9 +36,7 @@ class ViewHelperConfigurationTest extends TestCase
         self::$pluginManager = $application->getServiceManager()->get('ViewHelperManager');
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function providesTheFlashMessengerHelper()
     {
         $this->assertInstanceOf('DkplusBase\View\Helper\FlashMessenger', self::$pluginManager->get('flashMessenger'));
