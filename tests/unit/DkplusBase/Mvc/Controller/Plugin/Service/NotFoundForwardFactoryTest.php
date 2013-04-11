@@ -1,9 +1,7 @@
 <?php
 /**
- * @category   DkplusTesting
- * @package    Base
- * @subpackage Mvc\Controller\Plugin
- * @author     Oskar Bley <oskar@programming-php.net>
+ * @license MIT
+ * @link    https://github.com/UFOMelkor/DkplusCrud canonical source repository
  */
 
 namespace DkplusBase\Mvc\Controller\Plugin\Service;
@@ -11,10 +9,8 @@ namespace DkplusBase\Mvc\Controller\Plugin\Service;
 use PHPUnit_Framework_TestCase as TestCase;
 
 /**
- * @category   DkplusTesting
- * @package    Base
- * @subpackage Mvc\Controller\Plugin
- * @author     Oskar Bley <oskar@programming-php.net>
+ * @author Oskar Bley <oskar@programming-php.net>
+ * @since  0.1.0
  */
 class NotFoundForwardFactoryTest extends TestCase
 {

@@ -1,9 +1,7 @@
 <?php
 /**
- * @category   Dkplus
- * @package    Base
- * @subpackage Mvc\Controller\Plugin
- * @author     Oskar Bley <oskar@programming-php.net>
+ * @license MIT
+ * @link    https://github.com/UFOMelkor/DkplusCrud canonical source repository
  */
 
 namespace DkplusBase\Mvc\Controller\Plugin;
@@ -12,10 +10,8 @@ use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Zend\View\Model\ModelInterface as ViewModelInterface;
 
 /**
- * @category   Dkplus
- * @package    Base
- * @subpackage Mvc\Controller\Plugin
- * @author     Oskar Bley <oskar@programming-php.net>
+ * @author Oskar Bley <oskar@programming-php.net>
+ * @since  0.1.0
  */
 class NotFoundForward extends AbstractPlugin
 {

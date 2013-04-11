@@ -1,9 +1,7 @@
 <?php
 /**
- * @category   Dkplus
- * @package    Base
- * @subpackage Module
- * @author     Oskar Bley <oskar@programming-php.net>
+ * @license MIT
+ * @link    https://github.com/UFOMelkor/DkplusCrud canonical source repository
  */
 
 namespace DkplusBase;
@@ -15,10 +13,8 @@ use Zend\ModuleManager\Feature\ServiceProviderInterface as ServiceProvider;
 use Zend\ModuleManager\Feature\ViewHelperProviderInterface as ViewHelperProvider;
 
 /**
- * @category   Dkplus
- * @package    Base
- * @subpackage Module
- * @author     Oskar Bley <oskar@programming-php.net>
+ * @author Oskar Bley <oskar@programming-php.net>
+ * @since  0.1.0
  */
 class Module implements
     AutoloaderProvider,
